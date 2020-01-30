@@ -16,51 +16,40 @@ class ArtDetailVC: UIViewController {
   var currentImage: [UIImage]!
   
   // MARK: - UI Objects
-  lazy var imageCollectionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .horizontal
-    layout.minimumInteritemSpacing = 0
-    layout.itemSize = CGSize(width: view.frame.width, height: 300)
-    
-    let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 3), collectionViewLayout: layout)
-    //        cv.delegate = self
-    //        cv.dataSource = self
-    //        cv.register(ItemImageCollectionViewCell.self, forCellWithReuseIdentifier: "imageCell")
-    cv.isPagingEnabled = true
-    return cv
-  }()
+    lazy var artImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "noimage")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
   
-  lazy var SizeName: UILabel = {
+  lazy var sizeName: UILabel = {
     let label = UILabel()
     label.text = "Size:"
     label.textColor = .black
-    view.addSubview(label)
     return label
   }()
   
-  lazy var ArtistName: UILabel = {
+  lazy var artistName: UILabel = {
     let label = UILabel()
     label.text = "Artist Name: "
-    view.addSubview(label)
     return label
   }()
   
-  lazy var PriceName: UILabel = {
+  lazy var priceName: UILabel = {
     let label = UILabel()
     label.text = "$$"
-    view.addSubview(label)
     return label
   }()
   
-  lazy var ARlogo: UIImageView = {
+  lazy var arLogo: UIImageView = {
     let Imagelogo = UIImageView()
     Imagelogo.image = #imageLiteral(resourceName: "2064275-200")
-    view.addSubview(Imagelogo)
     Imagelogo.translatesAutoresizingMaskIntoConstraints = false
     return Imagelogo
   }()
   
-  lazy var PriceButton: UIButton = {
+  lazy var priceButton: UIButton = {
     let button = UIButton(type: UIButton.ButtonType.system)
     button.setTitle("BUY NOW ", for: .normal)
     button.addTarget(self, action: #selector(PriceTapped), for: .touchUpInside)
@@ -82,67 +71,73 @@ class ArtDetailVC: UIViewController {
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
+
   }
   
   //MARK: - Private functions
   private func addSubviews() {
-    view.addSubview(imageCollectionView)
+    view.addSubview(artImage)
+    view.addSubview(sizeName)
+    view.addSubview(artistName)
+    view.addSubview(priceName)
+    view.addSubview(arLogo)
   }
   
   private func setupUIConstraints() {
-    constrainImageCollectionView()
-    constrainSizelabel()
-    constrainArtistlabel()
-    constrainMoneylabel()
-    BuyButtonConst()
-    ARButtonConst()
+   
+    constSizelabel()
+    constArtistlabel()
+    constMoneyLabel()
+    constBuyButton()
+    constARButton()
+    constImageView()
   }
   
   // MARK: - Constraints
-  private func constrainImageCollectionView() {
-    imageCollectionView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      imageCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-      imageCollectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-      imageCollectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-      imageCollectionView.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.height / 3)
-    ])
-  }
-  
-  private func constrainSizelabel() {
-    SizeName.snp.makeConstraints { (make) in
+ private func constSizelabel() {
+    sizeName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
       make.top.equalToSuperview().offset(400)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
   
-  private func constrainArtistlabel() {
-    ArtistName.snp.makeConstraints { (make) in
+  private func constArtistlabel() {
+    artistName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
       make.top.equalToSuperview().offset(450)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
   
-  private func constrainMoneylabel() {
-    PriceName.snp.makeConstraints { (make) in
+    private func constImageView() {
+        artImage.snp.makeConstraints{ (make) in
+            make.left.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(100)
+            make.size.equalTo(CGSize(width: 400, height: 300))
+           
+              }
+    }
+    
+    
+  private func constMoneyLabel() {
+    priceName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
       make.top.equalToSuperview().offset(500)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
   
-  private func  BuyButtonConst() {
-    PriceButton.snp.makeConstraints { (make) in
+  private func  constBuyButton() {
+    priceButton.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(20)
       make.top.equalToSuperview().offset(600)
       make.size.equalTo(CGSize(width: 350, height: 40))
     }
   }
   
-  private func  ARButtonConst() {
-    ARlogo.snp.makeConstraints { (make) in
+  private func  constARButton() {
+    arLogo.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(20)
       make.top.equalToSuperview().offset(650)
       make.size.equalTo(CGSize(width: 100, height: 50))
