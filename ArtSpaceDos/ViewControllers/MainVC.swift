@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class MainVC: UIViewController {
+class HomePageVC: UIViewController {
   
   //MARK: -- Properties
   var arrayOfImages = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5"),UIImage(named: "6"),UIImage(named: "7"),UIImage(named: "8"),UIImage(named: "9"),UIImage(named: "10")]
@@ -55,22 +55,28 @@ class MainVC: UIViewController {
   //MARK: -- Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationController?.navigationBar.isHidden = true
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
     getArtPosts()
   }
-  
+  override func viewWillAppear(_ animated: Bool) {
+    self.navigationController?.navigationBar.isHidden = true
+  }
+   
+  override func viewWillDisappear(_ animated: Bool) {
+    self.navigationController?.navigationBar.isHidden = false
+  }
+    
   //MARK: -- Private Functions
   private func getArtPosts() {
-    FirestoreService.manager.getAllArtObjects { (result) in
+    FirestoreService.manager.getAllArtObjects { [weak self](result) in
       switch result {
       case .failure(let error):
         print(error)
       case .success(let artFromFirebase):
         DispatchQueue.main.async {
-          self.artObjectData = artFromFirebase
+            self?.artObjectData = artFromFirebase
           dump(artFromFirebase)
         }
       }
@@ -110,7 +116,7 @@ class MainVC: UIViewController {
 }
 
 //MARK: -- Extensions
-extension MainVC: UICollectionViewDataSource {
+extension HomePageVC: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return arrayOfImages.count
@@ -125,7 +131,7 @@ extension MainVC: UICollectionViewDataSource {
   }
 }
 
-extension MainVC: UICollectionViewDelegate {
+extension HomePageVC: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = ArtDetailVC()
@@ -133,7 +139,7 @@ extension MainVC: UICollectionViewDelegate {
   }
 }
 
-extension MainVC: UICollectionViewDelegateFlowLayout {
+extension HomePageVC: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 200, height: 200)
