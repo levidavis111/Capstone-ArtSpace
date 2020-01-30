@@ -146,12 +146,32 @@ class ArtDetailVC: UIViewController {
   
 }
 
-    //MARK: - Extension tbd
-
-//extension ArtDetailVC: UICollectionViewDelegateFlowLayout {
+extension ArtDetailVC: UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: 150, height: 200)
+  }
+  
+}
+//lazy var cancelButton: UIButton = {
+//       let button = UIButton()
+//       button.backgroundColor = .clear
+//       button.tintColor = .black
+//       button.setImage(UIImage(systemName: "xmark"), for: .normal)
+//       button.imageView?.contentMode = .scaleAspectFit
+//               button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
+//       button.addTarget(self, action: #selector(transitionOut), for: .touchUpInside)
+//       return button
+//   }()
 //
-//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//    return CGSize(width: 150, height: 200)
-//  }
+//   @objc func transitionOut() {
+//       let prevVC = HomePageVC()
+//       prevVC.modalPresentationStyle = .fullScreen
+//       self.present(prevVC, animated: true, completion: nil)
+//   }
 //
-//}
+//   cancelButton.snp.makeConstraints { make in
+//                  make.width.equalTo(75)
+//                  make.top.equalTo(self.view).offset(75)
+//                  make.left.equalTo(self.view).offset(15)
+//              }
