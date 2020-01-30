@@ -105,7 +105,7 @@ class CreatePost: UIViewController {
   private func showAlert(with title: String, and message: String) {
     let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
     alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in
-      let prevVC = MainVC()
+      let prevVC = HomePageVC()
       prevVC.modalPresentationStyle = .fullScreen
       self.present(prevVC, animated: true, completion: nil)
     }))
