@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>762979929996-l78c3h576ruj1t0te588o2vkli28ea2h.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.762979929996-l78c3h576ruj1t0te588o2vkli28ea2h</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCkpDFGdxGWl0538CCbWqWrAHLD09NOKkY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>762979929996</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>The-Best-Programmer-Ever.ArtSpacePrototype</string>
+	<key>PROJECT_ID</key>
+	<string>artspaceprototype</string>
+	<key>STORAGE_BUCKET</key>
+	<string>artspaceprototype.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:762979929996:ios:0c3c499e0dea19365490a9</string>
+	<key>DATABASE_URL</key>
+	<string>https://artspaceprototype.firebaseio.com</string>
+</dict>
+</plist>

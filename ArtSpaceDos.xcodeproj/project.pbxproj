@@ -3,17 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6CC7ADAFABF30C52B2FAFCA8 /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE1012DF3EA2C67857EE2ED /* Pods_ArtSpaceDos.framework */; };
 		D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88123E33697005B22D4 /* AppDelegate.swift */; };
 		D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88323E33697005B22D4 /* SceneDelegate.swift */; };
-		D82FA88623E33697005B22D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88523E33697005B22D4 /* ViewController.swift */; };
 		D82FA88923E33697005B22D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82FA88723E33697005B22D4 /* Main.storyboard */; };
 		D82FA88B23E3369A005B22D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D82FA88A23E3369A005B22D4 /* Assets.xcassets */; };
 		D82FA88E23E3369A005B22D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82FA88C23E3369A005B22D4 /* LaunchScreen.storyboard */; };
+		D82FA89623E33BC2005B22D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D82FA89523E33BC2005B22D4 /* GoogleService-Info.plist */; };
+		D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA89823E33BED005B22D4 /* AppUser.swift */; };
+		D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA89A23E33C12005B22D4 /* ArtObject.swift */; };
+		D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A023E33C84005B22D4 /* MainVC.swift */; };
+		D82FA8A323E33C9E005B22D4 /* ArtDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */; };
+		D82FA8A523E33CB1005B22D4 /* CreatePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */; };
+		D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A723E33D1F005B22D4 /* ArtCell.swift */; };
+		D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8AA23E33E49005B22D4 /* String+Validations.swift */; };
+		D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */; };
+		D82FA8B223E33ED3005B22D4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B123E33ED3005B22D4 /* FirebaseService.swift */; };
+		D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B323E346B6005B22D4 /* UIUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,11 +32,21 @@
 		D82FA87E23E33697005B22D4 /* ArtSpaceDos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSpaceDos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82FA88123E33697005B22D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D82FA88323E33697005B22D4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D82FA88523E33697005B22D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D82FA88823E33697005B22D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D82FA88A23E3369A005B22D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D82FA88D23E3369A005B22D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D82FA88F23E3369A005B22D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D82FA89523E33BC2005B22D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D82FA89823E33BED005B22D4 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
+		D82FA89A23E33C12005B22D4 /* ArtObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtObject.swift; sourceTree = "<group>"; };
+		D82FA8A023E33C84005B22D4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtDetailVC.swift; sourceTree = "<group>"; };
+		D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostVC.swift; sourceTree = "<group>"; };
+		D82FA8A723E33D1F005B22D4 /* ArtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtCell.swift; sourceTree = "<group>"; };
+		D82FA8AA23E33E49005B22D4 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
+		D82FA8B123E33ED3005B22D4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		D82FA8B323E346B6005B22D4 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		ECE1012DF3EA2C67857EE2ED /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -56,7 +76,6 @@
 				A7E28B1BF34ABBC63718BE6C /* Pods-ArtSpaceDos.debug.xcconfig */,
 				0E40CA08D5E200C85CD7AE45 /* Pods-ArtSpaceDos.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -81,15 +100,81 @@
 		D82FA88023E33697005B22D4 /* ArtSpaceDos */ = {
 			isa = PBXGroup;
 			children = (
+				D82FA89723E33BCE005B22D4 /* Models */,
+				D82FA89E23E33C41005B22D4 /* ViewControllers */,
+				D82FA8AC23E33E61005B22D4 /* FirebaseHelpers */,
+				D82FA8A623E33CBF005B22D4 /* SupportingFiles */,
+				D82FA8B523E34A4C005B22D4 /* Utilities */,
 				D82FA88123E33697005B22D4 /* AppDelegate.swift */,
 				D82FA88323E33697005B22D4 /* SceneDelegate.swift */,
-				D82FA88523E33697005B22D4 /* ViewController.swift */,
-				D82FA88723E33697005B22D4 /* Main.storyboard */,
-				D82FA88A23E3369A005B22D4 /* Assets.xcassets */,
-				D82FA88C23E3369A005B22D4 /* LaunchScreen.storyboard */,
 				D82FA88F23E3369A005B22D4 /* Info.plist */,
+				D82FA89523E33BC2005B22D4 /* GoogleService-Info.plist */,
 			);
 			path = ArtSpaceDos;
+			sourceTree = "<group>";
+		};
+		D82FA89723E33BCE005B22D4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA89823E33BED005B22D4 /* AppUser.swift */,
+				D82FA89A23E33C12005B22D4 /* ArtObject.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D82FA89E23E33C41005B22D4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA89F23E33C4B005B22D4 /* Cell */,
+				D82FA8A023E33C84005B22D4 /* MainVC.swift */,
+				D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */,
+				D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D82FA89F23E33C4B005B22D4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA8A723E33D1F005B22D4 /* ArtCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		D82FA8A623E33CBF005B22D4 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA88A23E3369A005B22D4 /* Assets.xcassets */,
+				D82FA88723E33697005B22D4 /* Main.storyboard */,
+				D82FA88C23E3369A005B22D4 /* LaunchScreen.storyboard */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		D82FA8A923E33E2E005B22D4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA8AA23E33E49005B22D4 /* String+Validations.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D82FA8AC23E33E61005B22D4 /* FirebaseHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */,
+				D82FA8B123E33ED3005B22D4 /* FirebaseService.swift */,
+			);
+			path = FirebaseHelpers;
+			sourceTree = "<group>";
+		};
+		D82FA8B523E34A4C005B22D4 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D82FA8B323E346B6005B22D4 /* UIUtilities.swift */,
+				D82FA8A923E33E2E005B22D4 /* Extensions */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D82FA88E23E3369A005B22D4 /* LaunchScreen.storyboard in Resources */,
+				D82FA89623E33BC2005B22D4 /* GoogleService-Info.plist in Resources */,
 				D82FA88B23E3369A005B22D4 /* Assets.xcassets in Resources */,
 				D82FA88923E33697005B22D4 /* Main.storyboard in Resources */,
 			);
@@ -207,9 +293,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82FA88623E33697005B22D4 /* ViewController.swift in Sources */,
+				D82FA8A523E33CB1005B22D4 /* CreatePostVC.swift in Sources */,
+				D82FA8A323E33C9E005B22D4 /* ArtDetailVC.swift in Sources */,
+				D82FA8B223E33ED3005B22D4 /* FirebaseService.swift in Sources */,
+				D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */,
+				D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */,
+				D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */,
+				D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */,
 				D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */,
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
+				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
+				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
+				D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
