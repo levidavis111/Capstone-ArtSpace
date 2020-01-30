@@ -1,11 +1,5 @@
 
 //
-//  HomePageVC.swift
-//  ArtSpacePrototype
-//
-//  Created by God on 1/21/20.
-//  Copyright © 2020 God. All rights reserved.
-//
 import UIKit
 import SnapKit
 var arrayOfImages = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5"),UIImage(named: "6"),UIImage(named: "7"),UIImage(named: "8"),UIImage(named: "9"),UIImage(named: "10")]
@@ -137,4 +131,3 @@ extension HomePageVC: UICollectionViewDataSource, UICollectionViewDelegate, UICo
         return CGSize(width: 200, height: 200)
     }
     
-}

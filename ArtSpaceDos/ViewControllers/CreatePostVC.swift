@@ -87,7 +87,7 @@ class CreatePost: UIViewController {
   
   //MARK: - Obj-C Functions
   @objc func transitionOut() {
-    let prevVC = HomePageVC()
+    let prevVC = MainVC()
     prevVC.modalPresentationStyle = .fullScreen
     self.present(prevVC, animated: true, completion: nil)
   }
