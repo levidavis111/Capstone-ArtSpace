@@ -14,15 +14,7 @@ class HomePageVC: UIViewController {
     }
   }
     //MARK: - Variables
-    lazy var searchBar: UISearchBar = {
-    let searchBar = UISearchBar()
-    searchBar.placeholder = "Search"
-    searchBar.backgroundColor = .white
-    searchBar.barTintColor = .white
-    searchBar.tintColor = .white
-    return searchBar
-    }()
-    
+
     lazy var filterButton: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
@@ -98,31 +90,34 @@ class HomePageVC: UIViewController {
     //MARK: - UISetup
   
   private func addSubviews() {
-      [searchBar, filterButton, userProfile, artCollectionView].forEach({self.view.addSubview($0)})
+      [filterButton, artCollectionView].forEach({self.view.addSubview($0)})
   }
   
   private func setupUIConstraints() {
-    searchBar.snp.makeConstraints { make in
-    make.width.equalTo(200)
-    make.top.equalTo(self.view).offset(75)
-    make.left.equalTo(self.view).offset(100)
+ 
+    postButton.snp.makeConstraints { make in
+         make.centerX.equalTo(view.snp.top)
+        make.centerX.equalTo(view.snp.trailing)
+//        make.top.equalToSuperview().offset(15)
+//        make.right.equalTo(self.view).offset(50)
     }
     
-    filterButton.snp.makeConstraints { make in
-    make.top.equalTo(searchBar).offset(15)
-    make.right.equalTo(searchBar).offset(50)
-    }
-    
-    userProfile.snp.makeConstraints { make in
-    make.top.equalTo(searchBar).offset(15)
-    make.left.equalTo(searchBar).offset(-50)
-    }
-    
+//    userProfile.snp.makeConstraints { make in
+//    make.top.equalTo(searchBar).offset(15)
+//    make.left.equalTo(searchBar).offset(-50)
+//    }
+//
     artCollectionView.snp.makeConstraints { make in
-    make.top.equalTo(self.view).offset(150)
-    make.left.equalTo(self.view)
-    make.bottom.equalTo(self.view)
-    make.right.equalTo(self.view)
+        make.top.equalTo(postButton)
+        make.left.equalTo(view).offset(10)
+        make.bottom.equalTo(view).offset(10)
+        make.right.equalTo(view).offset(10)
+        
+//        make.edges.equalTo(view).inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+//    make.top.equalTo(self.view).offset(150)
+//    make.left.equalTo(self.view)
+//    make.bottom.equalTo(self.view)
+//    make.right.equalTo(self.view)
     }
     }
     
