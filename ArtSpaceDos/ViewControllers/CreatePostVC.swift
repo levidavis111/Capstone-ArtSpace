@@ -41,6 +41,7 @@ class CreatePost: UIViewController {
     let input = UITextField()
     input.textAlignment = .center
     input.placeholder = "Name Of Art"
+    input.borderStyle = .roundedRect
     return input
   }()
   
@@ -48,6 +49,7 @@ class CreatePost: UIViewController {
     let price = UITextField()
     price.textAlignment = .center
     price.placeholder = "Price"
+    price.borderStyle = .roundedRect
     return price
   }()
   
@@ -80,16 +82,29 @@ class CreatePost: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+//     self.navigationController?.navigationBar.isHidden = true
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setUpConstraints()
+    
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+      super.viewWillDisappear(animated)
+      navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
   //MARK: - Obj-C Functions
   @objc func transitionOut() {
-    let prevVC = HomePageVC()
-    prevVC.modalPresentationStyle = .fullScreen
-    self.present(prevVC, animated: true, completion: nil)
+//    let prevVC = HomePageVC()
+//    prevVC.modalPresentationStyle = .fullScreen
+//    self.present(prevVC, animated: true, completion: nil)
+    navigationController?.popToRootViewController(animated: true)
   }
   
   @objc func postArt() {
@@ -105,9 +120,9 @@ class CreatePost: UIViewController {
   private func showAlert(with title: String, and message: String) {
     let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
     alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in
-      let prevVC = HomePageVC()
-      prevVC.modalPresentationStyle = .fullScreen
-      self.present(prevVC, animated: true, completion: nil)
+//      let prevVC = HomePageVC()
+      self.navigationController?.popViewController(animated: true)
+//      self.present(prevVC, animated: true, completion: nil)
     }))
     present(alertVC, animated: true, completion: nil)
   }

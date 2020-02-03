@@ -13,32 +13,38 @@ import SnapKit
 class ArtDetailVC: UIViewController {
   
   //MARK: - Properties
-  var currentImage: [UIImage]!
+  var currentImage: UIImage!
   
   // MARK: - UI Objects
     lazy var artImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "noimage")
+      imageView.image = self.currentImage
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
   
+  lazy var descriptionBox: UILabel = {
+    let textView = UILabel()
+    textView.text = "This is art 💁🏽‍♂️"
+    return textView
+  }()
+  
   lazy var sizeName: UILabel = {
     let label = UILabel()
-    label.text = "Size:"
+    label.text = "Size: Super Big "
     label.textColor = .black
     return label
   }()
   
   lazy var artistName: UILabel = {
     let label = UILabel()
-    label.text = "Artist Name: "
+    label.text = "Artist Name: Patrick Star "
     return label
   }()
   
   lazy var priceName: UILabel = {
     let label = UILabel()
-    label.text = "$$"
+    label.text = "Price: Priceless"
     return label
   }()
   
@@ -67,12 +73,13 @@ class ArtDetailVC: UIViewController {
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+     self.navigationController?.navigationBar.isHidden = true
     view.backgroundColor = .white
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
-
   }
+
   
   //MARK: - Private functions
   private func addSubviews() {
@@ -81,6 +88,7 @@ class ArtDetailVC: UIViewController {
     view.addSubview(artistName)
     view.addSubview(priceName)
     view.addSubview(arLogo)
+    view.addSubview(descriptionBox)
   }
   
   private func setupUIConstraints() {
@@ -91,13 +99,23 @@ class ArtDetailVC: UIViewController {
     constBuyButton()
     constARButton()
     constImageView()
+    constDescription()
   }
   
   // MARK: - Constraints
+  private func constDescription(){
+    descriptionBox.snp.makeConstraints { (make) in
+      make.left.equalToSuperview().offset(150)
+      make.top.equalToSuperview().offset(400)
+      make.size.equalTo(CGSize(width: 400, height: 40))
+      
+    }
+  }
+
  private func constSizelabel() {
     sizeName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
-      make.top.equalToSuperview().offset(400)
+      make.top.equalToSuperview().offset(450)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
@@ -105,11 +123,11 @@ class ArtDetailVC: UIViewController {
   private func constArtistlabel() {
     artistName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
-      make.top.equalToSuperview().offset(450)
+      make.top.equalToSuperview().offset(500)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
-  
+
     private func constImageView() {
         artImage.snp.makeConstraints{ (make) in
             make.left.equalToSuperview().offset(20)
@@ -123,7 +141,7 @@ class ArtDetailVC: UIViewController {
   private func constMoneyLabel() {
     priceName.snp.makeConstraints { (make) in
       make.left.equalToSuperview().offset(150)
-      make.top.equalToSuperview().offset(500)
+      make.top.equalToSuperview().offset(550)
       make.size.equalTo(CGSize(width: 400, height: 40))
     }
   }
