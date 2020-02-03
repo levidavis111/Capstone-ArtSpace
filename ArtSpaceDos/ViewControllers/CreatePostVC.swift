@@ -134,31 +134,6 @@ class CreatePost: UIViewController {
         }
     }
     
-    /**
-     private func createPost() {
-
-         guard let photoURL = self.imageURL else {return}
-         let photoURLString = "\(photoURL)"
-         guard let user = FirebaseAuthService.manager.currentUser else {return}
-         
-         let newPost = Post(photoURL: photoURLString, creatorID: user.uid)
-         FirestoreService.manager.createPost(post: newPost) { (result) in
-             switch result {
-             case .failure(let error):
-                 print(error)
-             case .success(()):
-                 self.showAlert(with: "Posted!", and: "Yay!")
-
-             }
-         }
-         
-     }
-     */
-    
-    private func setImageView() {
-        artImage.image = image
-    }
-    
     private func showAlert(with title: String, and message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in
@@ -227,16 +202,17 @@ extension CreatePost: UIImagePickerControllerDelegate, UINavigationControllerDel
         
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {return}
         
-        FirebaseStorageService.manager.storeImage(image: imageData) { [weak self](result) in
+        FirebaseStorageService.manager.storeImage(image: imageData) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let url):
                 self?.imageURL = url
+                
             }
+            
         }
-        setImageView()
-        
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
+

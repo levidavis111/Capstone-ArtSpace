@@ -35,8 +35,10 @@ class FirebaseStorageService {
                     if let error = error {
                         completion(.failure(error))
                     } else {
-                        guard let url = url else {completion(.failure(error!)); return}
-                        completion(.success(url))
+                        imageLocation.downloadURL { (url, error) in
+                            guard error == nil, let url = url else {completion(.failure(error!)); return}
+                            completion(.success(url))
+                        }
                     }
                 }
             }
