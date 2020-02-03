@@ -13,30 +13,30 @@ class HomePageVC: UIViewController {
       self.artCollectionView.reloadData()
     }
   }
-<<<<<<< HEAD
+
     //MARK: - Variables
 
-    lazy var filterButton: UIButton = {
-=======
+
   //MARK: - Variables
   lazy var filterButton: UIButton = {
->>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
+
     let button = UIButton()
-//    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
     button.setTitle("Filter", for: .normal)
     button.setTitleColor(.systemBlue, for: .normal)
     button.imageView?.contentMode = .scaleAspectFit
-//    button.tintColor = .systemBlue
     button.addTarget(self, action: #selector(transitionToFilterVC), for: .touchUpInside)
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
     return button
   }()
   
-  lazy var userProfile: UIButton = {
+  lazy var optionsMenu: UIButton = {
     let button = UIButton()
-    button.setImage(UIImage(systemName: "person"), for: .normal)
-    button.imageView?.contentMode = .scaleAspectFit
-    button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
+    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+    button.imageView?.contentMode = .scaleToFill
+    button.layer.cornerRadius = 10
+
+    button.backgroundColor = .white
+//    button.imageEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
     button.tintColor = .black
     return button
   }()
@@ -107,20 +107,12 @@ class HomePageVC: UIViewController {
   }
   //MARK: - UISetup
   private func addSubviews() {
-<<<<<<< HEAD
-      [filterButton, artCollectionView].forEach({self.view.addSubview($0)})
+
+      [filterButton,postButton,optionsMenu,artCollectionView].forEach({self.view.addSubview($0)})
+    view.bringSubviewToFront(optionsMenu)
   }
   
-  private func setupUIConstraints() {
- 
-    postButton.snp.makeConstraints { make in
-         make.centerX.equalTo(view.snp.top)
-        make.centerX.equalTo(view.snp.trailing)
-//        make.top.equalToSuperview().offset(15)
-//        make.right.equalTo(self.view).offset(50)
-=======
-    [filterButton, postButton, artCollectionView].forEach({self.view.addSubview($0)})
-  }
+
   
   private func setupUIConstraints() {
     postButton.snp.makeConstraints { make in
@@ -131,35 +123,23 @@ class HomePageVC: UIViewController {
     filterButton.snp.makeConstraints { (make) in
       make.top.equalTo(self.view).offset(50)
       make.left.equalTo(self.view).offset(25)
->>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
     }
     
-//    userProfile.snp.makeConstraints { make in
-//    make.top.equalTo(searchBar).offset(15)
-//    make.left.equalTo(searchBar).offset(-50)
-//    }
-//
-    artCollectionView.snp.makeConstraints { make in
-<<<<<<< HEAD
-        make.top.equalTo(postButton)
-        make.left.equalTo(view).offset(10)
-        make.bottom.equalTo(view).offset(10)
-        make.right.equalTo(view).offset(10)
-        
-//        make.edges.equalTo(view).inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-//    make.top.equalTo(self.view).offset(150)
-//    make.left.equalTo(self.view)
-//    make.bottom.equalTo(self.view)
-//    make.right.equalTo(self.view)
-=======
-      make.top.equalTo(postButton).offset(35)
-      make.left.equalTo(self.view)
-      make.bottom.equalTo(self.view)
-      make.right.equalTo(self.view)
->>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
+    optionsMenu.snp.makeConstraints { (make) in
+        make.bottom.equalTo(self.view).offset(-50)
+        make.right.equalTo(self.view).offset(-50)
+        make.width.equalTo(50)
+        make.height.equalTo(50)
     }
-  }
-}
+    artCollectionView.snp.makeConstraints { make in
+        
+        make.top.equalTo(postButton).offset(35)
+        make.left.equalTo(self.view)
+        make.bottom.equalTo(self.view)
+        make.right.equalTo(self.view)
+    }
+    }
+    }
 
 //MARK: -- Extensions
 extension HomePageVC: UICollectionViewDataSource {
