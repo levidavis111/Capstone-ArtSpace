@@ -8,6 +8,7 @@ target 'ArtSpaceDos' do
 	pod 'Firebase/Firestore' 
 	pod 'Firebase/Storage'  
 	pod 'SnapKit', '~> 5.0.0'
+	
 
   # Pods for ArtSpaceDos
 
