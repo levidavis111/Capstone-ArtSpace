@@ -13,27 +13,35 @@ class HomePageVC: UIViewController {
       self.artCollectionView.reloadData()
     }
   }
+<<<<<<< HEAD
     //MARK: - Variables
 
     lazy var filterButton: UIButton = {
+=======
+  //MARK: - Variables
+  lazy var filterButton: UIButton = {
+>>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
     let button = UIButton()
-    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+//    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+    button.setTitle("Filter", for: .normal)
+    button.setTitleColor(.systemBlue, for: .normal)
     button.imageView?.contentMode = .scaleAspectFit
-    button.tintColor = .black
+//    button.tintColor = .systemBlue
+    button.addTarget(self, action: #selector(transitionToFilterVC), for: .touchUpInside)
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
     return button
-    }()
+  }()
   
-    lazy var userProfile: UIButton = {
+  lazy var userProfile: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(systemName: "person"), for: .normal)
     button.imageView?.contentMode = .scaleAspectFit
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
     button.tintColor = .black
     return button
-    }()
-    
-    lazy var artCollectionView: UICollectionView = {
+  }()
+  
+  lazy var artCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout.init()
     let cv = UICollectionView(frame:.zero , collectionViewLayout: layout)
     layout.scrollDirection = .vertical
@@ -43,53 +51,63 @@ class HomePageVC: UIViewController {
     cv.delegate = self
     cv.dataSource = self
     return cv
-    }()
-    
-    lazy var postButton: UIButton = {
+  }()
+  
+  lazy var postButton: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(systemName: "plus"), for: .normal)
     button.imageView?.contentMode = .scaleAspectFit
     button.tintColor = .black
     button.backgroundColor = .white
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
-    button.addTarget(self, action: #selector(transitionToForm), for: .touchUpInside)
+    button.addTarget(self, action: #selector(transitionToCreatePostVC), for: .touchUpInside)
     return button
-    }()
-    
-    //MARK: -- Lifecycle
-    override func viewDidLoad() {
+  }()
+  
+  //MARK: -- Lifecycle
+  override func viewDidLoad() {
     super.viewDidLoad()
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
     getArtPosts()
-    }
-  
-    override func viewWillAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = false
-    }
-    
-    //MARK: -- Private Functions
-    private func getArtPosts() {
-    FirestoreService.manager.getAllArtObjects { [weak self](result) in
-    switch result {
-    case .failure(let error):
-    print(error)
-    case .success(let artFromFirebase):
-    DispatchQueue.main.async {
-    self?.artObjectData = artFromFirebase
-    dump(artFromFirebase)
-    }
-      }
-      }
   }
-    //MARK: - UISetup
   
+  override func viewWillAppear(_ animated: Bool) {
+    self.navigationController?.navigationBar.isHidden = true
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    self.navigationController?.navigationBar.isHidden = false
+  }
+  
+  //MARK: - Obj-C Functions
+  @objc func transitionToCreatePostVC() {
+    let nextVC = CreatePost()
+    self.navigationController?.pushViewController(nextVC, animated: true)
+  }
+  
+  @objc func transitionToFilterVC() {
+    //code here
+  }
+  
+  //MARK: -- Private Functions
+  private func getArtPosts() {
+    FirestoreService.manager.getAllArtObjects { [weak self](result) in
+      switch result {
+      case .failure(let error):
+        print(error)
+      case .success(let artFromFirebase):
+        DispatchQueue.main.async {
+          self?.artObjectData = artFromFirebase
+          dump(artFromFirebase)
+        }
+      }
+    }
+  }
+  //MARK: - UISetup
   private func addSubviews() {
+<<<<<<< HEAD
       [filterButton, artCollectionView].forEach({self.view.addSubview($0)})
   }
   
@@ -100,6 +118,20 @@ class HomePageVC: UIViewController {
         make.centerX.equalTo(view.snp.trailing)
 //        make.top.equalToSuperview().offset(15)
 //        make.right.equalTo(self.view).offset(50)
+=======
+    [filterButton, postButton, artCollectionView].forEach({self.view.addSubview($0)})
+  }
+  
+  private func setupUIConstraints() {
+    postButton.snp.makeConstraints { make in
+      make.top.equalTo(self.view).offset(50)
+      make.right.equalTo(self.view).offset(-25)
+    }
+    
+    filterButton.snp.makeConstraints { (make) in
+      make.top.equalTo(self.view).offset(50)
+      make.left.equalTo(self.view).offset(25)
+>>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
     }
     
 //    userProfile.snp.makeConstraints { make in
@@ -108,6 +140,7 @@ class HomePageVC: UIViewController {
 //    }
 //
     artCollectionView.snp.makeConstraints { make in
+<<<<<<< HEAD
         make.top.equalTo(postButton)
         make.left.equalTo(view).offset(10)
         make.bottom.equalTo(view).offset(10)
@@ -118,17 +151,15 @@ class HomePageVC: UIViewController {
 //    make.left.equalTo(self.view)
 //    make.bottom.equalTo(self.view)
 //    make.right.equalTo(self.view)
+=======
+      make.top.equalTo(postButton).offset(35)
+      make.left.equalTo(self.view)
+      make.bottom.equalTo(self.view)
+      make.right.equalTo(self.view)
+>>>>>>> 8a80d8e0ee3e96f24a71e47e350dffc165fb767d
     }
-    }
-    
-    //MARK: - Obj-C Functions
-    @objc func transitionToForm() {
-    let nextVC = CreatePost()
-    self.navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
-    }
-
+  }
+}
 
 //MARK: -- Extensions
 extension HomePageVC: UICollectionViewDataSource {
