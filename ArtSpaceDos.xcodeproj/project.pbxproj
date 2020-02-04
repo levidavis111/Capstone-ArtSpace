@@ -24,6 +24,7 @@
 		D82FA8B223E33ED3005B22D4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B123E33ED3005B22D4 /* FirebaseService.swift */; };
 		D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B323E346B6005B22D4 /* UIUtilities.swift */; };
 		D854837E23E385D300811E6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D854837D23E385D300811E6B /* GoogleService-Info.plist */; };
+		FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		D82FA8B323E346B6005B22D4 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D854837D23E385D300811E6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECE1012DF3EA2C67857EE2ED /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			children = (
 				D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */,
 				D82FA8B123E33ED3005B22D4 /* FirebaseService.swift */,
+				FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */,
 			);
 			path = FirebaseHelpers;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				D82FA8A323E33C9E005B22D4 /* ArtDetailVC.swift in Sources */,
 				D82FA8B223E33ED3005B22D4 /* FirebaseService.swift in Sources */,
 				D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */,
+				FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */,
 				D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */,
 				D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */,
 				D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */,
