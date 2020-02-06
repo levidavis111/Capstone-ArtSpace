@@ -1,12 +1,3 @@
-//
-//  CreatePostVC.swift
-//  ArtSpaceDos
-//
-//  Created by Jocelyn Boyd on 1/30/20.
-//  Copyright © 2020 Jocelyn Boyd. All rights reserved.
-//
-
-import UIKit
 
 import UIKit
 import SnapKit
@@ -89,32 +80,29 @@ class CreatePost: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
     self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
+    }  
+      
+       override func viewWillDisappear(_ animated: Bool) {
     self.navigationController?.navigationBar.isHidden = false
     }
     
-    //MARK: - Obj-C Functions
-    @objc func transitionOut() {
-        let prevVC = HomePageVC()
-        prevVC.modalPresentationStyle = .fullScreen
-        self.present(prevVC, animated: true, completion: nil)
-    }
-    
-    @objc func postArt() {
-        print("pressed")
-        createArtObject()
-    }
-    
-    @objc func pickPhoto() {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        present(imagePickerVC, animated: true)
-    }
+  
+  //MARK: - Obj-C Functions
+  @objc func transitionOut() {
+    navigationController?.popToRootViewController(animated: true)
+  }
+  
+  @objc func postArt() {
+    showAlert(with: "Art Posted", and: "Now available for Sale!")
+  }
+  
+  @objc func pickPhoto() {
+    let imagePickerVC = UIImagePickerController()
+    imagePickerVC.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+    present(imagePickerVC, animated: true)
+  }
     
     //    MARK: - Private Functions
-    
     private func createArtObject(){
         guard let photoURL = imageURL else {return}
         let photoURLString = "\(photoURL)"

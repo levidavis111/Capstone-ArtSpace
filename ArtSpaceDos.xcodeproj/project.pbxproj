@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1ED9F7965A7F36CFE7097B4B /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */; };
+		6CC7ADAFABF30C52B2FAFCA8 /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE1012DF3EA2C67857EE2ED /* Pods_ArtSpaceDos.framework */; };
+		D80E04CF23ECAA2200352C3E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileVC.swift */; };
+		D80E04D123ECAA3900352C3E /* PurchaseHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */; };
+		D80E04D323ECAA4C00352C3E /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */; };
+		D80E04D523ECAAEC00352C3E /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D423ECAAEC00352C3E /* MainTabVC.swift */; };
 		D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88123E33697005B22D4 /* AppDelegate.swift */; };
 		D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88323E33697005B22D4 /* SceneDelegate.swift */; };
 		D82FA88923E33697005B22D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82FA88723E33697005B22D4 /* Main.storyboard */; };
@@ -32,6 +37,12 @@
 		07CAB035D21EE62393BAAFAE /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
 		3176C420D1463778EC7D5464 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E40CA08D5E200C85CD7AE45 /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
+		A7E28B1BF34ABBC63718BE6C /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
+		D80E04CE23ECAA2200352C3E /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryVC.swift; sourceTree = "<group>"; };
+		D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
+		D80E04D423ECAAEC00352C3E /* MainTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
 		D82FA87E23E33697005B22D4 /* ArtSpaceDos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSpaceDos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82FA88123E33697005B22D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D82FA88323E33697005B22D4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,9 +142,13 @@
 			children = (
 				D82FA89F23E33C4B005B22D4 /* Cell */,
 				D82FA8A023E33C84005B22D4 /* MainVC.swift */,
+				D80E04D423ECAAEC00352C3E /* MainTabVC.swift */,
 				D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */,
 				D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */,
 				FC1616FE23ECA03900289C74 /* ARViewController.swift */,
+				D80E04CE23ECAA2200352C3E /* ProfileVC.swift */,
+				D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */,
+				D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -305,14 +320,18 @@
 				D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */,
 				FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */,
 				D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */,
+				D80E04D323ECAA4C00352C3E /* FavoritesVC.swift in Sources */,
 				D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */,
 				FC1616FF23ECA03900289C74 /* ARViewController.swift in Sources */,
 				D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */,
 				D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */,
+				D80E04CF23ECAA2200352C3E /* ProfileVC.swift in Sources */,
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
+				D80E04D123ECAA3900352C3E /* PurchaseHistoryVC.swift in Sources */,
 				D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */,
+				D80E04D523ECAAEC00352C3E /* MainTabVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

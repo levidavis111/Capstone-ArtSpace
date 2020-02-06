@@ -26,15 +26,15 @@ class HomePageVC: UIViewController {
     return button
   }()
   
-  lazy var optionsMenu: UIButton = {
-    let button = UIButton()
-    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
-    button.imageView?.contentMode = .scaleToFill
-    button.layer.cornerRadius = 10
-    button.backgroundColor = .white
-    button.tintColor = .black
-    return button
-  }()
+//  lazy var optionsMenu: UIButton = {
+//    let button = UIButton()
+//    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+//    button.imageView?.contentMode = .scaleToFill
+//    button.layer.cornerRadius = 10
+//    button.backgroundColor = .white
+//    button.tintColor = .black
+//    return button
+//  }()
   
   lazy var artCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout.init()
@@ -102,8 +102,8 @@ class HomePageVC: UIViewController {
   }
     
 //MARK: - UISetup Functions
-  private func addSubviews() {   [filterButton,createPost,optionsMenu,artCollectionView].forEach({self.view.addSubview($0)})
-    view.bringSubviewToFront(optionsMenu)
+  private func addSubviews() {   [filterButton,createPost,artCollectionView].forEach({self.view.addSubview($0)})
+//    view.bringSubviewToFront(optionsMenu)
   }
 
     private func setupUIConstraints() {
@@ -117,12 +117,12 @@ class HomePageVC: UIViewController {
             make.left.equalTo(self.view).offset(25)
         }
         
-        optionsMenu.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.view).offset(-50)
-            make.right.equalTo(self.view).offset(-50)
-            make.width.equalTo(50)
-            make.height.equalTo(50)
-        }
+//        optionsMenu.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(self.view).offset(-50)
+//            make.right.equalTo(self.view).offset(-50)
+//            make.width.equalTo(50)
+//            make.height.equalTo(50)
+//        }
         
         artCollectionView.snp.makeConstraints { make in
             make.top.equalTo(createPost).offset(35)
