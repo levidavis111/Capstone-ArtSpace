@@ -26,7 +26,7 @@ class CreatePost: UIViewController {
     lazy var postArtLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Post Your Art"
+        label.text = "Post Your Art Here"
         label.font = UIFont(name: "Avenir-Next", size: 30)
         return label
     }()
@@ -141,17 +141,17 @@ class CreatePost: UIViewController {
         cancelButton.snp.makeConstraints { make in
             make.width.equalTo(75)
             make.top.equalTo(self.view).offset(75)
-            make.left.equalTo(self.view).offset(15)
+            make.right.equalTo(self.view).offset(-25)
         }
         
         postArtLabel.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton)
-            make.left.equalTo(artPrice)
+            make.top.equalTo(75)
+            make.left.equalTo(self.view).offset(75)
         }
         
         artTitle.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton).offset(75)
-            make.left.equalTo(cancelButton).offset(75)
+            make.top.equalTo(postArtLabel).offset(75)
+            make.left.equalTo(postArtLabel).offset(75)
         }
         
         artPrice.snp.makeConstraints { make in
