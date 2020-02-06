@@ -80,6 +80,7 @@ class CreatePost: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.navigationController?.navigationBar.isHidden = true
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setUpConstraints()
@@ -87,9 +88,7 @@ class CreatePost: UIViewController {
   
   //MARK: - Obj-C Functions
   @objc func transitionOut() {
-    let prevVC = HomePageVC()
-    prevVC.modalPresentationStyle = .fullScreen
-    self.present(prevVC, animated: true, completion: nil)
+    navigationController?.popToRootViewController(animated: true)
   }
   
   @objc func postArt() {
