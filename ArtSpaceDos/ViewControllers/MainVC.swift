@@ -2,8 +2,7 @@
 
 import UIKit
 import SnapKit
-
-
+import Kingfisher
 class HomePageVC: UIViewController {
   
   //MARK: - Properties
@@ -71,7 +70,10 @@ class HomePageVC: UIViewController {
   }
   
   @objc func transitionToFilterVC() {
-    //code here
+    let popUpVC = FilterVC()
+    popUpVC.modalPresentationStyle = .popover
+    popUpVC.modalTransitionStyle = .crossDissolve
+    self.navigationController?.present(popUpVC, animated: true, completion: nil)
   }
   
   //MARK: -- Private Functions
@@ -118,25 +120,17 @@ class HomePageVC: UIViewController {
 extension HomePageVC: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    //    return arrayOfImages.count
     return artObjectData.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
     
-    let data = artObjectData[indexPath.row]
-    ImageHelper.shared.getImage(urlStr: data.artImageURL) { (result) in
-      DispatchQueue.main.async {
-        switch result {
-        case .failure(let error):
-          print(error)
-        case .success(let image):
-          cell.imageView.image = image
-        }
-      }
-    }
-    cell.priceLabel.text = "$\(data.price)"
+
+    let currentImage = artObjectData[indexPath.row]
+    let url = URL(string: currentImage.artImageURL)
+    cell.imageView.kf.setImage(with: url)
+
     return cell
   }
 }
@@ -156,3 +150,5 @@ extension HomePageVC: UICollectionViewDelegateFlowLayout {
     return CGSize(width: 200, height: 200)
   }
 }
+
+
