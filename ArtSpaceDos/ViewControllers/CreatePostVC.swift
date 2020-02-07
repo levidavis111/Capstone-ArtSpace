@@ -122,7 +122,7 @@ class CreatePost: UIViewController {
 //        guard let user = FirebaseAuthService.manager.currentUser else {return}
         let userID = "ABC123"
         
-        let newArtObject = ArtObject(artDescription: "Posted Art", artImageURL: photoURLString, sellerID: userID, price: 250.0, tags: ["2"])
+        let newArtObject = ArtObject(artistName: "Steve", artDescription: "Posted Art", width: 0.3, height: 0.2, artImageURL: photoURLString, sellerID: userID, price: 250.0, tags: ["2"])
         
         FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
             switch result {
