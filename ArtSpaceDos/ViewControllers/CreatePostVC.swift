@@ -26,7 +26,7 @@ class CreatePost: UIViewController {
     lazy var postArtLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Post Your Art"
+        label.text = "Post Your Art Here"
         label.font = UIFont(name: "Avenir-Next", size: 30)
         return label
     }()
@@ -110,7 +110,7 @@ class CreatePost: UIViewController {
 //        guard let user = FirebaseAuthService.manager.currentUser else {return}
         let userID = "ABC123"
         
-        let newArtObject = ArtObject(artDescription: "Posted Art", artImageURL: photoURLString, sellerID: userID, price: 250.0, tags: ["2"])
+        let newArtObject = ArtObject(artistName: "Steve", artDescription: "Posted Art", width: 0.3, height: 0.2, artImageURL: photoURLString, sellerID: userID, price: 250.0, tags: ["2"])
         
         FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
             switch result {
@@ -141,17 +141,17 @@ class CreatePost: UIViewController {
         cancelButton.snp.makeConstraints { make in
             make.width.equalTo(75)
             make.top.equalTo(self.view).offset(75)
-            make.left.equalTo(self.view).offset(15)
+            make.right.equalTo(self.view).offset(-25)
         }
         
         postArtLabel.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton)
-            make.left.equalTo(artPrice)
+            make.top.equalTo(75)
+            make.left.equalTo(self.view).offset(75)
         }
         
         artTitle.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton).offset(75)
-            make.left.equalTo(cancelButton).offset(75)
+            make.top.equalTo(postArtLabel).offset(75)
+            make.left.equalTo(postArtLabel).offset(75)
         }
         
         artPrice.snp.makeConstraints { make in
