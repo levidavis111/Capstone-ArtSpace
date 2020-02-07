@@ -103,4 +103,22 @@ class FirestoreService {
         }
     }
     
+    //MARK: Just Testing For Filtering Posts
+    func getPosts(forArtID: String, completion: @escaping (Result<[ArtObject], Error>) -> ()) {
+        database.collection(FirestoreCollections.ArtObject.rawValue).whereField("artID", isEqualTo: forArtID).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let posts = snapshot?.documents.compactMap({ (snapshot) -> ArtObject? in
+                    let postID = snapshot.documentID
+                    let post = ArtObject(from: snapshot.data(), id: postID)
+                    return post
+                })
+                completion(.success(posts ?? []))
+            }
+        }
+        
+    }
+
+    
 }

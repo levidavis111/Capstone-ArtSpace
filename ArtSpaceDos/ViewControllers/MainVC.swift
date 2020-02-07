@@ -2,10 +2,9 @@
 
 import UIKit
 import SnapKit
-
-
+import Kingfisher
 class HomePageVC: UIViewController {
-  
+
 //MARK: - Properties
   var arrayOfImages = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5"),UIImage(named: "6"),UIImage(named: "7"),UIImage(named: "8"),UIImage(named: "9"),UIImage(named: "10")]
   
@@ -25,7 +24,7 @@ class HomePageVC: UIViewController {
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
     return button
   }()
-  
+    
 //  lazy var optionsMenu: UIButton = {
 //    let button = UIButton()
 //    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
@@ -83,7 +82,10 @@ class HomePageVC: UIViewController {
   }
   
   @objc func transitionToFilterVC() {
-    //code here
+    let popUpVC = FilterVC()
+    popUpVC.modalPresentationStyle = .popover
+    popUpVC.modalTransitionStyle = .crossDissolve
+    self.navigationController?.present(popUpVC, animated: true, completion: nil)
   }
   
 //MARK: -- Private Functions
@@ -137,14 +139,16 @@ class HomePageVC: UIViewController {
 extension HomePageVC: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return arrayOfImages.count
+    return artObjectData.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
     
-    let currentImage = arrayOfImages[indexPath.row]
-    cell.imageView.image = currentImage!
+    let currentImage = artObjectData[indexPath.row]
+    let url = URL(string: currentImage.artImageURL)
+    cell.imageView.kf.setImage(with: url)
+
     return cell
   }
 }
@@ -163,3 +167,5 @@ extension HomePageVC: UICollectionViewDelegateFlowLayout {
     return CGSize(width: 200, height: 200)
   }
 }
+
+
