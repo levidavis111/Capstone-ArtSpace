@@ -1,12 +1,3 @@
-//
-//  CreatePostVC.swift
-//  ArtSpaceDos
-//
-//  Created by Jocelyn Boyd on 1/30/20.
-//  Copyright © 2020 Jocelyn Boyd. All rights reserved.
-//
-
-import UIKit
 
 import UIKit
 import SnapKit
@@ -35,7 +26,7 @@ class CreatePost: UIViewController {
     lazy var postArtLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Post Your Art"
+        label.text = "Post Your Art Here"
         label.font = UIFont(name: "Avenir-Next", size: 30)
         return label
     }()
@@ -89,32 +80,29 @@ class CreatePost: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
     self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
+    }  
+      
+       override func viewWillDisappear(_ animated: Bool) {
     self.navigationController?.navigationBar.isHidden = false
     }
     
-    //MARK: - Obj-C Functions
-    @objc func transitionOut() {
-        let prevVC = HomePageVC()
-        prevVC.modalPresentationStyle = .fullScreen
-        self.present(prevVC, animated: true, completion: nil)
-    }
-    
-    @objc func postArt() {
-        print("pressed")
-        createArtObject()
-    }
-    
-    @objc func pickPhoto() {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        present(imagePickerVC, animated: true)
-    }
+  
+  //MARK: - Obj-C Functions
+  @objc func transitionOut() {
+    navigationController?.popToRootViewController(animated: true)
+  }
+  
+  @objc func postArt() {
+    showAlert(with: "Art Posted", and: "Now available for Sale!")
+  }
+  
+  @objc func pickPhoto() {
+    let imagePickerVC = UIImagePickerController()
+    imagePickerVC.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+    present(imagePickerVC, animated: true)
+  }
     
     //    MARK: - Private Functions
-    
     private func createArtObject(){
         guard let photoURL = imageURL else {return}
         let photoURLString = "\(photoURL)"
@@ -153,17 +141,17 @@ class CreatePost: UIViewController {
         cancelButton.snp.makeConstraints { make in
             make.width.equalTo(75)
             make.top.equalTo(self.view).offset(75)
-            make.left.equalTo(self.view).offset(15)
+            make.right.equalTo(self.view).offset(-25)
         }
         
         postArtLabel.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton)
-            make.left.equalTo(artPrice)
+            make.top.equalTo(75)
+            make.left.equalTo(self.view).offset(75)
         }
         
         artTitle.snp.makeConstraints{ make in
-            make.top.equalTo(cancelButton).offset(75)
-            make.left.equalTo(cancelButton).offset(75)
+            make.top.equalTo(postArtLabel).offset(75)
+            make.left.equalTo(postArtLabel).offset(75)
         }
         
         artPrice.snp.makeConstraints { make in

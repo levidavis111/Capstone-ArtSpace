@@ -68,10 +68,10 @@ class ArtDetailVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    self.navigationController?.navigationBar.isHidden = true
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
-
   }
   
   //MARK: - Private functions
