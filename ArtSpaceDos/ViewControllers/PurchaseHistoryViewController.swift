@@ -1,5 +1,5 @@
 //
-//  ProfileVC.swift
+//  PurchaseHistoryViewController.swift
 //  ArtSpaceDos
 //
 //  Created by Jocelyn Boyd on 2/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+class PurchaseHistoryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

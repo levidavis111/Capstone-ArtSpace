@@ -35,17 +35,22 @@ class ArtCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    addConst()
+        addSubViews()
+        addConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addConst() {
+    func addSubViews() {
         contentView.addSubview(imageView)
         contentView.addSubview(priceLabel)
         contentView.addSubview(likeButton)
+    }
+    
+    func addConstraints() {
+        
         imageView.snp.makeConstraints{ make in
             make.top.equalTo(contentView)
             make.left.equalTo(contentView)

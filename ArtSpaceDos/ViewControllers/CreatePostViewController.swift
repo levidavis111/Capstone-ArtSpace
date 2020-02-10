@@ -4,12 +4,12 @@ import SnapKit
 import Photos
 import AssetsLibrary
 
-class CreatePost: UIViewController {
+class CreatePostViewController: UIViewController {
     
     //MARK: - Properties
     var image = UIImage() {
         didSet {
-            self.artImage.image = image
+            self.artImageView.image = image
         }
     }
     
@@ -22,7 +22,7 @@ class CreatePost: UIViewController {
         button.addTarget(self, action: #selector(pickPhoto), for: .touchUpInside)
         return button
     }()
-    
+    //MARK: TO DO - Add Text alignment to UI Utilities
     lazy var postArtLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -30,14 +30,14 @@ class CreatePost: UIViewController {
         label.font = UIFont(name: "Avenir-Next", size: 30)
         return label
     }()
-    lazy var artTitle: UITextField = {
+    lazy var artTitleLabel: UITextField = {
         let input = UITextField()
         input.textAlignment = .center
         input.placeholder = "Name Of Art"
         return input
     }()
     
-    lazy var artPrice: UITextField = {
+    lazy var artPriceLabel: UITextField = {
         let price = UITextField()
         price.textAlignment = .center
         price.placeholder = "Price"
@@ -48,43 +48,26 @@ class CreatePost: UIViewController {
         let button = UIButton()
         button.backgroundColor = .black
         button.setTitle("Post", for: .normal)
-        button.addTarget(self, action: #selector(postArt), for: .touchUpInside)
+        button.addTarget(self, action: #selector(postArtToFirebase), for: .touchUpInside)
         return button
     }()
-    
-    lazy var artImage: UIImageView = {
+    //MARK: TO DO - Use a better image upload icon, add label for instructions
+    lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "icloud.and.arrow.down.fill")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    lazy var cancelButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.tintColor = .black
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
-        button.addTarget(self, action: #selector(transitionOut), for: .touchUpInside)
-        return button
-    }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         UIUtilities.setViewBackgroundColor(view)
         addSubviews()
         setUpConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = true
-    }  
-      
-       override func viewWillDisappear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = false
-    }
     
   
   //MARK: - Obj-C Functions
@@ -92,13 +75,14 @@ class CreatePost: UIViewController {
     navigationController?.popToRootViewController(animated: true)
   }
   
-  @objc func postArt() {
+  @objc func postArtToFirebase() {
     showAlert(with: "Art Posted", and: "Now available for Sale!")
+    createArtObject()
   }
   
   @objc func pickPhoto() {
     let imagePickerVC = UIImagePickerController()
-    imagePickerVC.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+    imagePickerVC.delegate = self
     present(imagePickerVC, animated: true)
   }
     
@@ -125,41 +109,52 @@ class CreatePost: UIViewController {
     private func showAlert(with title: String, and message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in
-            let prevVC = HomePageVC()
+            let prevVC = MainViewController()
             prevVC.modalPresentationStyle = .fullScreen
             self.present(prevVC, animated: true, completion: nil)
         }))
         present(alertVC, animated: true, completion: nil)
     }
     
-    //MARK: UISetup
-    func addSubviews() {
-        [postArtLabel, artImage, artPrice,artTitle, postButton, cancelButton, uploadButton].forEach({self.view.addSubview($0)})
+    private func setupNavigationBar() {
+      let title = "Create Post"
+      let attrs = [
+        //MARK: TO DO - Get right font Avenir Next
+        //MARK: To Do - Move navigation configurations to UI Utilities
+        NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+        NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
+      navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
+      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+      navigationController?.navigationBar.shadowImage = UIImage()
+      navigationController?.navigationBar.isTranslucent = true
+      navigationController?.view.backgroundColor = .clear
+      navigationController?.navigationBar.topItem?.title = "\(title)"
     }
     
+    //MARK: UISetup
+    func addSubviews() {
+        [postArtLabel, artImageView, artPriceLabel,artTitleLabel, postButton,  uploadButton].forEach({self.view.addSubview($0)})
+    }
+    
+    //MARK: TO DO - Fix constraints
     func setUpConstraints() {
-        cancelButton.snp.makeConstraints { make in
-            make.width.equalTo(75)
-            make.top.equalTo(self.view).offset(75)
-            make.right.equalTo(self.view).offset(-25)
-        }
-        
+
         postArtLabel.snp.makeConstraints{ make in
             make.top.equalTo(75)
             make.left.equalTo(self.view).offset(75)
         }
         
-        artTitle.snp.makeConstraints{ make in
+        artTitleLabel.snp.makeConstraints{ make in
             make.top.equalTo(postArtLabel).offset(75)
             make.left.equalTo(postArtLabel).offset(75)
         }
         
-        artPrice.snp.makeConstraints { make in
-            make.top.equalTo(artTitle).offset(100)
-            make.left.equalTo(artTitle)
+        artPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(artTitleLabel).offset(100)
+            make.left.equalTo(artTitleLabel)
         }
         
-        artImage.snp.makeConstraints{ make in
+        artImageView.snp.makeConstraints{ make in
             make.width.equalTo(200)
             make.height.equalTo(200)
             make.center.equalTo(self.view)
@@ -172,16 +167,16 @@ class CreatePost: UIViewController {
         }
         
         postButton.snp.makeConstraints { make in
-            make.top.equalTo(artImage).offset(300)
-            make.left.equalTo(artTitle).offset(75)
+            make.top.equalTo(artImageView).offset(300)
+            make.left.equalTo(artTitleLabel).offset(75)
             make.width.equalTo(100)
         }
         
     }
 }
-
+ 
 //MARK: - Extensions
-extension CreatePost: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
@@ -189,7 +184,7 @@ extension CreatePost: UIImagePickerControllerDelegate, UINavigationControllerDel
         self.image = image
         
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {return}
-        
+        //MARK: To Do - Refactor when Image is being saved
         FirebaseStorageService.manager.storeImage(image: imageData) { [weak self] (result) in
             switch result {
             case .failure(let error):

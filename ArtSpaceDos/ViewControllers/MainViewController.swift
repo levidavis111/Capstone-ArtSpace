@@ -3,7 +3,8 @@
 import UIKit
 import SnapKit
 import Kingfisher
-class HomePageVC: UIViewController {
+
+class MainViewController: UIViewController {
   
   //MARK: - Properties
   var artObjectData = [ArtObject]() {
@@ -13,68 +14,40 @@ class HomePageVC: UIViewController {
   }
   
   //MARK: - Variables
-  lazy var filterButton: UIButton = {
-    let button = UIButton()
-    button.setTitle("Filter", for: .normal)
-    button.setTitleColor(.systemBlue, for: .normal)
-    button.imageView?.contentMode = .scaleAspectFit
-    button.addTarget(self, action: #selector(transitionToFilterVC), for: .touchUpInside)
-    button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
-    return button
-  }()
-  
   lazy var artCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout.init()
-    let cv = UICollectionView(frame:.zero , collectionViewLayout: layout)
+    let collectionView = UICollectionView(frame:.zero , collectionViewLayout: layout)
     layout.scrollDirection = .vertical
     layout.itemSize = CGSize(width: 250, height: 250)
-    cv.register(ArtCell.self, forCellWithReuseIdentifier: "artCell")
-    UIUtilities.setViewBackgroundColor(cv)
-    cv.delegate = self
-    cv.dataSource = self
-    return cv
+    collectionView.register(ArtCell.self, forCellWithReuseIdentifier: "artCell")
+    UIUtilities.setViewBackgroundColor(collectionView)
+    collectionView.delegate = self
+    collectionView.dataSource = self
+    return collectionView
   }()
   
-  lazy var createPost: UIButton = {
-    let button = UIButton()
-    button.setImage(UIImage(systemName: "plus"), for: .normal)
-    button.imageView?.contentMode = .scaleAspectFit
-    button.tintColor = .black
-    button.backgroundColor = .white
-    button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
-    button.addTarget(self, action: #selector(transitionToCreatePostVC), for: .touchUpInside)
-    return button
-  }()
+
   
   //MARK: -- Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupNavigationBar()
     UIUtilities.setViewBackgroundColor(view)
     addSubviews()
     setupUIConstraints()
     getArtPosts()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = true
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    self.navigationController?.navigationBar.isHidden = false
-  }
   
   //MARK: - Obj-C Functions
-  @objc func transitionToCreatePostVC() {
-    let nextVC = CreatePost()
-    self.navigationController?.pushViewController(nextVC, animated: true)
-  }
   
   @objc func transitionToFilterVC() {
-    let popUpVC = FilterVC()
+    let popUpVC = FilterViewController()
     popUpVC.modalPresentationStyle = .popover
     popUpVC.modalTransitionStyle = .crossDissolve
     self.navigationController?.present(popUpVC, animated: true, completion: nil)
   }
+    
   
   //MARK: -- Private Functions
   private func getArtPosts() {
@@ -85,30 +58,35 @@ class HomePageVC: UIViewController {
       case .success(let artFromFirebase):
         DispatchQueue.main.async {
           self?.artObjectData = artFromFirebase
-          dump(artFromFirebase)
         }
       }
     }
   }
-  
+
+    private func setupNavigationBar() {
+       let title = "ArtSpace"
+       let attrs = [
+         NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
+         NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
+       navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
+       navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+       navigationController?.navigationBar.shadowImage = UIImage()
+       navigationController?.navigationBar.isTranslucent = true
+       navigationController?.view.backgroundColor = .clear
+       navigationController?.navigationBar.topItem?.title = "\(title)"
+        let filterButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(transitionToFilterVC))
+        self.navigationItem.leftBarButtonItem = filterButton
+        
+     }
   //MARK: - UISetup Functions
   private func addSubviews() {
-    [filterButton,createPost,artCollectionView].forEach({self.view.addSubview($0)})
+    self.view.addSubview(artCollectionView)
   }
   
   private func setupUIConstraints() {
-    createPost.snp.makeConstraints { make in
-      make.top.equalTo(self.view).offset(50)
-      make.right.equalTo(self.view).offset(-25)
-    }
-    
-    filterButton.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view).offset(50)
-      make.left.equalTo(self.view).offset(25)
-    }
-    
     artCollectionView.snp.makeConstraints { make in
-      make.top.equalTo(createPost).offset(35)
+        //MARK: TO DO revise constraints to super view
+      make.top.equalTo(view).offset(100)
       make.left.equalTo(self.view.safeAreaLayoutGuide)
       make.bottom.equalTo(self.view)
       make.right.equalTo(self.view.safeAreaLayoutGuide)
@@ -117,16 +95,14 @@ class HomePageVC: UIViewController {
 }
 
 //MARK: -- Extensions
-extension HomePageVC: UICollectionViewDataSource {
-  
+extension MainViewController: UICollectionViewDataSource {
+//MARK: Research Diffable Data Source
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return artObjectData.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
-    
-
     let currentImage = artObjectData[indexPath.row]
     let url = URL(string: currentImage.artImageURL)
     cell.imageView.kf.setImage(with: url)
@@ -136,16 +112,17 @@ extension HomePageVC: UICollectionViewDataSource {
 }
 
 
-extension HomePageVC: UICollectionViewDelegate {
+extension MainViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let detailVC = ArtDetailVC()
+    //MARK: TO DO - Pass data of current cell to Detail View
+    let detailVC = ArtDetailViewController()
     self.navigationController?.pushViewController(detailVC, animated: true)
   }
 }
 
-extension HomePageVC: UICollectionViewDelegateFlowLayout {
-  
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+  //MARK: TO DO - Fix Cell Size Across Simulators
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 200, height: 200)
   }
