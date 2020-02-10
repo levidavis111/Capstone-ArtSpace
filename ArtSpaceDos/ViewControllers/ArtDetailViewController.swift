@@ -42,12 +42,15 @@ class ArtDetailViewController: UIViewController {
         return label
     }()
     //MARK: TO DO - Make arLogo a UIButton
-    lazy var arLogo: UIImageView = {
-        let Imagelogo = UIImageView()
-//        Imagelogo.image = #imageLiteral(resourceName: "2064275-200")
-        Imagelogo.translatesAutoresizingMaskIntoConstraints = false
-        return Imagelogo
-    }()
+        lazy var arLogo: UIImageView = {
+            let Imagelogo = UIImageView()
+            Imagelogo.image = #imageLiteral(resourceName: "ARKit-Badge")
+            Imagelogo.translatesAutoresizingMaskIntoConstraints = false
+           Imagelogo.isUserInteractionEnabled = true
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(arButtonTapped(_:)))
+            Imagelogo.addGestureRecognizer(tapGesture)
+            return Imagelogo
+        }()
     
     lazy var buyNowButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -64,6 +67,14 @@ class ArtDetailViewController: UIViewController {
         alertPopup.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
         self.present(alertPopup, animated: true, completion: nil)
     }
+    // MARK: arButtonNavigation
+    @objc func arButtonTapped(_ tapGesture: UITapGestureRecognizer) {
+            let newViewController = ARViewController()
+            self.navigationController?.pushViewController(newViewController, animated: true)
+        }
+        
+
+
     
     //MARK:- Private func
         private func getArtPosts() {
@@ -79,7 +90,7 @@ class ArtDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.navigationController?.navigationBar.isHidden = true
+     //   self.navigationController?.navigationBar.isHidden = true
         UIUtilities.setViewBackgroundColor(view)
         addSubviews()
         setupUIConstraints()
