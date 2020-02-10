@@ -73,7 +73,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private func constrainSceneView() {
         sceneView.translatesAutoresizingMaskIntoConstraints = false
-        
+        //MARK: TO Do - Take safe area layout out??
         [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
          sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
          sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -123,6 +123,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
 }
+//MARK: TO DO - Document Functionality
 
 extension ARViewController {
     

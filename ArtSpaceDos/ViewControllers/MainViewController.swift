@@ -115,13 +115,14 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //MARK: TO DO - Pass data of current cell to Detail View
     let detailVC = ArtDetailViewController()
     self.navigationController?.pushViewController(detailVC, animated: true)
   }
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
-  //MARK: Fix Cell Size Across Simulators
+  //MARK: TO DO - Fix Cell Size Across Simulators
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 200, height: 200)
   }
