@@ -250,67 +250,6 @@ PODS:
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
   - leveldb-library (1.22)
-  - MaterialComponents/AnimationTiming (103.1.0)
-  - MaterialComponents/Buttons (103.1.0):
-    - MaterialComponents/Elevation
-    - MaterialComponents/Ink
-    - MaterialComponents/private/Math
-    - MaterialComponents/Ripple
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/Shapes
-    - MaterialComponents/Typography
-    - MDFInternationalization
-    - MDFTextAccessibility
-  - MaterialComponents/Chips (103.1.0):
-    - MaterialComponents/Elevation
-    - MaterialComponents/Ink
-    - MaterialComponents/private/Math
-    - MaterialComponents/Ripple
-    - MaterialComponents/ShadowElevations
-    - MaterialComponents/ShadowLayer
-    - MaterialComponents/ShapeLibrary
-    - MaterialComponents/Shapes
-    - MaterialComponents/TextFields
-    - MaterialComponents/Typography
-    - MDFInternationalization
-  - MaterialComponents/Elevation (103.1.0):
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/Ink (103.1.0):
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/Palettes (103.1.0)
-  - MaterialComponents/private/Application (103.1.0)
-  - MaterialComponents/private/Color (103.1.0)
-  - MaterialComponents/private/Math (103.1.0)
-  - MaterialComponents/Ripple (103.1.0):
-    - MaterialComponents/AnimationTiming
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-  - MaterialComponents/ShadowElevations (103.1.0)
-  - MaterialComponents/ShadowLayer (103.1.0):
-    - MaterialComponents/ShadowElevations
-  - MaterialComponents/ShapeLibrary (103.1.0):
-    - MaterialComponents/private/Math
-    - MaterialComponents/Shapes
-  - MaterialComponents/Shapes (103.1.0):
-    - MaterialComponents/private/Color
-    - MaterialComponents/private/Math
-    - MaterialComponents/ShadowLayer
-  - MaterialComponents/TextFields (103.1.0):
-    - MaterialComponents/AnimationTiming
-    - MaterialComponents/Buttons
-    - MaterialComponents/Elevation
-    - MaterialComponents/Palettes
-    - MaterialComponents/private/Math
-    - MaterialComponents/Typography
-    - MDFInternationalization
-  - MaterialComponents/Typography (103.1.0):
-    - MaterialComponents/private/Application
-    - MaterialComponents/private/Math
-  - MDFInternationalization (2.0.0)
-  - MDFTextAccessibility (2.0.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -323,7 +262,6 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - Kingfisher (~> 5.0)
-  - MaterialComponents/Chips
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
@@ -346,9 +284,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - Kingfisher
     - leveldb-library
-    - MaterialComponents
-    - MDFInternationalization
-    - MDFTextAccessibility
     - nanopb
     - SnapKit
 
@@ -371,12 +306,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  MaterialComponents: 0312a643d1aed5e5f10cba4be06a6aa62bd07c14
-  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
-  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: f0ba3d14ffdedf4c27f6513ab34f3313309cdd5a
+PODFILE CHECKSUM: 900d0a348ce1c7d19755073c8ec58b329018995b
 
 COCOAPODS: 1.8.4
