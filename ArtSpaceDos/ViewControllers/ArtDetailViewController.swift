@@ -18,7 +18,7 @@ class ArtDetailViewController: UIViewController {
     // MARK: - UI Objects
     lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "noimage")
+//        imageView.image = #imageLiteral(resourceName: "noimage")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -44,7 +44,7 @@ class ArtDetailViewController: UIViewController {
     //MARK: TO DO - Make arLogo a UIButton
     lazy var arLogo: UIImageView = {
         let Imagelogo = UIImageView()
-        Imagelogo.image = #imageLiteral(resourceName: "2064275-200")
+//        Imagelogo.image = #imageLiteral(resourceName: "2064275-200")
         Imagelogo.translatesAutoresizingMaskIntoConstraints = false
         return Imagelogo
     }()
@@ -65,6 +65,15 @@ class ArtDetailViewController: UIViewController {
         self.present(alertPopup, animated: true, completion: nil)
     }
     
+    //MARK: properties
+    private func getArtPosts() {
+        priceNameLabel.text = "\(currentArtObject.price) Dollars"
+        artistNameLabel.text = currentArtObject.artistName
+         let url = URL(string: currentArtObject.artImageURL)
+        artImageView.kf.setImage(with: url)
+
+     }
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +82,8 @@ class ArtDetailViewController: UIViewController {
         UIUtilities.setViewBackgroundColor(view)
         addSubviews()
         setupUIConstraints()
+        getArtPosts()
+       
     }
     
     //MARK: - Private functions
