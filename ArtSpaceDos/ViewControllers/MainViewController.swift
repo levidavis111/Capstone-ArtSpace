@@ -115,8 +115,10 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let specificArtObject = artObjectData[indexPath.row]
     //MARK: TO DO - Pass data of current cell to Detail View
     let detailVC = ArtDetailViewController()
+    detailVC.currentArtObject = specificArtObject
     self.navigationController?.pushViewController(detailVC, animated: true)
   }
 }
