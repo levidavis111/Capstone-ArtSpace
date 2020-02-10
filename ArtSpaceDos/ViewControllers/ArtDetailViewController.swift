@@ -65,10 +65,10 @@ class ArtDetailViewController: UIViewController {
         self.present(alertPopup, animated: true, completion: nil)
     }
     
-    //MARK: properties
-    private func getArtPosts() {
+    //MARK:- Private func
+        private func getArtPosts() {
         priceNameLabel.text = "\(currentArtObject.price) Dollars"
-        dimensionsLabel.text = "\(currentArtObject.height)"
+        dimensionsLabel.text = "Height: \(currentArtObject.height) Width: \(currentArtObject.width)"
         artistNameLabel.text = currentArtObject.artistName
          let url = URL(string: currentArtObject.artImageURL)
         artImageView.kf.setImage(with: url)
