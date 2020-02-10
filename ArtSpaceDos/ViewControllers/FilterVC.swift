@@ -9,12 +9,13 @@
 import UIKit
 import MaterialComponents.MaterialChips
 import SnapKit
-import Firebase 
+import Firebase
+
+//MARK: Create a delegate for Filtering
 class FilterVC: UIViewController {
     private var filterArray = ["1", "2"]
     lazy var collectionView: UICollectionView = {
         let layout = MDCChipCollectionViewFlowLayout()
-        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(MDCChipCollectionViewCell.self, forCellWithReuseIdentifier: "identifier")
         cv.backgroundColor = .black
@@ -27,33 +28,34 @@ class FilterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
         setUpConstraints()
     }
     
     
     @objc func filterPosts() {
-        let mainVC = HomePageVC()
-        mainVC.artObjectData = loadPosts(tag: "1")
-        mainVC.artCollectionView.reloadData()
+        loadPosts(tag: "1")
     }
     
-    func loadPosts(tag: String) -> [ArtObject] {
-        var returnArt = [ArtObject]()
+    func loadPosts(tag: String){
+        _ = [ArtObject]()
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             FirestoreService.manager.getPosts(forArtID: tag ?? "") { (result) in
                 switch result {
                 case .success(let artPieces):
-                    returnArt = artPieces
+                    self?.loadPostsHandleSuccess(with: artPieces)
                 case .failure(let error):
                     print(":( \(error)")
                     
                 }
             }
         }
-        return returnArt
     }
     
+    private func loadPostsHandleSuccess(with artObjects: [ArtObject]) {
+        let mainVC = HomePageVC()
+        mainVC.artObjectData = artObjects
+        mainVC.artCollectionView.reloadData()
+    }
     
     func setUpConstraints() {
         view.addSubview(collectionView)
@@ -65,8 +67,6 @@ class FilterVC: UIViewController {
             make.height.equalTo(view)
         }
     }
-    
-
 }
 
 extension FilterVC: UICollectionViewDelegate {
@@ -83,12 +83,6 @@ extension FilterVC: UICollectionViewDataSource {
         cell.chipView.setTitleColor(UIColor.red, for: .selected)
          cell.chipView.isUserInteractionEnabled = true
         cell.chipView.addTarget(self, action: #selector(filterPosts), for: .touchUpInside)
-       
         return cell
     }
-    
-    
 }
-extension FilterVC {
-    
-    }
