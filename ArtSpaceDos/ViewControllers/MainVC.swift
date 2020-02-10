@@ -4,19 +4,17 @@ import UIKit
 import SnapKit
 import Kingfisher
 class HomePageVC: UIViewController {
-
-//MARK: - Properties
-  var arrayOfImages = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5"),UIImage(named: "6"),UIImage(named: "7"),UIImage(named: "8"),UIImage(named: "9"),UIImage(named: "10")]
   
+  //MARK: - Properties
   var artObjectData = [ArtObject]() {
     didSet {
       self.artCollectionView.reloadData()
     }
   }
-    
-//MARK: - Variables
+  
+  //MARK: - Variables
   lazy var filterButton: UIButton = {
-  let button = UIButton()
+    let button = UIButton()
     button.setTitle("Filter", for: .normal)
     button.setTitleColor(.systemBlue, for: .normal)
     button.imageView?.contentMode = .scaleAspectFit
@@ -24,16 +22,6 @@ class HomePageVC: UIViewController {
     button.imageEdgeInsets = UIEdgeInsets(top: 25,left: 25,bottom: 25,right: 25)
     return button
   }()
-    
-//  lazy var optionsMenu: UIButton = {
-//    let button = UIButton()
-//    button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
-//    button.imageView?.contentMode = .scaleToFill
-//    button.layer.cornerRadius = 10
-//    button.backgroundColor = .white
-//    button.tintColor = .black
-//    return button
-//  }()
   
   lazy var artCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout.init()
@@ -58,7 +46,7 @@ class HomePageVC: UIViewController {
     return button
   }()
   
-//MARK: -- Lifecycle
+  //MARK: -- Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     UIUtilities.setViewBackgroundColor(view)
@@ -75,7 +63,7 @@ class HomePageVC: UIViewController {
     self.navigationController?.navigationBar.isHidden = false
   }
   
-//MARK: - Obj-C Functions
+  //MARK: - Obj-C Functions
   @objc func transitionToCreatePostVC() {
     let nextVC = CreatePost()
     self.navigationController?.pushViewController(nextVC, animated: true)
@@ -88,7 +76,7 @@ class HomePageVC: UIViewController {
     self.navigationController?.present(popUpVC, animated: true, completion: nil)
   }
   
-//MARK: -- Private Functions
+  //MARK: -- Private Functions
   private func getArtPosts() {
     FirestoreService.manager.getAllArtObjects { [weak self](result) in
       switch result {
@@ -102,37 +90,30 @@ class HomePageVC: UIViewController {
       }
     }
   }
-    
-//MARK: - UISetup Functions
-  private func addSubviews() {   [filterButton,createPost,artCollectionView].forEach({self.view.addSubview($0)})
-//    view.bringSubviewToFront(optionsMenu)
+  
+  //MARK: - UISetup Functions
+  private func addSubviews() {
+    [filterButton,createPost,artCollectionView].forEach({self.view.addSubview($0)})
   }
-
-    private func setupUIConstraints() {
-        createPost.snp.makeConstraints { make in
-            make.top.equalTo(self.view).offset(50)
-            make.right.equalTo(self.view).offset(-25)
-        }
-        
-        filterButton.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view).offset(50)
-            make.left.equalTo(self.view).offset(25)
-        }
-        
-//        optionsMenu.snp.makeConstraints { (make) in
-//            make.bottom.equalTo(self.view).offset(-50)
-//            make.right.equalTo(self.view).offset(-50)
-//            make.width.equalTo(50)
-//            make.height.equalTo(50)
-//        }
-        
-        artCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(createPost).offset(35)
-            make.left.equalTo(self.view)
-            make.bottom.equalTo(self.view)
-            make.right.equalTo(self.view)
-        }
+  
+  private func setupUIConstraints() {
+    createPost.snp.makeConstraints { make in
+      make.top.equalTo(self.view).offset(50)
+      make.right.equalTo(self.view).offset(-25)
     }
+    
+    filterButton.snp.makeConstraints { (make) in
+      make.top.equalTo(self.view).offset(50)
+      make.left.equalTo(self.view).offset(25)
+    }
+    
+    artCollectionView.snp.makeConstraints { make in
+      make.top.equalTo(createPost).offset(35)
+      make.left.equalTo(self.view.safeAreaLayoutGuide)
+      make.bottom.equalTo(self.view)
+      make.right.equalTo(self.view.safeAreaLayoutGuide)
+    }
+  }
 }
 
 //MARK: -- Extensions
@@ -145,6 +126,7 @@ extension HomePageVC: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
     
+
     let currentImage = artObjectData[indexPath.row]
     let url = URL(string: currentImage.artImageURL)
     cell.imageView.kf.setImage(with: url)
@@ -152,6 +134,7 @@ extension HomePageVC: UICollectionViewDataSource {
     return cell
   }
 }
+
 
 extension HomePageVC: UICollectionViewDelegate {
   
