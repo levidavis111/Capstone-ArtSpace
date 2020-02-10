@@ -1,5 +1,5 @@
 //
-//  FavoritesVC.swift
+//  ProfileViewController.swift
 //  ArtSpaceDos
 //
 //  Created by Jocelyn Boyd on 2/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoritesVC: UIViewController {
+class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

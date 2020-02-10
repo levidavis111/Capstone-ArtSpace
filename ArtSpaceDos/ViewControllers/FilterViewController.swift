@@ -12,7 +12,7 @@ import SnapKit
 import Firebase
 
 //MARK: Create a delegate for Filtering
-class FilterVC: UIViewController {
+class FilterViewController: UIViewController {
     private var filterArray = ["1", "2"]
     lazy var collectionView: UICollectionView = {
         let layout = MDCChipCollectionViewFlowLayout()
@@ -52,7 +52,7 @@ class FilterVC: UIViewController {
     }
     
     private func loadPostsHandleSuccess(with artObjects: [ArtObject]) {
-        let mainVC = HomePageVC()
+        let mainVC = MainViewController()
         mainVC.artObjectData = artObjects
         mainVC.artCollectionView.reloadData()
     }
@@ -69,10 +69,10 @@ class FilterVC: UIViewController {
     }
 }
 
-extension FilterVC: UICollectionViewDelegate {
+extension FilterViewController: UICollectionViewDelegate {
     
 }
-extension FilterVC: UICollectionViewDataSource {
+extension FilterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        return filterArray.count
     }

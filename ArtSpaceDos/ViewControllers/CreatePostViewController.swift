@@ -4,7 +4,7 @@ import SnapKit
 import Photos
 import AssetsLibrary
 
-class CreatePost: UIViewController {
+class CreatePostViewController: UIViewController {
     
     //MARK: - Properties
     var image = UIImage() {
@@ -125,7 +125,7 @@ class CreatePost: UIViewController {
     private func showAlert(with title: String, and message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert: UIAlertAction!) in
-            let prevVC = HomePageVC()
+            let prevVC = MainViewController()
             prevVC.modalPresentationStyle = .fullScreen
             self.present(prevVC, animated: true, completion: nil)
         }))
@@ -181,7 +181,7 @@ class CreatePost: UIViewController {
 }
 
 //MARK: - Extensions
-extension CreatePost: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return

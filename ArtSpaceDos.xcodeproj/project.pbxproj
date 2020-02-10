@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1ED9F7965A7F36CFE7097B4B /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */; };
-		CBA886A423EDF40100E45D49 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA886A323EDF40100E45D49 /* FilterVC.swift */; };
-		D80E04CF23ECAA2200352C3E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileVC.swift */; };
-		D80E04D123ECAA3900352C3E /* PurchaseHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */; };
-		D80E04D323ECAA4C00352C3E /* FavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */; };
-		D80E04D523ECAAEC00352C3E /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D423ECAAEC00352C3E /* MainTabVC.swift */; };
+		CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA886A323EDF40100E45D49 /* FilterViewController.swift */; };
+		D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */; };
+		D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */; };
+		D80E04D323ECAA4C00352C3E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */; };
+		D80E04D523ECAAEC00352C3E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */; };
 		D80E04D723ECC9FE00352C3E /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D623ECC9FE00352C3E /* ImageHelper.swift */; };
 		D80E04DA23ECCBC300352C3E /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D923ECCBC300352C3E /* AppError.swift */; };
 		D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88123E33697005B22D4 /* AppDelegate.swift */; };
@@ -22,9 +22,9 @@
 		D82FA88E23E3369A005B22D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82FA88C23E3369A005B22D4 /* LaunchScreen.storyboard */; };
 		D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA89823E33BED005B22D4 /* AppUser.swift */; };
 		D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA89A23E33C12005B22D4 /* ArtObject.swift */; };
-		D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A023E33C84005B22D4 /* MainVC.swift */; };
-		D82FA8A323E33C9E005B22D4 /* ArtDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */; };
-		D82FA8A523E33CB1005B22D4 /* CreatePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */; };
+		D82FA8A123E33C84005B22D4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A023E33C84005B22D4 /* MainViewController.swift */; };
+		D82FA8A323E33C9E005B22D4 /* ArtDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A223E33C9E005B22D4 /* ArtDetailViewController.swift */; };
+		D82FA8A523E33CB1005B22D4 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A423E33CB1005B22D4 /* CreatePostViewController.swift */; };
 		D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8A723E33D1F005B22D4 /* ArtCell.swift */; };
 		D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8AA23E33E49005B22D4 /* String+Validations.swift */; };
 		D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */; };
@@ -39,11 +39,11 @@
 		07CAB035D21EE62393BAAFAE /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
 		3176C420D1463778EC7D5464 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBA886A323EDF40100E45D49 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
-		D80E04CE23ECAA2200352C3E /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryVC.swift; sourceTree = "<group>"; };
-		D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVC.swift; sourceTree = "<group>"; };
-		D80E04D423ECAAEC00352C3E /* MainTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
+		CBA886A323EDF40100E45D49 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryViewController.swift; sourceTree = "<group>"; };
+		D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D80E04D623ECC9FE00352C3E /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		D80E04D923ECCBC300352C3E /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		D82FA87E23E33697005B22D4 /* ArtSpaceDos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSpaceDos.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,9 +55,9 @@
 		D82FA88F23E3369A005B22D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D82FA89823E33BED005B22D4 /* AppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		D82FA89A23E33C12005B22D4 /* ArtObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtObject.swift; sourceTree = "<group>"; };
-		D82FA8A023E33C84005B22D4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtDetailVC.swift; sourceTree = "<group>"; };
-		D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostVC.swift; sourceTree = "<group>"; };
+		D82FA8A023E33C84005B22D4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D82FA8A223E33C9E005B22D4 /* ArtDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtDetailViewController.swift; sourceTree = "<group>"; };
+		D82FA8A423E33CB1005B22D4 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		D82FA8A723E33D1F005B22D4 /* ArtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtCell.swift; sourceTree = "<group>"; };
 		D82FA8AA23E33E49005B22D4 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		D82FA8AF23E33EBD005B22D4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
@@ -153,15 +153,15 @@
 			isa = PBXGroup;
 			children = (
 				D82FA89F23E33C4B005B22D4 /* Cell */,
-				D82FA8A023E33C84005B22D4 /* MainVC.swift */,
-				D80E04D423ECAAEC00352C3E /* MainTabVC.swift */,
-				D82FA8A223E33C9E005B22D4 /* ArtDetailVC.swift */,
-				D82FA8A423E33CB1005B22D4 /* CreatePostVC.swift */,
+				D82FA8A023E33C84005B22D4 /* MainViewController.swift */,
+				D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */,
+				D82FA8A223E33C9E005B22D4 /* ArtDetailViewController.swift */,
+				D82FA8A423E33CB1005B22D4 /* CreatePostViewController.swift */,
 				FC1616FE23ECA03900289C74 /* ARViewController.swift */,
-				D80E04CE23ECAA2200352C3E /* ProfileVC.swift */,
-				D80E04D023ECAA3900352C3E /* PurchaseHistoryVC.swift */,
-				D80E04D223ECAA4C00352C3E /* FavoritesVC.swift */,
-				CBA886A323EDF40100E45D49 /* FilterVC.swift */,
+				D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */,
+				D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */,
+				D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */,
+				CBA886A323EDF40100E45D49 /* FilterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -328,27 +328,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82FA8A523E33CB1005B22D4 /* CreatePostVC.swift in Sources */,
-				D82FA8A323E33C9E005B22D4 /* ArtDetailVC.swift in Sources */,
+				D82FA8A523E33CB1005B22D4 /* CreatePostViewController.swift in Sources */,
+				D82FA8A323E33C9E005B22D4 /* ArtDetailViewController.swift in Sources */,
 				D82FA8B223E33ED3005B22D4 /* FirebaseService.swift in Sources */,
 				D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */,
 				FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */,
 				D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */,
-				D80E04D323ECAA4C00352C3E /* FavoritesVC.swift in Sources */,
+				D80E04D323ECAA4C00352C3E /* FavoritesViewController.swift in Sources */,
 				D80E04D723ECC9FE00352C3E /* ImageHelper.swift in Sources */,
-				D82FA8A123E33C84005B22D4 /* MainVC.swift in Sources */,
+				D82FA8A123E33C84005B22D4 /* MainViewController.swift in Sources */,
 				FC1616FF23ECA03900289C74 /* ARViewController.swift in Sources */,
 				D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */,
 				D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */,
 				D80E04DA23ECCBC300352C3E /* AppError.swift in Sources */,
-				D80E04CF23ECAA2200352C3E /* ProfileVC.swift in Sources */,
-				CBA886A423EDF40100E45D49 /* FilterVC.swift in Sources */,
+				D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */,
+				CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */,
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
-				D80E04D123ECAA3900352C3E /* PurchaseHistoryVC.swift in Sources */,
+				D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */,
 				D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */,
-				D80E04D523ECAAEC00352C3E /* MainTabVC.swift in Sources */,
+				D80E04D523ECAAEC00352C3E /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

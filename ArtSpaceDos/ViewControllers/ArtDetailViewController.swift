@@ -1,5 +1,5 @@
 //
-//  ArtDetailVC.swift
+//  ArtDetailViewController.swift
 //  ArtSpaceDos
 //
 //  Created by Jocelyn Boyd on 1/30/20.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ArtDetailVC: UIViewController {
+class ArtDetailViewController: UIViewController {
   
   //MARK: - Properties
   var currentImage: [UIImage]!
@@ -146,7 +146,7 @@ class ArtDetailVC: UIViewController {
   
 }
 
-extension ArtDetailVC: UICollectionViewDelegateFlowLayout {
+extension ArtDetailViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 150, height: 200)
