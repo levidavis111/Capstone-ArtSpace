@@ -87,13 +87,19 @@ class FilterViewController: UIViewController {
                 $0.isSelected = false
             }
         })
-        
+    }
+    
+    private func showAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
     }
     
     //MARK: Objective C Functions
+    //MARK: TO DO - Account for when button has already been selected
     @objc func addOrRemoveTags(_ sender: UIButton) {
         if sender.isSelected {
-            sender.backgroundColor = .darkGray
+            sender.backgroundColor = .lightGray
             //MARK: To Do - Be able to remove tag if there's multiple filters
             guard tagArray.count > 0 else {
                 return
@@ -162,4 +168,6 @@ class FilterViewController: UIViewController {
             make.width.equalTo(300)
         }
     }
+
+
 }
