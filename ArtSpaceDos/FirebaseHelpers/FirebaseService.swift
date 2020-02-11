@@ -104,8 +104,8 @@ class FirestoreService {
     }
     
     //MARK: Just Testing For Filtering Posts
-    func getPosts(forArtID: String, completion: @escaping (Result<[ArtObject], Error>) -> ()) {
-        database.collection(FirestoreCollections.ArtObject.rawValue).whereField("artID", isEqualTo: forArtID).getDocuments { (snapshot, error) in
+    func getPosts(tags: [String], completion: @escaping (Result<[ArtObject], Error>) -> ()) {
+        database.collection(FirestoreCollections.ArtObject.rawValue).whereField("tags", isEqualTo: tags).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else {
