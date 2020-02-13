@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import Kingfisher
 
 private enum AppState: Int16 {
     case lookingForSurface
@@ -18,6 +19,9 @@ private enum AppState: Int16 {
 class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private var appState: AppState = .lookingForSurface
+    
+    var artObject: ArtObject!
+    var imageToDisplay: UIImage? = nil
     
     //    MARK: - Instantiate UI Elements
     
@@ -43,14 +47,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         constrainSubviews()
         initializeSceneView()
         initializeARSession()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
+        retrieveImage()
     }
     
     //    MARK: - @Objc-Methods
@@ -90,6 +87,27 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
          resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
     }
     
+    private func retrieveImage() {
+        guard let url = URL.init(string: artObject.artImageURL) else {return}
+        KingfisherManager.shared.retrieveImage(with: url) { (result) in
+            let image = try? result.get().image
+            if let image = image {
+                self.imageToDisplay = image
+            }
+        }
+    }
+    /**
+     KingfisherManager.shared.retrieveImage(with: url) { result in
+         let image = try? result.get().image
+         if let image = image {
+             ...
+         }
+     }
+     */
+    
+    
+//    Initialize sceneView and ARSession
+    
     private func initializeSceneView() {
         sceneView.delegate = self
         sceneView.automaticallyUpdatesLighting = true
@@ -98,6 +116,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.antialiasingMode = .multisampling2X
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
     }
+    
+//    Break configuration out into its own function, because it gets called more than once
     
     private func createARConfiguration() -> ARConfiguration {
         let config = ARWorldTrackingConfiguration()
@@ -123,17 +143,20 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
 }
-//MARK: TO DO - Document Functionality
 
 extension ARViewController {
     
 //    MARK: - APP Status
+    
+//   This method gets called every second. Put things here we want repeated constatnly
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
             self.updateAppState()
         }
     }
+    
+//    Helper messages that can be displayed to the user
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
@@ -157,6 +180,8 @@ extension ARViewController {
         }
     }
     
+//    Updates the appState when planes are detected or not
+    
     private func updateAppState() {
         guard appState == .pointToSurface || appState == .readyToFurnish else {return}
         
@@ -171,6 +196,8 @@ extension ARViewController {
         let screenDivisions = 5 - 1
         let viewWidth = view.bounds.size.width
         let viewHeight = view.bounds.size.height
+        
+//       Break screen into 5 x 5 divisions and perform a hit test on each one
         
         for y in 0...screenDivisions {
             let yCoord = CGFloat(y) / CGFloat(screenDivisions) * viewHeight
@@ -191,35 +218,45 @@ extension ARViewController {
     
 //    MARK: - Plane Detection
     
+//      Gets called every time the node for a new anchor get added
+
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         
-//        let planeType: String
         if planeAnchor.alignment == .horizontal {
-//            planeType = "horizontal"
+            
             print("horizontal plane detected")
+            
+            drawPlaneNode(on: node, for: planeAnchor)
         } else if planeAnchor.alignment == .vertical {
-//            planeType = "vertical"
+
             print("vertical plane detected")
         }
+        
+//        Draw plane over detected surface
         
         drawPlaneNode(on: node, for: planeAnchor)
         
     }
     
+//    Gets called when an existing anchor is updated
+    
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-        
+//        Remove child nodes that might exist
         node.enumerateChildNodes { (childNode, _) in
             childNode.removeFromParentNode()
         }
-        
+//        Draw new plane over detected surface
         drawPlaneNode(on: node, for: planeAnchor)
     }
     
     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
+        
+//        Create node same size as detected plane
         let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
+//        Position node in center of plane
         
         planeNode.position = SCNVector3(planeAnchor.center.x,
                                         planeAnchor.center.y,
@@ -233,7 +270,8 @@ extension ARViewController {
             print("It's horizontal")
             planeNode.name = "horizontal"
         } else {
-            planeNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "1")
+//            If vertical plance, add node as child
+            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
             planeNode.name = "vertical"
             node.addChildNode(planeNode)
 
@@ -243,8 +281,9 @@ extension ARViewController {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+//        Gets called if node corresponding to anchor is removed
         guard anchor is ARPlaneAnchor else {return}
-        
+//        Remove child nodes
         node.enumerateChildNodes { (childNode, _) in
             childNode.removeFromParentNode()
         }

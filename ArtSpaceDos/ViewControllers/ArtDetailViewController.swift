@@ -66,33 +66,34 @@ class ArtDetailViewController: UIViewController {
     }
     // MARK: arButtonNavigation
     @objc func arButtonTapped(_ tapGesture: UITapGestureRecognizer) {
-            let newViewController = ARViewController()
-            self.navigationController?.pushViewController(newViewController, animated: true)
-        }
-        
-
-
+        let newViewController = ARViewController()
+        newViewController.artObject = self.currentArtObject
+        self.navigationController?.pushViewController(newViewController, animated: true)
+    }
+    
+    
+    
     
     //MARK:- Private func
-        private func getArtPosts() {
+    private func getArtPosts() {
         priceNameLabel.text = "\(currentArtObject.price) Dollars"
         dimensionsLabel.text = "Height: \(currentArtObject.height) Width: \(currentArtObject.width)"
         artistNameLabel.text = currentArtObject.artistName
-         let url = URL(string: currentArtObject.artImageURL)
+        let url = URL(string: currentArtObject.artImageURL)
         artImageView.kf.setImage(with: url)
-
-     }
+        
+    }
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-     //   self.navigationController?.navigationBar.isHidden = true
+        //   self.navigationController?.navigationBar.isHidden = true
         UIUtilities.setViewBackgroundColor(view)
         addSubviews()
         setupUIConstraints()
         getArtPosts()
-       
+        
     }
     
     //MARK: - Private functions
