@@ -18,44 +18,41 @@ class ArtDetailViewController: UIViewController {
     // MARK: - UI Objects
     lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = #imageLiteral(resourceName: "noimage")
-        imageView.contentMode = .scaleAspectFit
+        UIUtilities.setUpImageView(imageView, image: UIImage(imageLiteralResourceName: "noimage"), contentMode: .scaleAspectFit)
         return imageView
     }()
     
     lazy var dimensionsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Size:"
-        label.textColor = .black
+        UIUtilities.setUILabel(label, labelTitle: "Size", size: 20, alignment: .center)
         return label
     }()
     
     lazy var artistNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Artist Name: "
+        UIUtilities.setUILabel(label, labelTitle: "", size: 20, alignment: .center)
         return label
     }()
     
     lazy var priceNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "$$"
+        UIUtilities.setUILabel(label, labelTitle: "", size: 20, alignment: .center)
         return label
     }()
     //MARK: TO DO - Make arLogo a UIButton
         lazy var arLogo: UIImageView = {
             let Imagelogo = UIImageView()
-            Imagelogo.image = #imageLiteral(resourceName: "ARKit-Badge")
+            UIUtilities.setUpImageView(Imagelogo, image: #imageLiteral(resourceName: "ARKit-Badge"), contentMode: .scaleAspectFit)
             Imagelogo.translatesAutoresizingMaskIntoConstraints = false
            Imagelogo.isUserInteractionEnabled = true
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(arButtonTapped(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(arButtonTapped(_:)))
             Imagelogo.addGestureRecognizer(tapGesture)
             return Imagelogo
         }()
     
     lazy var buyNowButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        button.setTitle("BUY NOW ", for: .normal)
-        button.addTarget(self, action: #selector(buyNowButtonPressed), for: .touchUpInside)
+        UIUtilities.setUpButton(button, title: "BUY NOW", backgroundColor: .clear, target: self, action: #selector(buyNowButtonPressed))
         view.addSubview(button)
         return button
     }()

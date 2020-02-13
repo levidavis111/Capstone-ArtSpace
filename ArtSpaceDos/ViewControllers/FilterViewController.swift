@@ -19,42 +19,34 @@ class FilterViewController: UIViewController {
     lazy var popUpView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = true
-        view.backgroundColor = .white
+        UIUtilities.setViewBackgroundColor(view)
         return view
     }()
     lazy var filterButtonOne: UIButton = {
         let button = UIButton()
-        button.setTitle("1", for: .normal)
-        button.backgroundColor = .lightGray
-        button.addTarget(self, action: #selector(addOrRemoveTags(_:)), for: .touchUpInside)
+        UIUtilities.setUpButton(button, title: "1", backgroundColor: .lightGray, target: self, action: #selector(addOrRemoveTags(_:)))
         return button
     }()
     
     lazy var filterButtonTwo: UIButton = {
         let button = UIButton()
-        button.setTitle("2", for: .normal)
-        button.backgroundColor = .lightGray
-        button.addTarget(self, action: #selector(addOrRemoveTags(_:)), for: .touchUpInside)
+        UIUtilities.setUpButton(button, title: "2", backgroundColor: .lightGray, target: self, action: #selector(addOrRemoveTags(_:)))
         return button
     }()
     
     lazy var continueButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Filter", for: .normal)
-        button.backgroundColor = .lightGray
+        UIUtilities.setUpButton(button, title: "Filter", backgroundColor: .lightGray, target: self, action: #selector(filterPosts))
         button.isUserInteractionEnabled = true
         button.showsTouchWhenHighlighted = true
-        button.addTarget(self, action: #selector(filterPosts), for: .touchUpInside)
         return button
     }()
     
     lazy var resetPostsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Reset", for: .normal)
-        button.backgroundColor = .lightGray
+        UIUtilities.setUpButton(button, title: "Reset", backgroundColor: .lightGray, target: self, action: #selector(resetPosts))
         button.isUserInteractionEnabled = true
         button.showsTouchWhenHighlighted = true
-        button.addTarget(self, action: #selector(resetPosts), for: .touchUpInside)
         return button
     }()
     
