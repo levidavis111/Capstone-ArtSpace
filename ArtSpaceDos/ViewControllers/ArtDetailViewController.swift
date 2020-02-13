@@ -78,9 +78,9 @@ class ArtDetailViewController: UIViewController {
     
     //MARK:- Private func
         private func getArtPosts() {
-        priceNameLabel.text = "\(currentArtObject.price) Dollars"
+        priceNameLabel.text = "Price: $\(currentArtObject.price) Dollars"
         dimensionsLabel.text = "Height: \(currentArtObject.height) Width: \(currentArtObject.width)"
-        artistNameLabel.text = currentArtObject.artistName
+        artistNameLabel.text = "Artist: \(currentArtObject.artistName)"
          let url = URL(string: currentArtObject.artImageURL)
         artImageView.kf.setImage(with: url)
 
@@ -121,38 +121,45 @@ class ArtDetailViewController: UIViewController {
     private func constrainDimensionLabel() {
         dimensionsLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(400)
+            make.top.equalToSuperview().offset(525)
             make.size.equalTo(CGSize(width: 400, height: 40))
         }
     }
-    
     private func constrainArtLabel() {
+
         artistNameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(450)
+            make.top.equalToSuperview().offset(500)
             make.size.equalTo(CGSize(width: 400, height: 40))
         }
+        
     }
     
     private func constrainArtView() {
         artImageView.snp.makeConstraints{ (make) in
             make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(100)
+           make.top.equalToSuperview().offset(100)
             make.size.equalTo(CGSize(width: 400, height: 300))
-            
+
         }
     }
-    
+
     
     private func constrainPriceLabel() {
+     
         priceNameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(500)
+            make.top.equalToSuperview().offset(550)
             make.size.equalTo(CGSize(width: 400, height: 40))
         }
     }
     
     private func  constrainBuyButton() {
+//  buyNowButton.snp.makeConstraints{ make in
+//             make.width.equalTo(200)
+//             make.height.equalTo(200)
+//             make.center.equalTo(self.view)
+//         }
         buyNowButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(600)
@@ -161,11 +168,13 @@ class ArtDetailViewController: UIViewController {
     }
     
     private func  constrainARButton() {
-        arLogo.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(650)
+        arLogo.snp.makeConstraints { make in
+            make.top.equalTo(buyNowButton.snp.bottom).offset(600)
+            make.center.equalTo(view)
+            //    make.left.equalTo(buyNowButton.snp.bottom).offset(20)
             make.size.equalTo(CGSize(width: 100, height: 50))
         }
+
     }
     
 }
