@@ -72,18 +72,9 @@ class MainViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let title = "ArtSpace"
-        let attrs = [
-            NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
-            NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
-        navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationBar.topItem?.title = "\(title)"
         let filterButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(transitionToFilterVC))
-        self.navigationItem.leftBarButtonItem = filterButton
+        UIUtilities.setUpNavigationBar(title: "ArtSpace", viewController: self, leftBarButton: filterButton)
+       
     }
     
     private func showAlert(with title: String, and message: String) {

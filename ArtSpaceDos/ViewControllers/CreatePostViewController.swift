@@ -18,44 +18,36 @@ class CreatePostViewController: UIViewController {
     //MARK: - UIOjbects
     lazy var uploadButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(pickPhoto), for: .touchUpInside)
+        UIUtilities.setUpButton(button, title: "", backgroundColor: .clear, target: self, action: #selector(pickPhoto))
         return button
     }()
-    //MARK: TO DO - Add Text alignment to UI Utilities
+    
     lazy var postArtLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.text = "Post Your Art Here"
-        label.font = UIFont(name: "Avenir-Next", size: 30)
+        UIUtilities.setUILabel(label, labelTitle: "Post Your Art Here", size: 20, alignment: .center)
         return label
     }()
     lazy var artTitleLabel: UITextField = {
         let input = UITextField()
-        input.textAlignment = .center
-        input.placeholder = "Name Of Art"
+        UIUtilities.setupTextView(input, placeholder: "Name Of Art", alignment: .center)
         return input
     }()
     
     lazy var artPriceLabel: UITextField = {
         let price = UITextField()
-        price.textAlignment = .center
-        price.placeholder = "Price"
+        UIUtilities.setupTextView(price, placeholder: "Price", alignment: .center)
         return price
     }()
     
     lazy var postButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitle("Post", for: .normal)
-        button.addTarget(self, action: #selector(postArtToFirebase), for: .touchUpInside)
+        UIUtilities.setUpButton(button, title: "Post", backgroundColor: .darkGray, target: self, action: #selector(postArtToFirebase))
         return button
     }()
-    //MARK: TO DO - Use a better image upload icon, add label for instructions
+    
     lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "icloud.and.arrow.down.fill")
-        imageView.contentMode = .scaleAspectFit
+        UIUtilities.setUpImageView(imageView, image: #imageLiteral(resourceName: "noimage"), contentMode: .scaleAspectFit)
         return imageView
     }()
     
@@ -117,18 +109,8 @@ class CreatePostViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-      let title = "Create Post"
-      let attrs = [
-        //MARK: TO DO - Get right font Avenir Next
-        //MARK: To Do - Move navigation configurations to UI Utilities
-        NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
-        NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
-      navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
-      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-      navigationController?.navigationBar.shadowImage = UIImage()
-      navigationController?.navigationBar.isTranslucent = true
-      navigationController?.view.backgroundColor = .clear
-      navigationController?.navigationBar.topItem?.title = "\(title)"
+        let leftButton = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(pickPhoto))
+      UIUtilities.setUpNavigationBar(title: "Create Post", viewController: self, leftBarButton: leftButton)
     }
     
     //MARK: UISetup
