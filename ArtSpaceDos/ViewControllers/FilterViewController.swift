@@ -10,84 +10,157 @@ import UIKit
 import SnapKit
 import Firebase
 
-//MARK: Create a delegate for Filtering
 class FilterViewController: UIViewController {
-    private var filterArray = ["1", "2"]
-
+    //MARK: Variables
+    weak var filterDelegate: FilterTheArtDelegate?
+    
+    var tagArray = [String]()
+    //MARK: UI Elements
     lazy var popUpView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = true
-        view.backgroundColor = .darkGray
+        view.backgroundColor = .white
         return view
     }()
     lazy var filterButtonOne: UIButton = {
         let button = UIButton()
-        button.titleLabel?.text = "1"
-        button.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        button.setTitle("1", for: .normal)
+        button.backgroundColor = .lightGray
+        button.addTarget(self, action: #selector(addOrRemoveTags(_:)), for: .touchUpInside)
         return button
     }()
-
+    
+    lazy var filterButtonTwo: UIButton = {
+        let button = UIButton()
+        button.setTitle("2", for: .normal)
+        button.backgroundColor = .lightGray
+        button.addTarget(self, action: #selector(addOrRemoveTags(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var continueButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Filter", for: .normal)
+        button.backgroundColor = .lightGray
+        button.isUserInteractionEnabled = true
+        button.showsTouchWhenHighlighted = true
+        button.addTarget(self, action: #selector(filterPosts), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var resetPostsButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Reset", for: .normal)
+        button.backgroundColor = .lightGray
+        button.isUserInteractionEnabled = true
+        button.showsTouchWhenHighlighted = true
+        button.addTarget(self, action: #selector(resetPosts), for: .touchUpInside)
+        return button
+    }()
+    
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        addSubViews(all: [popUpView])
+        ifAlreadyFiltered(filterButtons: [filterButtonOne,filterButtonTwo])
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
+        view.isOpaque = false
+        addSubViews(all: [popUpView,continueButton,resetPostsButton,filterButtonOne,filterButtonTwo])
         setUpConstraints()
     }
-
-
-    @objc func filterPosts() {
-        loadPosts(tag: "1")
+    
+    //MARK: Private Functions
+    func ifAlreadyFiltered(filterButtons: [UIButton]) {
+        filterButtons.forEach({
+            if tagArray.contains($0.titleLabel!.text!) {
+                $0.backgroundColor = .darkGray
+                $0.isSelected = true
+            }
+            else {
+                $0.backgroundColor = .lightGray
+                $0.isSelected = false
+            }
+        })
     }
-
-    func loadPosts(tag: String){
-        _ = [ArtObject]()
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            FirestoreService.manager.getPosts(forArtID: tag ?? "") { (result) in
-                switch result {
-                case .success(let artPieces):
-                    self?.loadPostsHandleSuccess(with: artPieces)
-                case .failure(let error):
-                    print(":( \(error)")
-
-                }
+    
+    private func showAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    //MARK: Objective C Functions
+    //MARK: TO DO - Account for when button has already been selected
+    @objc func addOrRemoveTags(_ sender: UIButton) {
+        if sender.isSelected {
+            sender.backgroundColor = .lightGray
+            //MARK: To Do - Be able to remove tag if there's multiple filters
+            guard tagArray.count > 0 else {
+                return
+            }
+            tagArray.remove(at: 0)
+        }
+        else {
+            guard tagArray.contains(sender.titleLabel!.text!) else {
+                tagArray.append(sender.titleLabel!.text!)
+                sender.backgroundColor = .darkGray
+                print(tagArray)
+                return
             }
         }
     }
-
-    private func loadPostsHandleSuccess(with artObjects: [ArtObject]) {
-        let mainVC = MainViewController()
-        mainVC.artObjectData = artObjects
-        mainVC.artCollectionView.reloadData()
+    @objc func dismissFilterVC() {
+        dismiss(animated: true, completion: nil)
     }
     
+    @objc func filterPosts() {
+        filterDelegate?.getTagsToFilter(get: tagArray)
+        dismissFilterVC()
+    }
+    @objc func resetPosts() {
+        filterDelegate?.cancelFilters()
+        dismissFilterVC()
+    }
+    
+    //MARK: Constraints
     func addSubViews(all views: [UIView]) {
         views.forEach({view.addSubview($0)})
     }
-
+    
     func setUpConstraints() {
+        
+        filterButtonOne.snp.makeConstraints { make in
+            make.top.equalTo(popUpView).offset(50)
+            make.left.equalTo(popUpView).offset(50)
+            make.width.equalTo(75)
+        }
+        
+        filterButtonTwo.snp.makeConstraints{ make in
+            make.top.equalTo(popUpView).offset(50)
+            make.right.equalTo(popUpView).inset(50)
+            make.width.equalTo(75)
+        }
+        
+        resetPostsButton.snp.makeConstraints { make in
+            make.bottom.equalTo(popUpView)
+            make.width.equalTo(150)
+            make.right.equalTo(popUpView)
+            make.height.equalTo(50)
+        }
+        
+        continueButton.snp.makeConstraints { make in
+            make.bottom.equalTo(popUpView)
+            make.width.equalTo(150)
+            make.left.equalTo(popUpView)
+            make.height.equalTo(50)
+        }
+        
         popUpView.snp.makeConstraints{ make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
             make.height.equalTo(300)
+            make.width.equalTo(300)
         }
     }
-//
+
+
 }
-//
-//extension FilterViewController: UICollectionViewDelegate {
-//
-//}
-//extension FilterViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//       return filterArray.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath) as! MDCChipCollectionViewCell
-//        cell.chipView.titleLabel.text = filterArray[indexPath.row]
-//        cell.chipView.setTitleColor(UIColor.red, for: .selected)
-//         cell.chipView.isUserInteractionEnabled = true
-//        cell.chipView.addTarget(self, action: #selector(filterPosts), for: .touchUpInside)
-//        return cell
-//    }
-//}
