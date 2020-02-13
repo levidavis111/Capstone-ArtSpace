@@ -18,10 +18,18 @@ class ArtDetailViewController: UIViewController {
     // MARK: - UI Objects
     lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = #imageLiteral(resourceName: "noimage")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
+    lazy var artDescription: UITextView = {
+         let summary = UITextView()
+         summary.textAlignment = .center
+         summary.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+         summary.text = "Description Unavailable"
+         summary.font = summary.font?.withSize(20)
+         return summary
+     }()
     
     lazy var dimensionsLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +52,7 @@ class ArtDetailViewController: UIViewController {
     //MARK: TO DO - Make arLogo a UIButton
         lazy var arLogo: UIImageView = {
             let Imagelogo = UIImageView()
+           Imagelogo.backgroundColor = #colorLiteral(red: 0.4900177717, green: 0.5300267935, blue: 0.5836209655, alpha: 0.8659605369)
             Imagelogo.image = #imageLiteral(resourceName: "ARKit-Badge")
             Imagelogo.translatesAutoresizingMaskIntoConstraints = false
            Imagelogo.isUserInteractionEnabled = true
@@ -55,11 +64,15 @@ class ArtDetailViewController: UIViewController {
     lazy var buyNowButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         button.setTitle("BUY NOW ", for: .normal)
+       button.layer.cornerRadius = 15
+         button.layer.borderWidth = 5.0
+        button.layer.borderColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         button.addTarget(self, action: #selector(buyNowButtonPressed), for: .touchUpInside)
         view.addSubview(button)
         return button
     }()
     
+ 
     //MARK: - Obj-C Functions
     @objc func buyNowButtonPressed() {
         let alertPopup = UIAlertController(title: "Successful", message: "Thank you for your purchase!", preferredStyle: .alert)
@@ -78,8 +91,8 @@ class ArtDetailViewController: UIViewController {
     
     //MARK:- Private func
         private func getArtPosts() {
-        priceNameLabel.text = "Price: $\(currentArtObject.price) Dollars"
-        dimensionsLabel.text = "Height: \(currentArtObject.height) Width: \(currentArtObject.width)"
+        priceNameLabel.text = "Price: $\(currentArtObject.price)"
+        dimensionsLabel.text = "Size: H x \(currentArtObject.height) W x \(currentArtObject.width)D"
         artistNameLabel.text = "Artist: \(currentArtObject.artistName)"
          let url = URL(string: currentArtObject.artImageURL)
         artImageView.kf.setImage(with: url)
@@ -106,6 +119,7 @@ class ArtDetailViewController: UIViewController {
         view.addSubview(artistNameLabel)
         view.addSubview(priceNameLabel)
         view.addSubview(arLogo)
+        view.addSubview(artDescription)
     }
     
     private func setupUIConstraints() {
@@ -115,22 +129,25 @@ class ArtDetailViewController: UIViewController {
         constrainBuyButton()
         constrainARButton()
         constrainArtView()
+        descriptionConstraints()
     }
     
     // MARK: - Constraints
     private func constrainDimensionLabel() {
         dimensionsLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(525)
-            make.size.equalTo(CGSize(width: 400, height: 40))
+            make.left.equalToSuperview().offset(100)
+            make.center.equalTo(view.center)
+            make.top.equalToSuperview().offset(550)
+            make.size.equalTo(CGSize(width: 450, height: 40))
         }
     }
     private func constrainArtLabel() {
 
         artistNameLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(500)
-            make.size.equalTo(CGSize(width: 400, height: 40))
+            make.left.equalToSuperview().offset(100)
+            make.center.equalTo(view.center)
+            make.top.equalToSuperview().offset(600)
+            make.size.equalTo(CGSize(width: 450, height: 40))
         }
         
     }
@@ -148,22 +165,19 @@ class ArtDetailViewController: UIViewController {
     private func constrainPriceLabel() {
      
         priceNameLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(550)
+            make.left.equalToSuperview().offset(100)
+            make.center.equalTo(view.center)
+            make.top.equalToSuperview().offset(650)
             make.size.equalTo(CGSize(width: 400, height: 40))
         }
     }
     
     private func  constrainBuyButton() {
-//  buyNowButton.snp.makeConstraints{ make in
-//             make.width.equalTo(200)
-//             make.height.equalTo(200)
-//             make.center.equalTo(self.view)
-//         }
+
         buyNowButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(600)
-            make.size.equalTo(CGSize(width: 350, height: 40))
+            make.left.equalToSuperview().offset(150)
+            make.top.equalToSuperview().offset(700)
+            make.size.equalTo(CGSize(width: 125, height: 40))
         }
     }
     
@@ -171,10 +185,18 @@ class ArtDetailViewController: UIViewController {
         arLogo.snp.makeConstraints { make in
             make.top.equalTo(buyNowButton.snp.bottom).offset(600)
             make.center.equalTo(view)
-            //    make.left.equalTo(buyNowButton.snp.bottom).offset(20)
             make.size.equalTo(CGSize(width: 100, height: 50))
         }
 
+    }
+    
+    private func descriptionConstraints() {
+  artDescription.snp.makeConstraints { (make) in
+    make.center.equalTo(view.center)
+       make.top.equalToSuperview().offset(500)
+       make.size.equalTo(CGSize(width: 300, height: 40))
+   }
+        
     }
     
 }
