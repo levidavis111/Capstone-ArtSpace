@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import Kingfisher
 
 private enum AppState: Int16 {
     case lookingForSurface
@@ -18,6 +19,9 @@ private enum AppState: Int16 {
 class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private var appState: AppState = .lookingForSurface
+    
+    var artObject: ArtObject!
+    var imageToDisplay: UIImage? = nil
     
     //    MARK: - Instantiate UI Elements
     
@@ -43,6 +47,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         constrainSubviews()
         initializeSceneView()
         initializeARSession()
+        retrieveImage()
     }
     
     //    MARK: - @Objc-Methods
@@ -81,6 +86,25 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
          resetButton.heightAnchor.constraint(equalToConstant: 50),
          resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
     }
+    
+    private func retrieveImage() {
+        guard let url = URL.init(string: artObject.artImageURL) else {return}
+        KingfisherManager.shared.retrieveImage(with: url) { (result) in
+            let image = try? result.get().image
+            if let image = image {
+                self.imageToDisplay = image
+            }
+        }
+    }
+    /**
+     KingfisherManager.shared.retrieveImage(with: url) { result in
+         let image = try? result.get().image
+         if let image = image {
+             ...
+         }
+     }
+     */
+    
     
 //    Initialize sceneView and ARSession
     
@@ -203,6 +227,8 @@ extension ARViewController {
         if planeAnchor.alignment == .horizontal {
             
             print("horizontal plane detected")
+            
+            drawPlaneNode(on: node, for: planeAnchor)
         } else if planeAnchor.alignment == .vertical {
 
             print("vertical plane detected")
@@ -245,7 +271,7 @@ extension ARViewController {
             planeNode.name = "horizontal"
         } else {
 //            If vertical plance, add node as child
-            planeNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "1")
+            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
             planeNode.name = "vertical"
             node.addChildNode(planeNode)
 
