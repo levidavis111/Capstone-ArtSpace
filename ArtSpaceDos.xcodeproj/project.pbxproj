@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1ED9F7965A7F36CFE7097B4B /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */; };
 		CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA886A323EDF40100E45D49 /* FilterViewController.swift */; };
+		CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBEC33A23F5A13800A83FD7 /* Delegates.swift */; };
 		D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */; };
 		D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */; };
 		D80E04D323ECAA4C00352C3E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */; };
@@ -38,6 +39,7 @@
 		3176C420D1463778EC7D5464 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		7D49D249EED92669C144D431 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBA886A323EDF40100E45D49 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		CBBEC33A23F5A13800A83FD7 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryViewController.swift; sourceTree = "<group>"; };
 		D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				D82FA8B323E346B6005B22D4 /* UIUtilities.swift */,
 				D82FA8A923E33E2E005B22D4 /* Extensions */,
+				CBBEC33A23F5A13800A83FD7 /* Delegates.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
+				CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */,
 				D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */,
 				D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */,
 				D80E04D523ECAAEC00352C3E /* MainTabBarController.swift in Sources */,

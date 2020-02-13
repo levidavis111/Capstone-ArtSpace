@@ -10,13 +10,6 @@ import UIKit
 import SnapKit
 import Firebase
 
-//MARK: Filter Delegate
-//NOTE: If more delegates need to be created add to a seperate file
-protocol FilterTheArtDelegate: UIViewController {
-    func getTagsToFilter(get tags:[String])
-    func cancelFilters()
-}
-
 class FilterViewController: UIViewController {
     //MARK: Variables
     weak var filterDelegate: FilterTheArtDelegate?
