@@ -162,7 +162,7 @@ extension MainViewController: FilterTheArtDelegate {
     func loadFilteredPosts(tags: [String]) {
         //Checking to make sure that there are tags to be filtered
         guard tags.count > 0 else {
-            showAlert(with: "Oops!", and: "Please select a fiter!")
+            showAlert(with: "Oops!", and: "Please select a filter!")
         //Resets All Art If There Is No Filter
             getArtPosts()
             return
