@@ -109,18 +109,8 @@ class CreatePostViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-      let title = "Create Post"
-      let attrs = [
-        //MARK: TO DO - Get right font Avenir Next
-        //MARK: To Do - Move navigation configurations to UI Utilities
-        NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
-        NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
-      navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
-      navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-      navigationController?.navigationBar.shadowImage = UIImage()
-      navigationController?.navigationBar.isTranslucent = true
-      navigationController?.view.backgroundColor = .clear
-      navigationController?.navigationBar.topItem?.title = "\(title)"
+        let leftButton = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(pickPhoto))
+      UIUtilities.setUpNavigationBar(title: "Create Post", viewController: self, leftBarButton: leftButton)
     }
     
     //MARK: UISetup
