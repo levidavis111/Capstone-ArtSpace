@@ -136,71 +136,71 @@ class ArtDetailViewController: UIViewController {
     
     // MARK: - Constraints
     private func constrainDimensionLabel() {
-        dimensionsLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(100)
-            make.center.equalTo(view.center)
-            make.top.equalToSuperview().offset(550)
-            make.size.equalTo(CGSize(width: 450, height: 40))
-        }
+   dimensionsLabel.snp.makeConstraints { (make) in
+    make.left.equalTo(self.view).offset(8)
+    make.right.equalTo(self.view).offset(-8)
+    make.height.equalTo(self.view)
+    make.bottom.equalTo(self.view).offset(100)
+    }
     }
     private func constrainArtLabel() {
 
         artistNameLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(100)
-            make.center.equalTo(view.center)
-            make.top.equalToSuperview().offset(600)
-            make.size.equalTo(CGSize(width: 450, height: 40))
-        }
-        
+                make.left.equalTo(dimensionsLabel).offset(8)
+                make.right.equalTo(dimensionsLabel).offset(-8)
+                make.height.equalTo(dimensionsLabel)
+            make.bottom.equalTo(dimensionsLabel).offset(30)
+            }
     }
     
     private func constrainArtView() {
-        artImageView.snp.makeConstraints{ (make) in
-            make.left.equalToSuperview().offset(20)
-           make.top.equalToSuperview().offset(100)
-            make.size.equalTo(CGSize(width: 400, height: 300))
+        artImageView.snp.makeConstraints { (make) in
+          make.top.equalTo(self.view).offset(100)
+          make.centerX.equalTo(self.view)
+        make.size.equalTo(CGSize(width: 300, height: 300))
 
-        }
     }
 
-    
+}
+
     private func constrainPriceLabel() {
-     
-        priceNameLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(100)
-            make.center.equalTo(view.center)
-            make.top.equalToSuperview().offset(650)
-            make.size.equalTo(CGSize(width: 400, height: 40))
-        }
+     priceNameLabel.snp.makeConstraints { (make) in
+                 make.left.equalTo(artistNameLabel).offset(8)
+                 make.right.equalTo(artistNameLabel).offset(-8)
+                 make.height.equalTo(artistNameLabel)
+             make.bottom.equalTo(artistNameLabel).offset(30)
+             }
+
     }
     
     private func  constrainBuyButton() {
+        buyNowButton.snp.makeConstraints { make in
+     make.centerY.equalTo(dimensionsLabel).offset(100)
+     make.centerX.equalTo(self.view)
+     make.width.equalTo(100)
+   }
 
-        buyNowButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(150)
-            make.top.equalToSuperview().offset(700)
-            make.size.equalTo(CGSize(width: 125, height: 40))
-        }
     }
-    
     private func  constrainARButton() {
         arLogo.snp.makeConstraints { make in
-            make.top.equalTo(buyNowButton.snp.bottom).offset(600)
-            make.center.equalTo(view)
-            make.size.equalTo(CGSize(width: 100, height: 50))
-        }
+            make.center.equalTo(view.center)
+            make.bottom.equalTo(artImageView).offset(60)
+       make.size.equalTo(CGSize(width: 80, height: 40))
+           }
 
     }
     
     private func descriptionConstraints() {
-  artDescription.snp.makeConstraints { (make) in
-    make.center.equalTo(view.center)
-       make.top.equalToSuperview().offset(500)
-       make.size.equalTo(CGSize(width: 300, height: 40))
-   }
+        artDescription.snp.makeConstraints { (make) in
+            make.left.equalTo(dimensionsLabel).offset(8)
+            make.right.equalTo(dimensionsLabel).offset(-8)
+            make.height.equalTo(arLogo)
+            make.bottom.equalTo(arLogo).offset(40)
+        }
         
     }
     
 }
+
 
 
