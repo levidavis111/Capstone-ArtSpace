@@ -21,7 +21,7 @@ class CreatePostViewController: UIViewController {
     let label = UILabel()
     label.numberOfLines = 0
     label.textAlignment = .center
-    label.text = "Tell us about your art! Fill out the fields below Press the icon to upload a photo and press sumbit."
+    label.text = "Tell us about your art! Fill out the fields below."
     label.font = UIFont(name: "Avenir-Next", size: 30)
     return label
   }()
@@ -31,7 +31,8 @@ class CreatePostViewController: UIViewController {
     textfield.layer.borderWidth = 1.0
     textfield.layer.borderColor = UIColor.black.cgColor
     textfield.textAlignment = .center
-    textfield.placeholder = "Name Of Art"
+    textfield.attributedPlaceholder = NSAttributedString(string: "Name Of Art",
+    attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     return textfield
   }()
   
@@ -40,7 +41,8 @@ class CreatePostViewController: UIViewController {
     label.layer.borderWidth = 1.0
     label.layer.borderColor = UIColor.black.cgColor
     label.textAlignment = .center
-    label.placeholder = "Price"
+    label.attributedPlaceholder = NSAttributedString(string: "Price",
+    attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     return label
   }()
   
@@ -55,7 +57,8 @@ class CreatePostViewController: UIViewController {
     textfield.layer.borderWidth = 1.0
     textfield.layer.borderColor = UIColor.black.cgColor
     textfield.textAlignment = .center
-    textfield.placeholder = "width"
+    textfield.attributedPlaceholder = NSAttributedString(string: "width",
+    attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     return textfield
   }()
   
@@ -64,7 +67,8 @@ class CreatePostViewController: UIViewController {
     textfield.layer.borderWidth = 1.0
     textfield.layer.borderColor = UIColor.black.cgColor
     textfield.textAlignment = .center
-    textfield.placeholder = "height"
+    textfield.attributedPlaceholder = NSAttributedString(string: "height",
+    attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     return textfield
   }()
   
@@ -184,13 +188,13 @@ class CreatePostViewController: UIViewController {
   func setUpConstraints() {
     
     createPostLabel.snp.makeConstraints{ make in
-      make.top.equalTo(self.view).offset(100)
+      make.top.equalTo(self.view).offset(50)
       make.left.equalTo(self.view).offset(25)
       make.right.equalTo(self.view).offset(-25)
     }
     
     artTitleTextfield.snp.makeConstraints{ make in
-      make.top.equalTo(createPostLabel).offset(100)
+      make.top.equalTo(createPostLabel).offset(50)
       make.left.equalTo(self.view).offset(25)
       make.right.equalTo(self.view).offset(-25)
       make.height.equalTo(25)
@@ -246,7 +250,7 @@ class CreatePostViewController: UIViewController {
     }
     
     submitButton.snp.makeConstraints { make in
-      make.top.equalTo(artImageView).offset(225)
+      make.bottom.equalTo(artImageView).offset(40)
       make.centerX.equalTo(self.view)
       make.width.equalTo(100)
     }
