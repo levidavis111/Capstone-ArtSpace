@@ -41,7 +41,7 @@ struct UIUtilities {
     static func setUpNavigationBar(title: String, viewController: UIViewController, leftBarButton: UIBarButtonItem) {
         let attrs = [
                    NSAttributedString.Key.foregroundColor: UIColor.systemBlue,
-                   NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 40)]
+                   NSAttributedString.Key.font: UIFont(name: "SnellRoundhand-Bold", size: 30)]
         viewController.navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
         viewController.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         viewController.navigationController?.navigationBar.shadowImage = UIImage()
