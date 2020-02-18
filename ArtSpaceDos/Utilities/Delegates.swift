@@ -7,7 +7,12 @@
 //
 
 import UIKit
+
 protocol FilterTheArtDelegate: UIViewController {
     func getTagsToFilter(get tags:[String])
     func cancelFilters()
+}
+
+protocol ArtCellFavoriteDelegate: AnyObject {
+    func faveArtObject(tag: Int)
 }
