@@ -111,6 +111,21 @@ extension MainViewController: UICollectionViewDataSource {
         let url = URL(string: currentImage.artImageURL)
         cell.imageView.kf.setImage(with: url)
         cell.delegate = self
+        cell.likeButton.tag = indexPath.row
+        
+        let existsInFaves = currentImage.existsInFavorites { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let bool):
+                switch bool {
+                case true:
+                    cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                case false:
+                    cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+            }
+        }
         
         return cell
     }
@@ -170,16 +185,30 @@ extension MainViewController: ArtCellFavoriteDelegate {
 //    MARK: - TODO: Update code to use Current User
     func faveArtObject(tag: Int) {
         let oneArtObject = artObjectData[tag]
-        let existsInFaves = oneArtObject.existsInFavorites { (result) in
+        let _ = oneArtObject.existsInFavorites { (result) in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let bool):
                 switch bool {
                 case true:
-                    print("true")
+                    FirestoreService.manager.deleteFavoritedArtObject(artID: oneArtObject.artID) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print(error)
+                        case .success(()):
+                            print("You deleted that art from favorites")
+                        }
+                    }
                 case false:
-                    print("false")
+                    FirestoreService.manager.createFavoriteArtObject(artObject: oneArtObject) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print(error)
+                        case .success(()):
+                            print("You saved that to favorites")
+                        }
+                    }
                 }
             }
         }
@@ -206,13 +235,12 @@ extension MainViewController: ArtCellFavoriteDelegate {
                          case .failure(let error):
                              print(error)
                          case .success(()):
-                             
                              print("You deleted that art from the search cell")
                          }
                      }
                  case false:
                      
-                     let favedArt = FavoriteArt(title: oneArt.title, longTitle: oneArt.longTitle, principalOrFirstMaker: oneArt.principalOrFirstMaker, photoURL: oneArt.webImage?.url ?? "", id: oneArt.id, creatorID: user.uid)
+                    let favedArt = FavoriteArt(title: oneArt.title, longTitle: oneArt.longTitle, principalOrFirstMaker: oneArt.principalOrFirstMaker, photoURL: oneArt.webImage?.url ?? "", id: oneArt.id, creatorID: user.uid)
                      
                      FirestoreService.manager.saveArt(art: favedArt) { (result) in
                          switch result {

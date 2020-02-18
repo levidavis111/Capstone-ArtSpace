@@ -31,6 +31,7 @@ class ArtCell: UICollectionViewCell {
         button.tintColor = .white
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.layer.cornerRadius = CGFloat(integerLiteral: 50)
+        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -45,6 +46,18 @@ class ArtCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    MARK: - ObjC Functions
+    
+    @objc private func likeButtonPressed(sender: UIButton!) {
+        delegate?.faveArtObject(tag: sender.tag)
+        if likeButton.image(for: .normal) == UIImage(systemName: "heart") {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+    }
+    
     
     func addSubViews() {
         contentView.addSubview(imageView)
