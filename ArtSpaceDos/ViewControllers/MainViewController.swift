@@ -15,6 +15,8 @@ class MainViewController: UIViewController {
     var currentFilters = [String]()
     var isCurrentlyFiltered = false
     
+    let cellSpacing: CGFloat = 5.0
+    
     //MARK: - Variables
     lazy var artCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -144,9 +146,26 @@ extension MainViewController: UICollectionViewDelegate {
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
-    //MARK: TO DO - Fix Cell Size Across Simulators
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200)
+        let numCells: CGFloat = 2
+        let numSpaces: CGFloat = numCells + 1
+        
+        let screenWidth = UIScreen.main.bounds.width
+        let screenheight = UIScreen.main.bounds.height
+        
+        return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenheight / 4)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: 0, right: cellSpacing)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
     }
 }
 
