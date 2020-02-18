@@ -23,6 +23,43 @@ struct ArtObject {
     let dateCreated: Date?
     let tags: [String]
     
+//    MARK: - TODO: Filter favorites by userID once login is functional. See commented-out code below.
+    
+    func existsInFavorites(completion: @escaping (Result <Bool, Error>) -> ()) {
+        FirestoreService.manager.getAllFavoriteArtObjects { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let favorites):
+                if favorites.contains(where: {$0.artID == self.artID}) {
+                    completion(.success(true))
+                } else {
+                    completion(.success(false))
+                }
+            }
+        }
+    }
+    
+//    func existsInFavorites(completion: @escaping (Result<Bool,Error>) -> ()) {
+//
+//            guard let user = FirebaseAuthService.manager.currentUser else {return}
+//
+//            FirestoreService.manager.getArts(forUserID: user.uid) { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                    print(error)
+//                case .success(let events):
+//                    if events.contains(where: {$0.id == self.id}) {
+//                        completion(.success(true))
+//                    } else {
+//                        completion(.success(false))
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
 //    MARK: - Init
   
     init(artistName: String, artDescription: String, width: CGFloat, height: CGFloat, artImageURL: String, sellerID: String, price: Double, dateCreated: Date? = nil, tags: [String]){
