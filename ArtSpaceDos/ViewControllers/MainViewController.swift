@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
         let collectionView = UICollectionView(frame:.zero , collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: 250, height: 250)
-        collectionView.register(ArtCell.self, forCellWithReuseIdentifier: "artCell")
+        collectionView.register(ArtCell.self, forCellWithReuseIdentifier: ReuseIdentifier.artCell.rawValue)
         UIUtilities.setViewBackgroundColor(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -106,14 +106,14 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
+        guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifier.artCell.rawValue, for: indexPath) as? ArtCell else {return UICollectionViewCell()}
         let currentImage = artObjectData[indexPath.row]
         let url = URL(string: currentImage.artImageURL)
         cell.imageView.kf.setImage(with: url)
         cell.delegate = self
         cell.likeButton.tag = indexPath.row
         
-        let existsInFaves = currentImage.existsInFavorites { (result) in
+        let _ = currentImage.existsInFavorites { (result) in
             switch result {
             case .failure(let error):
                 print(error)
