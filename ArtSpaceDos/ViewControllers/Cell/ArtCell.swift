@@ -10,6 +10,9 @@ import UIKit
 import SnapKit
 
 class ArtCell: UICollectionViewCell {
+    
+    weak var delegate: ArtCellFavoriteDelegate?
+    
     lazy var imageView: UIImageView = {
         let imgView = UIImageView()
         return imgView

@@ -148,5 +148,36 @@ class FirestoreService {
             }
         }
     }
+//    MARK: - TODO: Update to check only for current user.
+    
+    func deleteFavoritedArtObject(artID: String, completion: @escaping (Result <(), Error>) -> ()) {
+        
+        database.collection(FirestoreCollections.FavoriteArt.rawValue).whereField("artID", isEqualTo: artID).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                for document in snapshot!.documents {
+                    document.reference.delete()
+                    completion(.success(()))
+                }
+            }
+        }
+    }
+    
+//    func deleteFavoriteEvent(forUserID: String, eventID: String, completion: @escaping (Result <(), Error>) -> ()) {
+//
+//        db.collection(FireStoreCollections.events.rawValue).whereField("creatorID", isEqualTo: forUserID).whereField("id", isEqualTo: eventID).getDocuments { (snapshot, error) in
+//            if let error = error {
+//                print("Error getting documents \(error)")
+//                completion(.failure(error))
+//            } else {
+//                for document in snapshot!.documents {
+//                    document.reference.delete()
+//                    completion(.success(()))
+//                }
+//            }
+//        }
+//
+//    }
     
 }

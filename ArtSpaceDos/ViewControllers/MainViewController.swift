@@ -110,6 +110,7 @@ extension MainViewController: UICollectionViewDataSource {
         let currentImage = artObjectData[indexPath.row]
         let url = URL(string: currentImage.artImageURL)
         cell.imageView.kf.setImage(with: url)
+        cell.delegate = self
         
         return cell
     }
@@ -163,6 +164,69 @@ extension MainViewController: FilterTheArtDelegate {
         //MARK: TO DO - Enable Multiple Tags To Be Filtered
     }
     
+}
+
+extension MainViewController: ArtCellFavoriteDelegate {
+//    MARK: - TODO: Update code to use Current User
+    func faveArtObject(tag: Int) {
+        let oneArtObject = artObjectData[tag]
+        let existsInFaves = oneArtObject.existsInFavorites { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let bool):
+                switch bool {
+                case true:
+                    print("true")
+                case false:
+                    print("false")
+                }
+            }
+        }
+    }
+    
     
 }
 
+/**
+ extension ArtSearchViewController: EventCellDelegate {
+     func faveEvent(tag: Int) {
+         let oneArt = arts[tag]
+         guard let user = FirebaseAuthService.manager.currentUser else {return}
+         print("oneArt")
+         let existsInFaves = oneArt.existsInFavorites { (result) in
+             switch result {
+             case .failure(let error):
+                 print(error)
+             case .success(let bool):
+                 switch bool {
+                 case true:
+                     FirestoreService.manager.deleteFavoriteArt(forUserID: user.uid, artID: oneArt.id) { (result) in
+                         switch result {
+                         case .failure(let error):
+                             print(error)
+                         case .success(()):
+                             
+                             print("You deleted that art from the search cell")
+                         }
+                     }
+                 case false:
+                     
+                     let favedArt = FavoriteArt(title: oneArt.title, longTitle: oneArt.longTitle, principalOrFirstMaker: oneArt.principalOrFirstMaker, photoURL: oneArt.webImage?.url ?? "", id: oneArt.id, creatorID: user.uid)
+                     
+                     FirestoreService.manager.saveArt(art: favedArt) { (result) in
+                         switch result {
+                         case .failure(let error):
+                             print(error)
+                         case .success(()):
+                             print("You saved that art from the search vc cell")
+                         }
+                     }
+                 }
+             }
+         }
+         
+     }
+     
+ }
+ */
