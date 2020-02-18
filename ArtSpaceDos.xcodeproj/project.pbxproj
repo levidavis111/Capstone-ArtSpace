@@ -32,6 +32,7 @@
 		D854837E23E385D300811E6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D854837D23E385D300811E6B /* GoogleService-Info.plist */; };
 		FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */; };
 		FC1616FF23ECA03900289C74 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1616FE23ECA03900289C74 /* ARViewController.swift */; };
+		FC16170323FC8C6900289C74 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		D854837D23E385D300811E6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		FC1616FE23ECA03900289C74 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,9 +188,10 @@
 		D82FA8B523E34A4C005B22D4 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				D82FA8B323E346B6005B22D4 /* UIUtilities.swift */,
 				D82FA8A923E33E2E005B22D4 /* Extensions */,
+				D82FA8B323E346B6005B22D4 /* UIUtilities.swift */,
 				CBBEC33A23F5A13800A83FD7 /* Delegates.swift */,
+				FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
 				CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */,
+				FC16170323FC8C6900289C74 /* ReuseIdentifiers.swift in Sources */,
 				D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */,
 				D82FA8AB23E33E49005B22D4 /* String+Validations.swift in Sources */,
 				D80E04D523ECAAEC00352C3E /* MainTabBarController.swift in Sources */,
