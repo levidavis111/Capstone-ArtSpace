@@ -12,7 +12,7 @@
 		CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBEC33A23F5A13800A83FD7 /* Delegates.swift */; };
 		D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */; };
 		D80E04D123ECAA3900352C3E /* PurchaseHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */; };
-		D80E04D323ECAA4C00352C3E /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */; };
+		D80E04D323ECAA4C00352C3E /* SavedArtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D223ECAA4C00352C3E /* SavedArtViewController.swift */; };
 		D80E04D523ECAAEC00352C3E /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */; };
 		D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88123E33697005B22D4 /* AppDelegate.swift */; };
 		D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88323E33697005B22D4 /* SceneDelegate.swift */; };
@@ -30,6 +30,7 @@
 		D82FA8B223E33ED3005B22D4 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B123E33ED3005B22D4 /* FirestoreService.swift */; };
 		D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA8B323E346B6005B22D4 /* UIUtilities.swift */; };
 		D854837E23E385D300811E6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D854837D23E385D300811E6B /* GoogleService-Info.plist */; };
+		D886C88723FDA15E002FA690 /* SavedArtCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886C88623FDA15E002FA690 /* SavedArtCollectionViewCell.swift */; };
 		FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */; };
 		FC1616FF23ECA03900289C74 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1616FE23ECA03900289C74 /* ARViewController.swift */; };
 		FC16170323FC8C6900289C74 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */; };
@@ -43,7 +44,7 @@
 		CBBEC33A23F5A13800A83FD7 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryViewController.swift; sourceTree = "<group>"; };
-		D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		D80E04D223ECAA4C00352C3E /* SavedArtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArtViewController.swift; sourceTree = "<group>"; };
 		D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		D82FA87E23E33697005B22D4 /* ArtSpaceDos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSpaceDos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82FA88123E33697005B22D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		D82FA8B123E33ED3005B22D4 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		D82FA8B323E346B6005B22D4 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D854837D23E385D300811E6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D886C88623FDA15E002FA690 /* SavedArtCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArtCollectionViewCell.swift; sourceTree = "<group>"; };
 		FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		FC1616FE23ECA03900289C74 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
@@ -143,7 +145,7 @@
 				FC1616FE23ECA03900289C74 /* ARViewController.swift */,
 				D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */,
 				D80E04D023ECAA3900352C3E /* PurchaseHistoryViewController.swift */,
-				D80E04D223ECAA4C00352C3E /* FavoritesViewController.swift */,
+				D80E04D223ECAA4C00352C3E /* SavedArtViewController.swift */,
 				CBA886A323EDF40100E45D49 /* FilterViewController.swift */,
 			);
 			path = ViewControllers;
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				D82FA8A723E33D1F005B22D4 /* ArtCell.swift */,
+				D886C88623FDA15E002FA690 /* SavedArtCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -326,13 +329,14 @@
 				D82FA8B023E33EBD005B22D4 /* FirebaseAuth.swift in Sources */,
 				FC1616FD23E8B45D00289C74 /* FirebaseStorageService.swift in Sources */,
 				D82FA89923E33BED005B22D4 /* AppUser.swift in Sources */,
-				D80E04D323ECAA4C00352C3E /* FavoritesViewController.swift in Sources */,
+				D80E04D323ECAA4C00352C3E /* SavedArtViewController.swift in Sources */,
 				D82FA8A123E33C84005B22D4 /* MainViewController.swift in Sources */,
 				FC1616FF23ECA03900289C74 /* ARViewController.swift in Sources */,
 				D82FA89B23E33C12005B22D4 /* ArtObject.swift in Sources */,
 				D82FA88223E33697005B22D4 /* AppDelegate.swift in Sources */,
 				D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */,
 				CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */,
+				D886C88723FDA15E002FA690 /* SavedArtCollectionViewCell.swift in Sources */,
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,

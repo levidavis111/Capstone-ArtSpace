@@ -14,7 +14,7 @@ class MainTabBarController: UITabBarController {
   //MARK: Properties
   lazy var homePage = UINavigationController(rootViewController: MainViewController())
   lazy var createPost = UINavigationController(rootViewController: CreatePostViewController())
-  lazy var favorites = UINavigationController(rootViewController: FavoritesViewController())
+  lazy var favorites = UINavigationController(rootViewController: SavedArtViewController())
   lazy var profile = UINavigationController(rootViewController: ProfileViewController())
   
   
