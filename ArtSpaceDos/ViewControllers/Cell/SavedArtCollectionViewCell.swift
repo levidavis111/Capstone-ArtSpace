@@ -21,7 +21,8 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   //MARK: TODO - Implement function to unfavorite saved art and remove from view
   lazy var favoriteButton: UIButton = {
     let button = UIButton()
-    button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    let imageConfig = UIImage.SymbolConfiguration(scale: .large)
+    button.setImage(UIImage(systemName: "heart.fill", withConfiguration: imageConfig), for: .normal)
     button.layer.backgroundColor = UIColor.white.cgColor
     button.layer.cornerRadius = 20.0
     //    button.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
