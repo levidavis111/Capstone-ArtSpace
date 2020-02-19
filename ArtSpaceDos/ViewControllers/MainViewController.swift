@@ -15,13 +15,15 @@ class MainViewController: UIViewController {
     var currentFilters = [String]()
     var isCurrentlyFiltered = false
     
+    let cellSpacing: CGFloat = 5.0
+    
     //MARK: - Variables
     lazy var artCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let collectionView = UICollectionView(frame:.zero , collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: 250, height: 250)
-        collectionView.register(ArtCell.self, forCellWithReuseIdentifier: "artCell")
+        collectionView.register(ArtCell.self, forCellWithReuseIdentifier: ReuseIdentifier.artCell.rawValue)
         UIUtilities.setViewBackgroundColor(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -106,10 +108,26 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: "artCell", for: indexPath) as? ArtCell else {return UICollectionViewCell()}
+        guard let cell = artCollectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifier.artCell.rawValue, for: indexPath) as? ArtCell else {return UICollectionViewCell()}
         let currentImage = artObjectData[indexPath.row]
         let url = URL(string: currentImage.artImageURL)
         cell.imageView.kf.setImage(with: url)
+        cell.delegate = self
+        cell.likeButton.tag = indexPath.row
+        
+        let _ = currentImage.existsInFavorites { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let bool):
+                switch bool {
+                case true:
+                    cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                case false:
+                    cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+            }
+        }
         
         return cell
     }
@@ -128,9 +146,26 @@ extension MainViewController: UICollectionViewDelegate {
 }
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
-    //MARK: TO DO - Fix Cell Size Across Simulators
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200)
+        let numCells: CGFloat = 2
+        let numSpaces: CGFloat = numCells + 1
+        
+        let screenWidth = UIScreen.main.bounds.width
+        let screenheight = UIScreen.main.bounds.height
+        
+        return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenheight / 4)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: 0, right: cellSpacing)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
     }
 }
 
@@ -163,6 +198,82 @@ extension MainViewController: FilterTheArtDelegate {
         //MARK: TO DO - Enable Multiple Tags To Be Filtered
     }
     
+}
+
+extension MainViewController: ArtCellFavoriteDelegate {
+//    MARK: - TODO: Update code to use Current User
+    func faveArtObject(tag: Int) {
+        let oneArtObject = artObjectData[tag]
+        let _ = oneArtObject.existsInFavorites { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let bool):
+                switch bool {
+                case true:
+                    FirestoreService.manager.deleteFavoritedArtObject(artID: oneArtObject.artID) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print(error)
+                        case .success(()):
+                            print("You deleted that art from favorites")
+                        }
+                    }
+                case false:
+                    FirestoreService.manager.createFavoriteArtObject(artObject: oneArtObject) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print(error)
+                        case .success(()):
+                            print("You saved that to favorites")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
 }
 
+/**
+ extension ArtSearchViewController: EventCellDelegate {
+     func faveEvent(tag: Int) {
+         let oneArt = arts[tag]
+         guard let user = FirebaseAuthService.manager.currentUser else {return}
+         print("oneArt")
+         let existsInFaves = oneArt.existsInFavorites { (result) in
+             switch result {
+             case .failure(let error):
+                 print(error)
+             case .success(let bool):
+                 switch bool {
+                 case true:
+                     FirestoreService.manager.deleteFavoriteArt(forUserID: user.uid, artID: oneArt.id) { (result) in
+                         switch result {
+                         case .failure(let error):
+                             print(error)
+                         case .success(()):
+                             print("You deleted that art from the search cell")
+                         }
+                     }
+                 case false:
+                     
+                    let favedArt = FavoriteArt(title: oneArt.title, longTitle: oneArt.longTitle, principalOrFirstMaker: oneArt.principalOrFirstMaker, photoURL: oneArt.webImage?.url ?? "", id: oneArt.id, creatorID: user.uid)
+                     
+                     FirestoreService.manager.saveArt(art: favedArt) { (result) in
+                         switch result {
+                         case .failure(let error):
+                             print(error)
+                         case .success(()):
+                             print("You saved that art from the search vc cell")
+                         }
+                     }
+                 }
+             }
+         }
+         
+     }
+     
+ }
+ */
