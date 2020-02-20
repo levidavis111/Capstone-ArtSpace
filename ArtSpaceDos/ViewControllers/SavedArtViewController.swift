@@ -91,8 +91,9 @@ class SavedArtViewController: UIViewController {
       case .failure(let error):
         self.makeGeneralAlert(with: "Error", message: "\(error)")
       case .success(let savedArtObjects):
-        self.artObjectData = savedArtObjects
-        dump(savedArtObjects)
+        DispatchQueue.main.async {
+          self.artObjectData = savedArtObjects
+        }
       }
     }
   }
@@ -172,7 +173,10 @@ extension SavedArtViewController: SavedArtCellDelegate {
           self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
         case .success(()):
           self.makeGeneralAlert(with: "Success", message: "Item Removed")
-          self.loadAllBookmarkedArt()
+          DispatchQueue.main.async {
+            self.loadAllBookmarkedArt()
+            
+          }
         }
       }
     }))
