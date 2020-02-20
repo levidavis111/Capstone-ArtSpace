@@ -17,7 +17,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   //MARK: UI Elements
   lazy var savedImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: "7")
+    //MARK: Note: How to better scale pictures in view?
     imageView.contentMode = .scaleToFill
     imageView.backgroundColor = .clear
     return imageView
@@ -62,6 +62,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     button.setTitle("Buy", for: .normal)
     button.layer.backgroundColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
     button.layer.borderWidth = 1.0
+    button.layer.cornerRadius  = 5.0
     button.addTarget(self, action: #selector(buyButtonPressed), for: .touchUpInside)
     return button
   }()
@@ -87,7 +88,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     delegate?.buyButtonPressed(tag: tag)
   }
   
-  //MARK: Private functions
+  //MARK: Private Functions
   private func addSubViews() {
     contentView.addSubview(savedImageView)
     contentView.addSubview(bookmarkButton)
@@ -133,7 +134,6 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
       make.left.equalTo(bookmarkButton).offset(-75)
       make.width.equalTo(75)
     }
-    
   }
   
 }

@@ -57,10 +57,11 @@ class SavedArtViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "Saved Art List"
+    let viewControllerTitle = "My Saved Art"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
+    
     navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
@@ -150,7 +151,7 @@ extension SavedArtViewController: UICollectionViewDelegate {
   //
 }
 
-//MARK: SavedArtCell Delegate
+//MARK: SavedArtCell Delegate Extension
 extension SavedArtViewController: SavedArtCellDelegate {
   func removeSavedArt(tag: Int) {
     self.makeConfirmationAlert(with: "Remove Saved Item", and: "Are you sure?")
