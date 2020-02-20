@@ -11,25 +11,25 @@ import SnapKit
 
 class SavedArtCollectionViewCell: UICollectionViewCell {
   
+  //MARK: Properties
+  var delegate: SavedArtCellDelegate?
+  
   //MARK: UI Elements
   lazy var savedImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: "7")
+    //MARK: Note: How to better scale pictures in view?
     imageView.contentMode = .scaleToFill
     imageView.backgroundColor = .clear
     return imageView
   }()
   
-  lazy var favoriteButton: UIButton = {
+  lazy var bookmarkButton: UIButton = {
     let button = UIButton()
     let imageConfig = UIImage.SymbolConfiguration(scale: .large)
     button.setImage(UIImage(systemName: "bookmark.fill", withConfiguration: imageConfig), for: .normal)
     button.tintColor = .red
     button.layer.backgroundColor = UIColor.clear.cgColor
-//    button.layer.borderColor = UIColor.black.cgColor
-//    button.layer.borderWidth = 1
-//    button.layer.cornerRadius = 23.0
-    button.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
+    button.addTarget(self, action: #selector(bookmarkButtonPressed), for: .touchUpInside)
     return button
   }()
   
@@ -57,12 +57,12 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
-  //MARK: TODO - segue to detail view controller ->  launch Stripe ?
   lazy var buyButton: UIButton = {
     let button = UIButton()
     button.setTitle("Buy", for: .normal)
     button.layer.backgroundColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
     button.layer.borderWidth = 1.0
+    button.layer.cornerRadius  = 5.0
     button.addTarget(self, action: #selector(buyButtonPressed), for: .touchUpInside)
     return button
   }()
@@ -80,19 +80,18 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   }
   
   //MARK: Objc Functions
-  @objc func heartButtonPressed() {
-    //TODO: make an alert for to confirm of the user wants to delete the art from their list
-    //TODO: delete favorite from list
+  @objc func bookmarkButtonPressed() {
+    delegate?.removeSavedArt(tag: tag)
   }
   
   @objc func buyButtonPressed() {
-    //TODO: segue to Detail View Controller or Stripe ???
+    delegate?.buyButtonPressed(tag: tag)
   }
   
-  //MARK: Private functions
+  //MARK: Private Functions
   private func addSubViews() {
     contentView.addSubview(savedImageView)
-    contentView.addSubview(favoriteButton)
+    contentView.addSubview(bookmarkButton)
     contentView.addSubview(titleLabel)
     contentView.addSubview(artistNameLabel)
     contentView.addSubview(priceLabel)
@@ -108,8 +107,8 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
       make.bottom.equalTo(contentView).offset(-75)
     }
     
-    favoriteButton.snp.makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(10)
+    bookmarkButton.snp.makeConstraints { (make) in
+      make.bottom.equalTo(savedImageView).offset(50)
       make.right.equalTo(contentView).offset(-10)
       make.height.equalTo(45)
       make.width.equalTo(45)
@@ -131,11 +130,10 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     }
     
     buyButton.snp.makeConstraints { (make) in
-      make.bottom.equalTo(savedImageView).offset(55)
-      make.right.equalTo(contentView).offset(-25)
+      make.bottom.equalTo(savedImageView).offset(50)
+      make.left.equalTo(bookmarkButton).offset(-75)
       make.width.equalTo(75)
     }
-    
   }
   
 }

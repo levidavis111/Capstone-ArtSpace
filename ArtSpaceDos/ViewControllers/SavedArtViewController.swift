@@ -9,9 +9,15 @@
 import UIKit
 
 class SavedArtViewController: UIViewController {
-
-  var arrayOfImages = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5"),UIImage(named: "6"),UIImage(named: "7"),UIImage(named: "8"),UIImage(named: "9"),UIImage(named: "10")]
   
+  //MARK: Properties
+  var artObjectData = [ArtObject]() {
+    didSet {
+      self.savedArtCollectionView.reloadData()
+    }
+  }
+  
+  //MARK: UI Objects
   lazy var savedArtCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
@@ -23,30 +29,39 @@ class SavedArtViewController: UIViewController {
     collection.delegate = self
     
     collection.layer.backgroundColor = UIColor.clear.cgColor
-       collection.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
-       collection.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-       collection.layer.shadowOpacity = 0.9
-       collection.layer.shadowRadius = 4
+    collection.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
+    collection.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+    collection.layer.shadowOpacity = 0.9
+    collection.layer.shadowRadius = 4
     
     return collection
   }()
   
+  //MARK: Lifecyle Functions
   override func viewDidLoad() {
     super.viewDidLoad()
     setupViewBackgroundColor()
     setupNavigationBar()
     setupSavedArtCollectionView()
+    loadAllBookmarkedArt()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    loadAllBookmarkedArt()
+  }
+  
+  //MARK: Private Functions
   private func setupViewBackgroundColor() {
     UIUtilities.setViewBackgroundColor(view)
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "Saved Art List"
+    let viewControllerTitle = "My Saved Art"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
+    
     navigationController?.navigationBar.titleTextAttributes = attrs as [NSAttributedString.Key : Any]
     navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController?.navigationBar.shadowImage = UIImage()
@@ -55,10 +70,36 @@ class SavedArtViewController: UIViewController {
     navigationController?.navigationBar.topItem?.title = "\(viewControllerTitle)"
   }
   
-  //MARK: TODO: Make an alert to confirm if the user wants to delete from their saved list
+  private func makeGeneralAlert(with title: String, message: String) {
+    let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    present(alertVC, animated: true, completion: nil)
+  }
+  
+  private func makeConfirmationAlert(with title: String, and message: String) {
+    let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+      self.loadAllBookmarkedArt()
+    }))
+    present(alertVC, animated: true, completion: nil)
+  }
+  
+  private func loadAllBookmarkedArt() {
+    FirestoreService.manager.getAllSavedArtObjects { (result) in
+      switch result {
+      case .failure(let error):
+        self.makeGeneralAlert(with: "Error", message: "\(error)")
+      case .success(let savedArtObjects):
+        DispatchQueue.main.async {
+          self.artObjectData = savedArtObjects
+        }
+      }
+    }
+  }
+  
   private func setupSavedArtCollectionView() {
     view.addSubview(savedArtCollectionView)
-//    savedArtCollectionView.translatesAutoresizingMaskIntoConstraints = false
     
     savedArtCollectionView.snp.makeConstraints { (make) in
       make.top.equalTo(view.safeAreaLayoutGuide)
@@ -67,10 +108,11 @@ class SavedArtViewController: UIViewController {
       make.right.equalTo(view.safeAreaLayoutGuide)
     }
   }
-  
 }
 
+//MARK: - UICollectionView Extension
 extension SavedArtViewController: UICollectionViewDelegateFlowLayout {
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 25
   }
@@ -81,24 +123,63 @@ extension SavedArtViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension SavedArtViewController: UICollectionViewDataSource {
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return arrayOfImages.count
+    return artObjectData.count
   }
   
-  //MARK: TODO - Pass data from Firebase 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = savedArtCollectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifier.savedArtCell.rawValue, for: indexPath) as? SavedArtCollectionViewCell else {return UICollectionViewCell()}
-    cell.savedImageView.image = arrayOfImages[indexPath.row]
-//           let currentImage = artObjectData[indexPath.row]
-//           let url = URL(string: currentImage.artImageURL)
-//           cell.imageView.kf.setImage(with: url)
     
-           return cell
+    let savedArtObjects = artObjectData[indexPath.row]
+    let url = URL(string: savedArtObjects.artImageURL)
+    cell.savedImageView.kf.setImage(with: url)
+    
+    cell.artistNameLabel.text = "Artist: \(savedArtObjects.artistName)"
+    cell.titleLabel.text = "Art Title Goes Here"
+    
+    let price = savedArtObjects.price
+    let formattedPrice = String(format: "$ %.2f", price)
+    cell.priceLabel.text = formattedPrice
+    
+    cell.delegate = self
+    cell.tag = indexPath.row
+    return cell
   }
-  
-  
 }
 
 extension SavedArtViewController: UICollectionViewDelegate {
+  //
+}
+
+//MARK: SavedArtCell Delegate Extension
+extension SavedArtViewController: SavedArtCellDelegate {
+  func buyButtonPressed(tag: Int) {
+    let artObject = artObjectData[tag]
+    let detailVC = ArtDetailViewController()
+    detailVC.currentArtObject = artObject
+    navigationController?.pushViewController(detailVC, animated: true)
+  }
   
+  func removeSavedArt(tag: Int) {
+    let alertVC = UIAlertController(title: "Remove Saved Item", message: "Are you sure?", preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+    alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+      let oneArtObject = self.artObjectData[tag]
+      //MARK: - Get Favorites from userID when authentication is implemented
+      FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
+        switch result {
+        case .failure(let error):
+          self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
+        case .success(()):
+          self.makeGeneralAlert(with: "Success", message: "Item Removed")
+          DispatchQueue.main.async {
+            self.loadAllBookmarkedArt()
+            
+          }
+        }
+      }
+    }))
+    present(alertVC, animated: true, completion: nil)
+  }
 }

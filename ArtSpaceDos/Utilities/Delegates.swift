@@ -16,3 +16,8 @@ protocol FilterTheArtDelegate: UIViewController {
 protocol ArtCellFavoriteDelegate: AnyObject {
     func faveArtObject(tag: Int)
 }
+
+protocol SavedArtCellDelegate: AnyObject {
+  func removeSavedArt(tag: Int)
+  func buyButtonPressed(tag: Int)
+}
