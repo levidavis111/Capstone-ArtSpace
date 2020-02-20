@@ -153,25 +153,29 @@ extension SavedArtViewController: UICollectionViewDelegate {
 
 //MARK: SavedArtCell Delegate Extension
 extension SavedArtViewController: SavedArtCellDelegate {
-  func removeSavedArt(tag: Int) {
-    self.makeConfirmationAlert(with: "Remove Saved Item", and: "Are you sure?")
-  
-    //MARK: - Get Favorites from userID when authentication is implemented
-    let oneArtObject = artObjectData[tag]
-    FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
-      switch result {
-      case .failure(let error):
-        self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
-      case .success(()):
-        self.makeGeneralAlert(with: "Success", message: "Saved Item Removed")
-      }
-    }
-  }
-  
   func buyButtonPressed(tag: Int) {
     let artObject = artObjectData[tag]
     let detailVC = ArtDetailViewController()
     detailVC.currentArtObject = artObject
     navigationController?.pushViewController(detailVC, animated: true)
+  }
+  
+  func removeSavedArt(tag: Int) {
+    let alertVC = UIAlertController(title: "Remove Saved Item", message: "Are you sure?", preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+      let oneArtObject = self.artObjectData[tag]
+      //MARK: - Get Favorites from userID when authentication is implemented
+      FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
+        switch result {
+        case .failure(let error):
+          self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
+        case .success(()):
+          self.makeGeneralAlert(with: "Success", message: "Item Removed")
+          self.loadAllBookmarkedArt()
+        }
+      }
+    }))
+    present(alertVC, animated: true, completion: nil)
   }
 }
