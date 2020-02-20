@@ -134,7 +134,7 @@ class FirestoreService {
         }
     }
 //    MARK: TODO - ADD METHOD TO GET FAVORITES FOR THIS USER
-    func getAllFavoriteArtObjects(completion: @escaping (Result<[ArtObject], Error>) -> ()) {
+    func getAllSavedArtObjects(completion: @escaping (Result<[ArtObject], Error>) -> ()) {
         database.collectionGroup(FirestoreCollections.FavoriteArt.rawValue).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
@@ -150,7 +150,7 @@ class FirestoreService {
     }
 //    MARK: - TODO: Update to check only for current user.
     
-    func deleteFavoritedArtObject(artID: String, completion: @escaping (Result <(), Error>) -> ()) {
+    func removeSavedArtObject(artID: String, completion: @escaping (Result <(), Error>) -> ()) {
         
         database.collection(FirestoreCollections.FavoriteArt.rawValue).whereField("artID", isEqualTo: artID).getDocuments { (snapshot, error) in
             if let error = error {
