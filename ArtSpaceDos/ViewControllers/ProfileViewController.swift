@@ -131,8 +131,20 @@ class ProfileViewController: UIViewController {
       }
          
      }
-    
-    
+//
+//    @objc func signOutFunc(){
+//        FirebaseAuthService.manager.logoutUser()
+//
+//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//            let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+//            else { return}
+//
+//        UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromTop, animations: {
+//
+//            window.rootViewController = LoginViewController()
+//        }, completion: nil)
+//    }
+//
     
     private func presentPhotoPickerController() {
            DispatchQueue.main.async{
