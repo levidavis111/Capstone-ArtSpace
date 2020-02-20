@@ -10,4 +10,5 @@ import Foundation
 
 enum ReuseIdentifier: String {
     case artCell
+    case savedArtCell
 }
