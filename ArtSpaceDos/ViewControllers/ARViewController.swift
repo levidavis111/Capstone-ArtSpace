@@ -47,6 +47,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         constrainSubviews()
         initializeSceneView()
         initializeARSession()
+        initializeGestureRecognizer()
         retrieveImage()
     }
     
@@ -55,6 +56,73 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     @objc private func resetButtonPressed(sender: UIButton) {
         resetARSession()
     }
+    
+    @objc private func screenTapped(sender: UITapGestureRecognizer) {
+        let tappedScene = sender.view as! ARSCNView
+        tappedScene.isUserInteractionEnabled = true
+        let tapLocation = sender.location(in: tappedScene)
+        let planeIntersections = tappedScene.hitTest(tapLocation, types: .existingPlane)
+        if !planeIntersections.isEmpty {
+            print("plane tapped")
+            let transform = planeIntersections.first!.worldTransform
+            let positionColumn = transform.columns.3
+            let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
+            let artNode = SCNNode(geometry: SCNPlane(width: 0.5, height: 0.5))
+            artNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+            artNode.position = initialPosition
+            sceneView.scene.rootNode.addChildNode(artNode)
+        }
+        
+        print("Screen tapped")
+    }
+    
+    /**
+     func addFurniture(hitTestResult: ARHitTestResult) {
+       // Get the real-world position corresponding to
+       // where the user tapped on the screen.
+       let transform = hitTestResult.worldTransform
+       let positionColumn = transform.columns.3
+       let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
+       // Get the current furniture item, correct its position if necessary,
+       // and add it to the scene.
+       let node = furnitureSettings.currentFurniturePiece()
+       node.position = initialPosition + furnitureSettings.currentFurnitureOffset()
+       sceneView.scene.rootNode.addChildNode(node)
+     }
+
+     */
+    
+    /**
+     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
+             
+     //        Create node same size as detected plane
+     //        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
+             let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
+     //        Position node in center of plane
+             
+        planeNode.position = SCNVector3(planeAnchor.center.x,
+                                             planeAnchor.center.y,
+                                             planeAnchor.center.z)
+             
+             planeNode.geometry?.firstMaterial?.isDoubleSided = true
+             
+             planeNode.eulerAngles = SCNVector3(-Double.pi / 2,0,0)
+             
+             if planeAnchor.alignment == .horizontal {
+                 print("It's horizontal")
+                 planeNode.name = "horizontal"
+             } else {
+     //            If vertical plance, add node as child
+     //            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+                 planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
+                 planeNode.name = "vertical"
+                 node.addChildNode(planeNode)
+
+             }
+             
+             appState = .readyToFurnish
+         }
+     */
     
     //    MARK: - Private Methods
     
@@ -96,14 +164,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    /**
-     KingfisherManager.shared.retrieveImage(with: url) { result in
-         let image = try? result.get().image
-         if let image = image {
-             ...
-         }
-     }
-     */
     
     
 //    Initialize sceneView and ARSession
@@ -140,6 +200,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let config = createARConfiguration()
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
         appState = .lookingForSurface
+    }
+    
+//    Initialize gesture recognizer
+    
+    private func initializeGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
+        sceneView.addGestureRecognizer(tapGesture)
+        print("Tap Initialized")
     }
     
 }
@@ -255,7 +323,8 @@ extension ARViewController {
     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
         
 //        Create node same size as detected plane
-        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
+//        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
+        let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
 //        Position node in center of plane
         
         planeNode.position = SCNVector3(planeAnchor.center.x,
@@ -271,7 +340,8 @@ extension ARViewController {
             planeNode.name = "horizontal"
         } else {
 //            If vertical plance, add node as child
-            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+//            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+            planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
             planeNode.name = "vertical"
             node.addChildNode(planeNode)
 
