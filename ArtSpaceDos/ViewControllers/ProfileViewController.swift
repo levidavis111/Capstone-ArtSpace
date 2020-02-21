@@ -20,9 +20,14 @@ class ProfileViewController: UIViewController {
     
     //MARK: UI OBJC
     
-    lazy var userLabels: UILabel = {
-        let label = UILabel()
-        return label
+   lazy var userNameTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter User Name"
+        textField.font = UIFont(name: "Verdana", size: 14)
+        textField.backgroundColor = .clear
+        textField.layer.cornerRadius = 5
+        textField.autocorrectionType = .no
+        return textField
     }()
     lazy var profileImage: UIImageView = {
         let image = UIImageView()
@@ -63,11 +68,14 @@ class ProfileViewController: UIViewController {
     
     lazy var listingsLabel: UILabel = {
         let label = UILabel()
+        label.text = "Listings"
+        label.sizeToFit()
         return label
     }()
     
     lazy var purchasedListLabel: UILabel = {
         let label = UILabel()
+        label.text = "Purchased"
         return label
     }()
     
@@ -94,6 +102,9 @@ class ProfileViewController: UIViewController {
         view.addSubview(manageAccount)
         view.addSubview(settingsButton)
         view.addSubview(signOut)
+        view.addSubview(listingsLabel)
+        view.addSubview(purchasedListLabel)
+        view.addSubview(userNameTextField)
     }
     //MARK:ViewDidLoad cycle
     override func viewDidLoad() {
@@ -104,13 +115,17 @@ class ProfileViewController: UIViewController {
         constraintManageAccountLabel()
         settinglabelConstraints()
         signOutConstraints()
+        listinglabelConstraints()
+        purchasedlabelConstraints()
+        setupUserNameTextField()
         
       self.navigationController?.navigationBar.isHidden = true
       UIUtilities.setViewBackgroundColor(view)
     }
     
 //MARK: Objc Functions
-    
+
+ 
      @objc private func addImagePressed() {
     let imagePickerViewController = UIImagePickerController()
       imagePickerViewController.delegate = self
@@ -129,6 +144,7 @@ class ProfileViewController: UIViewController {
               self.present(imagePickerViewController, animated: true, completion: nil)
           }))
       }
+
          
      }
 //
@@ -188,6 +204,24 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func listinglabelConstraints() {
+        listingsLabel.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-350)
+            make.leading.equalTo(self.view).offset(50)
+            make.trailing.equalTo(self.view).offset(-50)
+      
+            }
+    }
+    private func purchasedlabelConstraints() {
+         purchasedListLabel.snp.makeConstraints { (make) in
+             make.bottom.equalTo(self.view).offset(-350)
+            // make.leading.equalTo(self.view).offset(50)
+           make.trailing.equalTo(self.view).offset(-50)
+       
+             }
+     }
+     
+    
     private func settinglabelConstraints() {
         settingsButton.snp.makeConstraints { (make) in
         make.bottom.equalTo(self.view).offset(-250)
@@ -205,7 +239,11 @@ class ProfileViewController: UIViewController {
             make.size.equalTo(CGSize(width: 100, height: 100))
         }
     }
-
+    private func setupUserNameTextField() {
+ 
+    }
+    
+    
 }
 //MARK: Extension
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -219,3 +257,4 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
  
+
