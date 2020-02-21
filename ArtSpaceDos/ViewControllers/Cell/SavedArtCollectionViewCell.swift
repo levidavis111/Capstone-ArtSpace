@@ -135,7 +135,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     }
     
     soldStatusLabel.snp.makeConstraints { (make) in
-      make.center.equalTo(contentView)
+      make.center.equalTo(soldStatusView)
     }
     
   }
