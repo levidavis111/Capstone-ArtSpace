@@ -20,6 +20,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     //MARK: Note: How to better scale pictures in view?
     imageView.contentMode = .scaleToFill
     imageView.backgroundColor = .clear
+    
     return imageView
   }()
   
@@ -86,7 +87,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     super.init(frame: frame)
     addSubViews()
     addConstraints()
-    contentView.backgroundColor = UIColor(red: 255/255, green: 193/255, blue: 207/255, alpha: 1)
+    setupContentView()
   }
   
   required init?(coder: NSCoder) {
@@ -103,6 +104,15 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   }
   
   //MARK: Functions
+  
+  func setupContentView() {
+    contentView.backgroundColor = .systemPurple
+    contentView.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
+    contentView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+    contentView.layer.shadowOpacity = 0.9
+    contentView.layer.shadowRadius = 4
+  }
+  
   func updateSoldStatus(status: Bool) {
     if status {
       setupSoldStatus()
