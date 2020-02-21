@@ -9,7 +9,8 @@ target 'ArtSpaceDos' do
 	pod 'Firebase/Storage'  
 	pod 'SnapKit', '~> 5.0.0'
 	pod 'Kingfisher', '~> 5.0'
-	pod 'EmptyDataSet-Swift', '~> 5.0.0'
+	pod 'EmptyDataSet-Swift', '~> 5.0.0' 
+	pod 'Stripe'
 
   # Pods for ArtSpaceDos
 
