@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EmptyDataSet_Swift
 
 class SavedArtViewController: UIViewController {
   
@@ -25,15 +26,9 @@ class SavedArtViewController: UIViewController {
     
     let collection = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 200), collectionViewLayout: layout)
     collection.register(SavedArtCollectionViewCell.self, forCellWithReuseIdentifier: ReuseIdentifier.savedArtCell.rawValue)
+    collection.backgroundColor = .clear
     collection.dataSource = self
     collection.delegate = self
-    
-    collection.layer.backgroundColor = UIColor.clear.cgColor
-    collection.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
-    collection.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-    collection.layer.shadowOpacity = 0.9
-    collection.layer.shadowRadius = 4
-    
     return collection
   }()
   
@@ -44,6 +39,7 @@ class SavedArtViewController: UIViewController {
     setupNavigationBar()
     setupSavedArtCollectionView()
     loadAllBookmarkedArt()
+    setupEmptyDataSourceDelegate()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +53,7 @@ class SavedArtViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "My Saved Works"
+    let viewControllerTitle = "Saved Artworks"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
@@ -183,5 +179,27 @@ extension SavedArtViewController: SavedArtCellDelegate {
       }
     }))
     present(alertVC, animated: true, completion: nil)
+  }
+}
+
+
+extension SavedArtViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+  
+  func setupEmptyDataSourceDelegate() {
+    savedArtCollectionView.emptyDataSetDelegate = self
+    savedArtCollectionView.emptyDataSetSource = self
+    savedArtCollectionView.backgroundView = UIView()
+  }
+  
+  func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+    let titleString = "You haven't saved any artworks yet."
+    let titleAttributes = [NSAttributedString.Key.font: UIFont.init(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
+    return NSAttributedString(string: titleString, attributes: titleAttributes)
+  }
+  
+  func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+    let descriptionString = "Tap the heart on an artwork to save for later."
+    let descriptionAttributes = [NSAttributedString.Key.font: UIFont.init(descriptor: .preferredFontDescriptor(withTextStyle: .subheadline), size: 20)]
+    return NSAttributedString(string: descriptionString, attributes: descriptionAttributes)
   }
 }
