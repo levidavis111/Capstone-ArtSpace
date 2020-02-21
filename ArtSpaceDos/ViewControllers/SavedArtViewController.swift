@@ -170,7 +170,6 @@ extension SavedArtViewController: SavedArtCellDelegate {
         case .failure(let error):
           self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
         case .success(()):
-          self.makeGeneralAlert(with: "Success", message: "Item Removed")
           DispatchQueue.main.async {
             self.loadAllBookmarkedArt()
             
