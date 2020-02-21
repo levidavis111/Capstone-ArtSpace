@@ -202,4 +202,6 @@ extension SavedArtViewController: EmptyDataSetSource, EmptyDataSetDelegate {
     let descriptionAttributes = [NSAttributedString.Key.font: UIFont.init(descriptor: .preferredFontDescriptor(withTextStyle: .subheadline), size: 20)]
     return NSAttributedString(string: descriptionString, attributes: descriptionAttributes)
   }
+  
+  //MARK: TODO: Add button to segue to the main view controller to prompt the user to view other works
 }
