@@ -57,7 +57,7 @@ class SavedArtViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "My Saved Art"
+    let viewControllerTitle = "My Saved Works"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
@@ -142,6 +142,8 @@ extension SavedArtViewController: UICollectionViewDataSource {
     let formattedPrice = String(format: "$ %.2f", price)
     cell.priceLabel.text = formattedPrice
     
+    cell.updateSoldStatus(status: savedArtObjects.soldStatus)
+    
     cell.delegate = self
     cell.tag = indexPath.row
     return cell
@@ -166,7 +168,7 @@ extension SavedArtViewController: SavedArtCellDelegate {
     alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
     alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
       let oneArtObject = self.artObjectData[tag]
-      //MARK: - Get Favorites from userID when authentication is implemented
+      //MARK: TODO: Get Favorites from userID when authentication is implemented
       FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
         switch result {
         case .failure(let error):
