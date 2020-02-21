@@ -11,6 +11,7 @@ import UIKit
 import FirebaseFirestore
 
 struct ArtObject {
+  //MARK: TODO: Add artTitle as a property 
     let artistName: String
     let artDescription: String
     let width: CGFloat
@@ -19,9 +20,46 @@ struct ArtObject {
     let artID: String
     let sellerID: String
     let price: Double
-    let soldStatus: Bool = false
+  //MARK: TODO: remove default status
+    let soldStatus: Bool = true
     let dateCreated: Date?
     let tags: [String]
+    
+//    MARK: - TODO: Filter favorites by userID once login is functional. See commented-out code below.
+    func existsInFavorites(completion: @escaping (Result <Bool, Error>) -> ()) {
+        FirestoreService.manager.getAllSavedArtObjects { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let favorites):
+                if favorites.contains(where: {$0.artID == self.artID}) {
+                    completion(.success(true))
+                } else {
+                    completion(.success(false))
+                }
+            }
+        }
+    }
+    
+//    func existsInFavorites(completion: @escaping (Result<Bool,Error>) -> ()) {
+//
+//            guard let user = FirebaseAuthService.manager.currentUser else {return}
+//
+//            FirestoreService.manager.getArts(forUserID: user.uid) { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                    print(error)
+//                case .success(let events):
+//                    if events.contains(where: {$0.id == self.id}) {
+//                        completion(.success(true))
+//                    } else {
+//                        completion(.success(false))
+//                    }
+//                }
+//            }
+//        }
+//    }
     
 //    MARK: - Init
   

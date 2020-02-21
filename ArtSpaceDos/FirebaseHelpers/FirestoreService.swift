@@ -12,6 +12,7 @@ import FirebaseFirestore
 fileprivate enum FirestoreCollections: String {
     case AppUser
     case ArtObject
+    case FavoriteArt
     
 }
 // MARK: - Add when we add search bar
@@ -119,4 +120,64 @@ class FirestoreService {
         }
         
     }
+    
+//    MARK: - Favorites Methods
+    func createFavoriteArtObject(artObject: ArtObject, completion: @ escaping (Result<(), Error>) -> ()) {
+        var fields: [String:Any] = artObject.fieldsDict
+        fields["dateCreated"] = Date()
+        database.collection(FirestoreCollections.FavoriteArt.rawValue).document(artObject.artID).setData(fields) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            completion(.success(()))
+        }
+    }
+//    MARK: TODO - ADD METHOD TO GET FAVORITES FOR THIS USER
+    func getAllSavedArtObjects(completion: @escaping (Result<[ArtObject], Error>) -> ()) {
+        database.collectionGroup(FirestoreCollections.FavoriteArt.rawValue).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let artObjects = snapshot?.documents.compactMap({ (snapshot) -> ArtObject? in
+                    let artObjectID = snapshot.documentID
+                    let artObject = ArtObject(from: snapshot.data(), id: artObjectID)
+                    return artObject
+                })
+                completion(.success(artObjects ?? []))
+            }
+        }
+    }
+//    MARK: - TODO: Update to check only for current user.
+    
+    func removeSavedArtObject(artID: String, completion: @escaping (Result <(), Error>) -> ()) {
+        
+        database.collection(FirestoreCollections.FavoriteArt.rawValue).whereField("artID", isEqualTo: artID).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                for document in snapshot!.documents {
+                    document.reference.delete()
+                    completion(.success(()))
+                }
+            }
+        }
+    }
+    
+//    func deleteFavoriteEvent(forUserID: String, eventID: String, completion: @escaping (Result <(), Error>) -> ()) {
+//
+//        db.collection(FireStoreCollections.events.rawValue).whereField("creatorID", isEqualTo: forUserID).whereField("id", isEqualTo: eventID).getDocuments { (snapshot, error) in
+//            if let error = error {
+//                print("Error getting documents \(error)")
+//                completion(.failure(error))
+//            } else {
+//                for document in snapshot!.documents {
+//                    document.reference.delete()
+//                    completion(.success(()))
+//                }
+//            }
+//        }
+//
+//    }
+    
 }
