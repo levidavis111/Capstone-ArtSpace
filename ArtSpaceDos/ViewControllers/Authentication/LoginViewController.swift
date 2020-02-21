@@ -123,7 +123,7 @@ class LoginViewController: UIViewController {
                         return
                 }
                 UIView.transition(with: self.view, duration: 0.1, options: .transitionFlipFromBottom, animations: {
-                  let mainViewController = MainViewController()
+                  let mainViewController = MainTabBarController()
                     mainViewController.modalPresentationStyle = .overCurrentContext
                     sceneDelegate.window?.rootViewController = mainViewController
                 }, completion: nil)
