@@ -102,6 +102,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     delegate?.buyButtonPressed(tag: tag)
   }
   
+  //MARK: Functions
   func updateSoldStatus(status: Bool) {
     if status {
       setupSoldStatus()
@@ -175,8 +176,6 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
       make.left.equalTo(bookmarkButton).offset(-75)
       make.width.equalTo(75)
     }
-    
-    
   }
   
 }

@@ -168,7 +168,7 @@ extension SavedArtViewController: SavedArtCellDelegate {
     alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
     alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
       let oneArtObject = self.artObjectData[tag]
-      //MARK: - Get Favorites from userID when authentication is implemented
+      //MARK: TODO: Get Favorites from userID when authentication is implemented
       FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
         switch result {
         case .failure(let error):
