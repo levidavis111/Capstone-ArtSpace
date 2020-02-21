@@ -57,7 +57,7 @@ class SavedArtViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "My Saved Art"
+    let viewControllerTitle = "My Saved Works"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
@@ -141,6 +141,8 @@ extension SavedArtViewController: UICollectionViewDataSource {
     let price = savedArtObjects.price
     let formattedPrice = String(format: "$ %.2f", price)
     cell.priceLabel.text = formattedPrice
+    
+    cell.updateSoldStatus(status: savedArtObjects.soldStatus)
     
     cell.delegate = self
     cell.tag = indexPath.row
