@@ -59,7 +59,7 @@ class SignUpViewController: UIViewController {
     
     lazy var signUpButton: UIButton = {
         let button = UIButton(frame:CGRect(x: 0, y: 0, width: 250, height: 40))
-        UIUtilities.setUpButton(button, title: "Sign Up", backgroundColor: .lightGray, target: self, action: #selector(signUpUser))
+        UIUtilities.setUpButton(button, title: "Sign Up", backgroundColor: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), target: self, action: #selector(signUpUser))
         button.titleLabel?.textColor = .red
         button.titleLabel?.textAlignment = .center
         button.layer.cornerRadius = button.frame.height / 2
@@ -71,12 +71,24 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
+    lazy var switchToLogin: UIButton = {
+        let button = UIButton(frame:CGRect(x: 0, y: 0, width: 250, height: 40))
+        UIUtilities.setUpButton(button, title: "Already Have An Account?", backgroundColor: .clear, target: self, action: #selector(switchToLoginController))
+        button.layer.cornerRadius = button.frame.height / 2
+        button.clipsToBounds = true
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowColor = UIColor.darkGray.cgColor
+        button.layer.masksToBounds = false
+        button.layer.shadowOpacity = 0.5
+        return button
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        UIUtilities.addSubViews([gifView,titleLabel,emailTextField,usernameInputView,passwordTextField,signUpButton], parentController: self)
+        self.navigationController?.navigationBar.isHidden = true
+        UIUtilities.addSubViews([gifView,titleLabel,emailTextField,usernameInputView,passwordTextField,signUpButton,switchToLogin], parentController: self)
         setUpConstraints()
     }
     //MARK: Objective C
@@ -101,6 +113,12 @@ class SignUpViewController: UIViewController {
         }
     }
     
+    @objc func switchToLoginController() {
+        let loginViewController = LoginViewController()
+        loginViewController.modalPresentationStyle = .overFullScreen
+        self.present(loginViewController, animated: true, completion: nil)
+    }
+    
     //MARK: Private Function
     private func handleCreateAccountResponse(with result: Result<User, Error>) {
         DispatchQueue.main.async {
@@ -119,6 +137,7 @@ class SignUpViewController: UIViewController {
         switch result {
         case .success:
             let tabBarController = MainTabBarController()
+            tabBarController.modalPresentationStyle = .overCurrentContext
             self.present(tabBarController, animated: true, completion: nil)
         case .failure(let error):
             self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
@@ -174,6 +193,11 @@ class SignUpViewController: UIViewController {
             make.height.equalTo(40)
         }
         
-    
+        switchToLogin.snp.makeConstraints{ make in
+            make.top.equalTo(signUpButton).offset(50)
+            make.centerX.equalTo(view)
+            make.width.equalTo(250)
+            make.height.equalTo(60)
+        }
     }
 }
