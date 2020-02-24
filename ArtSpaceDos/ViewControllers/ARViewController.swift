@@ -75,7 +75,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         removeNodes()
     }
     
-//    Adds box with image on it when scene is tapped, as long as there is a plane on it
+    //    Adds box with image on it when scene is tapped, as long as there is a plane on it
     
     @objc private func screenTapped(sender: UITapGestureRecognizer) {
         let tappedScene = sender.view as! ARSCNView
@@ -84,9 +84,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let planeIntersections = tappedScene.hitTest(tapLocation, types: .existingPlane)
         if !planeIntersections.isEmpty {
             
-            let transform = planeIntersections.first!.worldTransform
+            let transform = planeIntersections.last!.worldTransform
             let positionColumn = transform.columns.3
-            let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
+            let initialPosition = SCNVector3(positionColumn.x,
+                                             positionColumn.y,
+                                             positionColumn.z - 0.25)
             
             drawArtBox(initialPosition: initialPosition)
             
@@ -166,20 +168,23 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         guard ARWorldTrackingConfiguration.isSupported else {print("AR World Tracking Not Supported"); return}
         
         let config = createARConfiguration()
+        arState = .isActive
         sceneView.session.run(config)
     }
     
-//    Reset the session and scene
+    //    Reset the session and scene
     
     private func resetARSession() {
         let config = createARConfiguration()
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+        arState = .isActive
         appState = .lookingForSurface
     }
     
     private func removeNodes() {
-        artBox.removeFromParentNode()
-        basePlane.removeFromParentNode()
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }
     }
     
     //    Initialize gesture recognizer
@@ -190,16 +195,21 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         print("Tap Initialized")
     }
     
-//    Draw a box with image on the first face
+    //    Draw a box with image on the first face
     
     private func drawArtBox(initialPosition: SCNVector3) {
         
-        artBox = SCNNode(geometry: SCNBox(width: 0.5, height: 0.5, length: 0.05, chamferRadius: 0.5))
-        artBox.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+        artBox = SCNNode(geometry: SCNBox(width: artObject.width,
+                                          height: artObject.height,
+                                          length: 0.06,
+                                          chamferRadius: 0.5))
+        
         artBox.position = initialPosition
         
         let sideOne = SCNMaterial()
         sideOne.diffuse.contents = imageToDisplay
+        sideOne.lightingModel = .blinn
+        sideOne.diffuse.intensity = 0.75
         let otherSides = SCNMaterial()
         otherSides.diffuse.contents = UIColor.black
         
@@ -291,49 +301,25 @@ extension ARViewController {
         
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         
-        if arState == .isActive {
+        if arState == .isNotActive {
+            print("is not active")
+        } else {
             if planeAnchor.alignment == .vertical {
+                print("vertical")
                 drawPlaneNode(on: node, for: planeAnchor)
-                
+            } else if planeAnchor.alignment == .horizontal {
+                print("horizontal")
             }
-            //            arState = .isNotActive
         }
         
-        //            drawPlaneNode(on: node, for: planeAnchor)
-        
-        //            if planeAnchor.alignment == .horizontal {
-        //
-        //                print("horizontal plane detected")
-        //
-        //            } else if planeAnchor.alignment == .vertical {
-        //
-        //                print("vertical plane detected")
-        //                drawPlaneNode(on: node, for: planeAnchor)
-        //
-        //            }
-        
-        arState = .isNotActive
-        
-    }
-    
-    //    Gets called when an existing anchor is updated
-    
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-        //        Remove child nodes that might exist
-        node.enumerateChildNodes { (childNode, _) in
-            childNode.removeFromParentNode()
-        }
-        //        Draw new plane over detected surface
-        drawPlaneNode(on: node, for: planeAnchor)
     }
     
     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
         
-        basePlane = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
+        basePlane = SCNNode(geometry: SCNPlane(width: 2.5, height: 2.5))
         basePlane.position = SCNVector3(planeAnchor.center.x,
                                         planeAnchor.center.y,
-                                        planeAnchor.center.z)
+                                        planeAnchor.center.z - 0.5)
         basePlane.geometry?.firstMaterial?.isDoubleSided = true
         basePlane.eulerAngles = SCNVector3(-Double.pi/2, 0, 0)
         
@@ -341,12 +327,13 @@ extension ARViewController {
             print("It's horizontal")
             basePlane.name = "horizontal"
         } else {
-            //            If vertical plane, add node as child
+//            If vertical plane, add node as child
             basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
             basePlane.name = "vertical"
             node.addChildNode(basePlane)
         }
         arState = .isNotActive
+        print("\(arState)")
         
         appState = .readyToFurnish
     }
