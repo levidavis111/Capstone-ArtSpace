@@ -13,6 +13,9 @@ struct UIUtilities {
   static func setViewBackgroundColor(_ view: UIView) {
     view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
   }
+    static func addSubViews(_ views: [UIView], parentController: UIViewController) {
+        views.forEach({parentController.view.addSubview($0)})
+    }
   
     static func setUILabel(_ label: UILabel, labelTitle: String, size: CGFloat, alignment: NSTextAlignment) {
         label.text = labelTitle
