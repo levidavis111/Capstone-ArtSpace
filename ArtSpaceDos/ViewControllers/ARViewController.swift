@@ -16,12 +16,20 @@ private enum AppState: Int16 {
     case readyToFurnish
 }
 
+private enum ARState: Int16 {
+    case isActive
+    case isNotActive
+}
+
 class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private var appState: AppState = .lookingForSurface
+    private var arState: ARState = .isActive
     
     var artObject: ArtObject!
     var imageToDisplay: UIImage? = nil
+    
+    var basePlane = SCNNode()
     
     //    MARK: - Instantiate UI Elements
     
@@ -51,6 +59,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         retrieveImage()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        resetARSession()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        sceneView.session.pause()
+    }
+    
     //    MARK: - @Objc-Methods
     
     @objc private func resetButtonPressed(sender: UIButton) {
@@ -67,10 +83,17 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             let transform = planeIntersections.first!.worldTransform
             let positionColumn = transform.columns.3
             let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
-            let artNode = SCNNode(geometry: SCNPlane(width: 0.5, height: 0.5))
+//            let artNode = SCNNode(geometry: SCNPlane(width: 0.5, height: 0.5))
+            let artNode = SCNNode(geometry: SCNBox(width: 0.5, height: 0.5, length: 0.05, chamferRadius: 0.5))
             artNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
             artNode.position = initialPosition
+            let sideOne = SCNMaterial()
+            sideOne.diffuse.contents = imageToDisplay
+            let otherSides = SCNMaterial()
+            otherSides.diffuse.contents = UIColor.black
+            artNode.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
             sceneView.scene.rootNode.addChildNode(artNode)
+            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.clear
         }
         
         
@@ -245,19 +268,28 @@ extension ARViewController {
         
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         
-        if planeAnchor.alignment == .horizontal {
-            
-            print("horizontal plane detected")
-            
-            drawPlaneNode(on: node, for: planeAnchor)
-        } else if planeAnchor.alignment == .vertical {
-
-            print("vertical plane detected")
+        if arState == .isActive {
+            if planeAnchor.alignment == .vertical {
+                drawPlaneNode(on: node, for: planeAnchor)
+                
+            }
+//            arState = .isNotActive
         }
-        
-//        Draw plane over detected surface
-        
-        drawPlaneNode(on: node, for: planeAnchor)
+            
+//            drawPlaneNode(on: node, for: planeAnchor)
+            
+//            if planeAnchor.alignment == .horizontal {
+//
+//                print("horizontal plane detected")
+//
+//            } else if planeAnchor.alignment == .vertical {
+//
+//                print("vertical plane detected")
+//                drawPlaneNode(on: node, for: planeAnchor)
+//
+//            }
+            
+        arState = .isNotActive
         
     }
     
@@ -277,28 +309,35 @@ extension ARViewController {
         
 //        Create node same size as detected plane
 //        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
-        let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
-//        Position node in center of plane
+//        let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
+////        Position node in center of plane
+//
+//        planeNode.position = SCNVector3(planeAnchor.center.x,
+//                                        planeAnchor.center.y,
+//                                        planeAnchor.center.z)
+//
+//        planeNode.geometry?.firstMaterial?.isDoubleSided = true
+//
+//        planeNode.eulerAngles = SCNVector3(-Double.pi / 2,0,0)
         
-        planeNode.position = SCNVector3(planeAnchor.center.x,
+        basePlane = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
+        basePlane.position = SCNVector3(planeAnchor.center.x,
                                         planeAnchor.center.y,
                                         planeAnchor.center.z)
+        basePlane.geometry?.firstMaterial?.isDoubleSided = true
+        basePlane.eulerAngles = SCNVector3(-Double.pi/2, 0, 0)
         
-        planeNode.geometry?.firstMaterial?.isDoubleSided = true
-        
-        planeNode.eulerAngles = SCNVector3(-Double.pi / 2,0,0)
-        
-        if planeAnchor.alignment == .horizontal {
-            print("It's horizontal")
-            planeNode.name = "horizontal"
-        } else {
-//            If vertical plance, add node as child
-//            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
-            planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
-            planeNode.name = "vertical"
-            node.addChildNode(planeNode)
-
-        }
+            if planeAnchor.alignment == .horizontal {
+                print("It's horizontal")
+                basePlane.name = "horizontal"
+            } else {
+    //            If vertical plane, add node as child
+    //            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+                basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
+                basePlane.name = "vertical"
+                node.addChildNode(basePlane)
+            }
+        arState = .isNotActive
         
         appState = .readyToFurnish
     }
