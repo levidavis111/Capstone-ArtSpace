@@ -27,9 +27,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private var arState: ARState = .isActive
     
     var artObject: ArtObject!
-    var imageToDisplay: UIImage? = nil
+    private var imageToDisplay: UIImage? = nil
     
-    var basePlane = SCNNode()
+    private var basePlane = SCNNode()
+    private var artBox = SCNNode()
     
     //    MARK: - Instantiate UI Elements
     
@@ -71,7 +72,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     @objc private func resetButtonPressed(sender: UIButton) {
         resetARSession()
+        removeNodes()
     }
+    
+//    Adds box with image on it when scene is tapped, as long as there is a plane on it
     
     @objc private func screenTapped(sender: UITapGestureRecognizer) {
         let tappedScene = sender.view as! ARSCNView
@@ -83,23 +87,16 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             let transform = planeIntersections.first!.worldTransform
             let positionColumn = transform.columns.3
             let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
-//            let artNode = SCNNode(geometry: SCNPlane(width: 0.5, height: 0.5))
-            let artNode = SCNNode(geometry: SCNBox(width: 0.5, height: 0.5, length: 0.05, chamferRadius: 0.5))
-            artNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
-            artNode.position = initialPosition
-            let sideOne = SCNMaterial()
-            sideOne.diffuse.contents = imageToDisplay
-            let otherSides = SCNMaterial()
-            otherSides.diffuse.contents = UIColor.black
-            artNode.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
-            sceneView.scene.rootNode.addChildNode(artNode)
+            
+            drawArtBox(initialPosition: initialPosition)
+            
             basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.clear
+            
         }
-        
         
     }
     
-   
+    
     //    MARK: - Private Methods
     
     private func addSubviews() {
@@ -114,7 +111,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private func constrainSceneView() {
         sceneView.translatesAutoresizingMaskIntoConstraints = false
-      
+        
         [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
          sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
          sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -142,7 +139,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     
-//    Initialize sceneView and ARSession
+    //    Initialize sceneView and ARSession
     
     private func initializeSceneView() {
         sceneView.delegate = self
@@ -153,7 +150,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
     }
     
-//    Break configuration out into its own function, because it gets called more than once
+    //    Break configuration out into its own function, because it gets called more than once
     
     private func createARConfiguration() -> ARConfiguration {
         let config = ARWorldTrackingConfiguration()
@@ -172,13 +169,20 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(config)
     }
     
+//    Reset the session and scene
+    
     private func resetARSession() {
         let config = createARConfiguration()
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
         appState = .lookingForSurface
     }
     
-//    Initialize gesture recognizer
+    private func removeNodes() {
+        artBox.removeFromParentNode()
+        basePlane.removeFromParentNode()
+    }
+    
+    //    Initialize gesture recognizer
     
     private func initializeGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
@@ -186,13 +190,32 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         print("Tap Initialized")
     }
     
+//    Draw a box with image on the first face
+    
+    private func drawArtBox(initialPosition: SCNVector3) {
+        
+        artBox = SCNNode(geometry: SCNBox(width: 0.5, height: 0.5, length: 0.05, chamferRadius: 0.5))
+        artBox.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
+        artBox.position = initialPosition
+        
+        let sideOne = SCNMaterial()
+        sideOne.diffuse.contents = imageToDisplay
+        let otherSides = SCNMaterial()
+        otherSides.diffuse.contents = UIColor.black
+        
+        artBox.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
+        sceneView.scene.rootNode.addChildNode(artBox)
+        
+    }
+    
+    
 }
 
 extension ARViewController {
     
-//    MARK: - APP Status
+    //    MARK: - APP Status
     
-//   This method gets called every second. Update app state to supply messages to user
+    //   This method gets called every second. Update app state to supply messages to user
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
@@ -200,7 +223,7 @@ extension ARViewController {
         }
     }
     
-//    Helper messages that can be displayed to the user. Apple reccomends doing this.
+    //    Helper messages that can be displayed to the user. Apple reccomends doing this.
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
@@ -224,7 +247,7 @@ extension ARViewController {
         }
     }
     
-//    Updates the appState when planes are detected or not
+    //    Updates the appState when planes are detected or not
     
     private func updateAppState() {
         guard appState == .pointToSurface || appState == .readyToFurnish else {return}
@@ -241,7 +264,7 @@ extension ARViewController {
         let viewWidth = view.bounds.size.width
         let viewHeight = view.bounds.size.height
         
-//       Break screen into 5 x 5 divisions and perform a hit test on each one
+        //       Break screen into 5 x 5 divisions and perform a hit test on each one
         
         for y in 0...screenDivisions {
             let yCoord = CGFloat(y) / CGFloat(screenDivisions) * viewHeight
@@ -260,10 +283,10 @@ extension ARViewController {
         return false
     }
     
-//    MARK: - Plane Detection
+    //    MARK: - Plane Detection
     
-//      Gets called every time the node for a new anchor get added
-
+    //      Gets called every time the node for a new anchor get added
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
@@ -273,52 +296,39 @@ extension ARViewController {
                 drawPlaneNode(on: node, for: planeAnchor)
                 
             }
-//            arState = .isNotActive
+            //            arState = .isNotActive
         }
-            
-//            drawPlaneNode(on: node, for: planeAnchor)
-            
-//            if planeAnchor.alignment == .horizontal {
-//
-//                print("horizontal plane detected")
-//
-//            } else if planeAnchor.alignment == .vertical {
-//
-//                print("vertical plane detected")
-//                drawPlaneNode(on: node, for: planeAnchor)
-//
-//            }
-            
+        
+        //            drawPlaneNode(on: node, for: planeAnchor)
+        
+        //            if planeAnchor.alignment == .horizontal {
+        //
+        //                print("horizontal plane detected")
+        //
+        //            } else if planeAnchor.alignment == .vertical {
+        //
+        //                print("vertical plane detected")
+        //                drawPlaneNode(on: node, for: planeAnchor)
+        //
+        //            }
+        
         arState = .isNotActive
         
     }
     
-//    Gets called when an existing anchor is updated
+    //    Gets called when an existing anchor is updated
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-//        Remove child nodes that might exist
+        //        Remove child nodes that might exist
         node.enumerateChildNodes { (childNode, _) in
             childNode.removeFromParentNode()
         }
-//        Draw new plane over detected surface
+        //        Draw new plane over detected surface
         drawPlaneNode(on: node, for: planeAnchor)
     }
     
     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
-        
-//        Create node same size as detected plane
-//        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
-//        let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
-////        Position node in center of plane
-//
-//        planeNode.position = SCNVector3(planeAnchor.center.x,
-//                                        planeAnchor.center.y,
-//                                        planeAnchor.center.z)
-//
-//        planeNode.geometry?.firstMaterial?.isDoubleSided = true
-//
-//        planeNode.eulerAngles = SCNVector3(-Double.pi / 2,0,0)
         
         basePlane = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
         basePlane.position = SCNVector3(planeAnchor.center.x,
@@ -327,46 +337,45 @@ extension ARViewController {
         basePlane.geometry?.firstMaterial?.isDoubleSided = true
         basePlane.eulerAngles = SCNVector3(-Double.pi/2, 0, 0)
         
-            if planeAnchor.alignment == .horizontal {
-                print("It's horizontal")
-                basePlane.name = "horizontal"
-            } else {
-    //            If vertical plane, add node as child
-    //            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
-                basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
-                basePlane.name = "vertical"
-                node.addChildNode(basePlane)
-            }
+        if planeAnchor.alignment == .horizontal {
+            print("It's horizontal")
+            basePlane.name = "horizontal"
+        } else {
+            //            If vertical plane, add node as child
+            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
+            basePlane.name = "vertical"
+            node.addChildNode(basePlane)
+        }
         arState = .isNotActive
         
         appState = .readyToFurnish
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-//        Gets called if node corresponding to anchor is removed
+        //        Gets called if node corresponding to anchor is removed
         guard anchor is ARPlaneAnchor else {return}
-//        Remove child nodes
+        //        Remove child nodes
         node.enumerateChildNodes { (childNode, _) in
             childNode.removeFromParentNode()
         }
     }
     
     // MARK: - AR session error management
-
-      func session(_ session: ARSession, didFailWithError error: Error) {
+    
+    func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
         print("AR session failure: \(error)")
-      }
-
-      func sessionWasInterrupted(_ session: ARSession) {
+    }
+    
+    func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
         print("AR session was interrupted!")
-      }
-
-      func sessionInterruptionEnded(_ session: ARSession) {
+    }
+    
+    func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         print("AR session interruption ended.")
         resetARSession()
-      }
-
+    }
+    
 }
