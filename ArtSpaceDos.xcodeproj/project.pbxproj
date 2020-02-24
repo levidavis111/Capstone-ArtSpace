@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9173D4764C4741D888A0D212 /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02964C7AC467E3249C5BA96F /* Pods_ArtSpaceDos.framework */; };
+		3B948E92E6C10F00A7B88C9A /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EFECF797FED70B8B595A58D /* Pods_ArtSpaceDos.framework */; };
 		CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA886A323EDF40100E45D49 /* FilterViewController.swift */; };
 		CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBEC33A23F5A13800A83FD7 /* Delegates.swift */; };
 		D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */; };
@@ -37,9 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		02964C7AC467E3249C5BA96F /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CD63F7175C84AA0157E4DD9 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
-		C7FB5B73BAD63CDE3EE2FCAA /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
+		1EFECF797FED70B8B595A58D /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52FC922B63164A264778C458 /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
+		5A16FE11C831F1F48909E6C9 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		CBA886A323EDF40100E45D49 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		CBBEC33A23F5A13800A83FD7 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -75,18 +75,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9173D4764C4741D888A0D212 /* Pods_ArtSpaceDos.framework in Frameworks */,
+				3B948E92E6C10F00A7B88C9A /* Pods_ArtSpaceDos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F807DA675952C11A642753D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1EFECF797FED70B8B595A58D /* Pods_ArtSpaceDos.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6C801646FBAE48EAE621CBD4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3CD63F7175C84AA0157E4DD9 /* Pods-ArtSpaceDos.debug.xcconfig */,
-				C7FB5B73BAD63CDE3EE2FCAA /* Pods-ArtSpaceDos.release.xcconfig */,
+				5A16FE11C831F1F48909E6C9 /* Pods-ArtSpaceDos.debug.xcconfig */,
+				52FC922B63164A264778C458 /* Pods-ArtSpaceDos.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -97,7 +105,7 @@
 				D82FA88023E33697005B22D4 /* ArtSpaceDos */,
 				D82FA87F23E33697005B22D4 /* Products */,
 				6C801646FBAE48EAE621CBD4 /* Pods */,
-				E158E4B331FBC1B73172EDF7 /* Frameworks */,
+				3F807DA675952C11A642753D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,14 +207,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		E158E4B331FBC1B73172EDF7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				02964C7AC467E3249C5BA96F /* Pods_ArtSpaceDos.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -214,11 +214,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D82FA89223E3369A005B22D4 /* Build configuration list for PBXNativeTarget "ArtSpaceDos" */;
 			buildPhases = (
-				71BF78297864FB721B97CF8E /* [CP] Check Pods Manifest.lock */,
+				0A033B82A76B0A1AED1AF81C /* [CP] Check Pods Manifest.lock */,
 				D82FA87A23E33697005B22D4 /* Sources */,
 				D82FA87B23E33697005B22D4 /* Frameworks */,
 				D82FA87C23E33697005B22D4 /* Resources */,
-				0636342795A1A6DC80748752 /* [CP] Embed Pods Frameworks */,
+				DE8B12652D340E46D6A8912D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -277,24 +277,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0636342795A1A6DC80748752 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		71BF78297864FB721B97CF8E /* [CP] Check Pods Manifest.lock */ = {
+		0A033B82A76B0A1AED1AF81C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,6 +297,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE8B12652D340E46D6A8912D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -486,7 +486,7 @@
 		};
 		D82FA89323E3369A005B22D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CD63F7175C84AA0157E4DD9 /* Pods-ArtSpaceDos.debug.xcconfig */;
+			baseConfigurationReference = 5A16FE11C831F1F48909E6C9 /* Pods-ArtSpaceDos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -506,7 +506,7 @@
 		};
 		D82FA89423E3369A005B22D4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7FB5B73BAD63CDE3EE2FCAA /* Pods-ArtSpaceDos.release.xcconfig */;
+			baseConfigurationReference = 52FC922B63164A264778C458 /* Pods-ArtSpaceDos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

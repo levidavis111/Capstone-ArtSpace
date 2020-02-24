@@ -63,7 +63,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let tapLocation = sender.location(in: tappedScene)
         let planeIntersections = tappedScene.hitTest(tapLocation, types: .existingPlane)
         if !planeIntersections.isEmpty {
-            print("plane tapped")
+            
             let transform = planeIntersections.first!.worldTransform
             let positionColumn = transform.columns.3
             let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
@@ -73,57 +73,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             sceneView.scene.rootNode.addChildNode(artNode)
         }
         
-        print("Screen tapped")
+        
     }
     
-    /**
-     func addFurniture(hitTestResult: ARHitTestResult) {
-       // Get the real-world position corresponding to
-       // where the user tapped on the screen.
-       let transform = hitTestResult.worldTransform
-       let positionColumn = transform.columns.3
-       let initialPosition = SCNVector3(positionColumn.x, positionColumn.y, positionColumn.z)
-       // Get the current furniture item, correct its position if necessary,
-       // and add it to the scene.
-       let node = furnitureSettings.currentFurniturePiece()
-       node.position = initialPosition + furnitureSettings.currentFurnitureOffset()
-       sceneView.scene.rootNode.addChildNode(node)
-     }
-
-     */
-    
-    /**
-     private func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
-             
-     //        Create node same size as detected plane
-     //        let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z)))
-             let planeNode = SCNNode(geometry: SCNPlane(width: 2.0, height: 2.0))
-     //        Position node in center of plane
-             
-        planeNode.position = SCNVector3(planeAnchor.center.x,
-                                             planeAnchor.center.y,
-                                             planeAnchor.center.z)
-             
-             planeNode.geometry?.firstMaterial?.isDoubleSided = true
-             
-             planeNode.eulerAngles = SCNVector3(-Double.pi / 2,0,0)
-             
-             if planeAnchor.alignment == .horizontal {
-                 print("It's horizontal")
-                 planeNode.name = "horizontal"
-             } else {
-     //            If vertical plance, add node as child
-     //            planeNode.geometry?.firstMaterial?.diffuse.contents = imageToDisplay
-                 planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
-                 planeNode.name = "vertical"
-                 node.addChildNode(planeNode)
-
-             }
-             
-             appState = .readyToFurnish
-         }
-     */
-    
+   
     //    MARK: - Private Methods
     
     private func addSubviews() {
@@ -138,7 +91,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private func constrainSceneView() {
         sceneView.translatesAutoresizingMaskIntoConstraints = false
-        //MARK: TO Do - Take safe area layout out??
+      
         [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
          sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
          sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -216,7 +169,7 @@ extension ARViewController {
     
 //    MARK: - APP Status
     
-//   This method gets called every second. Put things here we want repeated constatnly
+//   This method gets called every second. Update app state to supply messages to user
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
@@ -224,7 +177,7 @@ extension ARViewController {
         }
     }
     
-//    Helper messages that can be displayed to the user
+//    Helper messages that can be displayed to the user. Apple reccomends doing this.
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
