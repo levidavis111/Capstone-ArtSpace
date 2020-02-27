@@ -257,6 +257,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - SnapKit (5.0.1)
+  - Stripe (19.0.0)
 
 DEPENDENCIES:
   - EmptyDataSet-Swift (~> 5.0.0)
@@ -265,6 +266,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Kingfisher (~> 5.0)
   - SnapKit (~> 5.0.0)
+  - Stripe
 
 SPEC REPOS:
   trunk:
@@ -289,6 +291,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - SnapKit
+    - Stripe
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -312,7 +315,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  Stripe: 5afd38a520f7a1a16b609127165d517fa9f7de32
 
-PODFILE CHECKSUM: 27f797a5aba8fb093e9dbc2d9dde33749fcaf5ba
+PODFILE CHECKSUM: f6a8a64f007a34346257dae1b94e313eede35f61
 
 COCOAPODS: 1.8.4
