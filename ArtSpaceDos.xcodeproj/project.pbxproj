@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9173D4764C4741D888A0D212 /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02964C7AC467E3249C5BA96F /* Pods_ArtSpaceDos.framework */; };
+		CB0D6FAA23FC55A20082178A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FA923FC55A20082178A /* LoginViewController.swift */; };
+		CB0D6FAC23FC55AC0082178A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FAB23FC55AC0082178A /* SignUpViewController.swift */; };
+		CB0D6FAE23FC55EA0082178A /* GifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FAD23FC55EA0082178A /* GifExtension.swift */; };
 		CBA886A423EDF40100E45D49 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA886A323EDF40100E45D49 /* FilterViewController.swift */; };
 		CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBEC33A23F5A13800A83FD7 /* Delegates.swift */; };
 		D80E04CF23ECAA2200352C3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */; };
@@ -40,6 +43,9 @@
 		02964C7AC467E3249C5BA96F /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD63F7175C84AA0157E4DD9 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		C7FB5B73BAD63CDE3EE2FCAA /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
+		CB0D6FA923FC55A20082178A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CB0D6FAB23FC55AC0082178A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CB0D6FAD23FC55EA0082178A /* GifExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifExtension.swift; sourceTree = "<group>"; };
 		CBA886A323EDF40100E45D49 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		CBBEC33A23F5A13800A83FD7 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		D80E04CE23ECAA2200352C3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +97,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CB0D6FA823FC558B0082178A /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				CB0D6FA923FC55A20082178A /* LoginViewController.swift */,
+				CB0D6FAB23FC55AC0082178A /* SignUpViewController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		D82FA87523E33697005B22D4 = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +152,7 @@
 		D82FA89E23E33C41005B22D4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CB0D6FA823FC558B0082178A /* Authentication */,
 				D82FA89F23E33C4B005B22D4 /* Cell */,
 				D82FA8A023E33C84005B22D4 /* MainViewController.swift */,
 				D80E04D423ECAAEC00352C3E /* MainTabBarController.swift */,
@@ -174,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				D82FA8AA23E33E49005B22D4 /* String+Validations.swift */,
+				CB0D6FAD23FC55EA0082178A /* GifExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -323,6 +340,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB0D6FAE23FC55EA0082178A /* GifExtension.swift in Sources */,
+				CB0D6FAC23FC55AC0082178A /* SignUpViewController.swift in Sources */,
+				CB0D6FAA23FC55A20082178A /* LoginViewController.swift in Sources */,
 				D82FA8A523E33CB1005B22D4 /* CreatePostViewController.swift in Sources */,
 				D82FA8A323E33C9E005B22D4 /* ArtDetailViewController.swift in Sources */,
 				D82FA8B223E33ED3005B22D4 /* FirestoreService.swift in Sources */,

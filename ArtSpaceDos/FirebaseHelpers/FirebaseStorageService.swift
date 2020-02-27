@@ -9,7 +9,14 @@
 import Foundation
 import FirebaseStorage
 
+enum pictureUploadType: String {
+    case artPiece = "artPiece"
+    case profilePicture = "profilePicture"
+}
+
 class FirebaseStorageService {
+    //enum to save profile picture to Firebase without adding profile pictures to the artpieces folder. 
+    
     static let manager = FirebaseStorageService()
     
     private let storage: Storage!
@@ -19,14 +26,23 @@ class FirebaseStorageService {
     private init() {
         storage = Storage.storage()
         storageReference = storage.reference()
-        imagesFolderReference = storageReference.child("images")
+        imagesFolderReference = storageReference.child(pictureUploadType.artPiece.rawValue)
     }
     
-    func storeImage(image: Data, completion: @escaping (Result<URL, Error>) -> ()) {
+    func storeImage(pictureType: pictureUploadType,image: Data, completion: @escaping (Result<URL, Error>) -> ()) {
         let metaData = StorageMetadata()
+        let userID = (FirebaseAuthService.manager.currentUser?.uid)!
         metaData.contentType = "image/jpeg"
         let uuid = UUID()
-        let imageLocation = imagesFolderReference.child(uuid.description)
+        var imageLocation = storageReference
+        switch pictureType {
+        case .artPiece:
+            imageLocation = storageReference.child("\(pictureType.rawValue)").child(uuid.description)
+            
+        case .profilePicture:
+            imageLocation = storageReference.child("\(pictureType.rawValue)").child(userID)
+        }
+//        let imageLocation = imagesFolderReference.child(uuid.description)
         imageLocation.putData(image, metadata: metaData) { (responseMetaData, error) in
             if let error = error {
                 completion(.failure(error))

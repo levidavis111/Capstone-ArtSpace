@@ -20,6 +20,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     //MARK: Note: How to better scale pictures in view?
     imageView.contentMode = .scaleToFill
     imageView.backgroundColor = .clear
+    
     return imageView
   }()
   
@@ -27,7 +28,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     let button = UIButton()
     let imageConfig = UIImage.SymbolConfiguration(scale: .large)
     button.setImage(UIImage(systemName: "bookmark.fill", withConfiguration: imageConfig), for: .normal)
-    button.tintColor = .red
+    button.tintColor = .systemBlue
     button.layer.backgroundColor = UIColor.clear.cgColor
     button.addTarget(self, action: #selector(bookmarkButtonPressed), for: .touchUpInside)
     return button
@@ -67,12 +68,26 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     return button
   }()
   
+  lazy var soldStatusView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+    return view
+  }()
+  
+  lazy var soldStatusLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Item Sold"
+    label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 75)
+    label.textColor = .red
+    return label
+  }()
+  
   //MARK: Lifecycle Methods
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubViews()
     addConstraints()
-    contentView.backgroundColor = UIColor(red: 255/255, green: 193/255, blue: 207/255, alpha: 1)
+    setupContentView()
   }
   
   required init?(coder: NSCoder) {
@@ -88,6 +103,22 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     delegate?.buyButtonPressed(tag: tag)
   }
   
+  //MARK: Functions
+  
+  func setupContentView() {
+    contentView.backgroundColor = .systemPurple
+    contentView.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
+    contentView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+    contentView.layer.shadowOpacity = 0.9
+    contentView.layer.shadowRadius = 4
+  }
+  
+  func updateSoldStatus(status: Bool) {
+    if status {
+      setupSoldStatus()
+    }
+  }
+  
   //MARK: Private Functions
   private func addSubViews() {
     contentView.addSubview(savedImageView)
@@ -96,6 +127,27 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(artistNameLabel)
     contentView.addSubview(priceLabel)
     contentView.addSubview(buyButton)
+  }
+  
+  private func setupSoldStatus() {
+    contentView.addSubview(soldStatusView)
+    soldStatusView.addSubview(soldStatusLabel)
+    constrainSoldStatus()
+    buyButton.isEnabled = false
+    buyButton.isHidden = true
+  }
+  
+  private func constrainSoldStatus() {
+    soldStatusView.snp.makeConstraints { (make) in
+      make.top.equalTo(contentView)
+      make.left.equalTo(contentView)
+      make.right.equalTo(contentView)
+      make.bottom.equalTo(contentView).offset(-75)
+    }
+    
+    soldStatusLabel.snp.makeConstraints { (make) in
+      make.center.equalTo(soldStatusView)
+    }
     
   }
   

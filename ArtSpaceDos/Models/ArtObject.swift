@@ -20,7 +20,8 @@ struct ArtObject {
     let artID: String
     let sellerID: String
     let price: Double
-    let soldStatus: Bool = false
+  //MARK: TODO: remove default status
+    let soldStatus: Bool = true
     let dateCreated: Date?
     let tags: [String]
     

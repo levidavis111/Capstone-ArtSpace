@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EmptyDataSet_Swift
 
 class SavedArtViewController: UIViewController {
   
@@ -25,15 +26,9 @@ class SavedArtViewController: UIViewController {
     
     let collection = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 200), collectionViewLayout: layout)
     collection.register(SavedArtCollectionViewCell.self, forCellWithReuseIdentifier: ReuseIdentifier.savedArtCell.rawValue)
+    collection.backgroundColor = .clear
     collection.dataSource = self
     collection.delegate = self
-    
-    collection.layer.backgroundColor = UIColor.clear.cgColor
-    collection.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
-    collection.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-    collection.layer.shadowOpacity = 0.9
-    collection.layer.shadowRadius = 4
-    
     return collection
   }()
   
@@ -44,6 +39,7 @@ class SavedArtViewController: UIViewController {
     setupNavigationBar()
     setupSavedArtCollectionView()
     loadAllBookmarkedArt()
+    setupEmptyDataSourceDelegate()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +53,7 @@ class SavedArtViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    let viewControllerTitle = "My Saved Art"
+    let viewControllerTitle = "Saved Artworks"
     let attrs = [
       NSAttributedString.Key.foregroundColor: UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1),
       NSAttributedString.Key.font: UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
@@ -142,6 +138,8 @@ extension SavedArtViewController: UICollectionViewDataSource {
     let formattedPrice = String(format: "$ %.2f", price)
     cell.priceLabel.text = formattedPrice
     
+    cell.updateSoldStatus(status: savedArtObjects.soldStatus)
+    
     cell.delegate = self
     cell.tag = indexPath.row
     return cell
@@ -166,13 +164,12 @@ extension SavedArtViewController: SavedArtCellDelegate {
     alertVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
     alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
       let oneArtObject = self.artObjectData[tag]
-      //MARK: - Get Favorites from userID when authentication is implemented
+      //MARK: TODO: Get Favorites from userID when authentication is implemented
       FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
         switch result {
         case .failure(let error):
           self.makeConfirmationAlert(with: "Error removing saved item", and: "\(error)")
         case .success(()):
-          self.makeGeneralAlert(with: "Success", message: "Item Removed")
           DispatchQueue.main.async {
             self.loadAllBookmarkedArt()
             
@@ -182,4 +179,28 @@ extension SavedArtViewController: SavedArtCellDelegate {
     }))
     present(alertVC, animated: true, completion: nil)
   }
+}
+
+
+extension SavedArtViewController: EmptyDataSetSource, EmptyDataSetDelegate {
+  
+  func setupEmptyDataSourceDelegate() {
+    savedArtCollectionView.emptyDataSetDelegate = self
+    savedArtCollectionView.emptyDataSetSource = self
+    savedArtCollectionView.backgroundView = UIView()
+  }
+  
+  func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+    let titleString = "You haven't saved any artworks yet."
+    let titleAttributes = [NSAttributedString.Key.font: UIFont.init(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 25)]
+    return NSAttributedString(string: titleString, attributes: titleAttributes)
+  }
+  
+  func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+    let descriptionString = "Tap the heart on an artwork to save for later."
+    let descriptionAttributes = [NSAttributedString.Key.font: UIFont.init(descriptor: .preferredFontDescriptor(withTextStyle: .subheadline), size: 20)]
+    return NSAttributedString(string: descriptionString, attributes: descriptionAttributes)
+  }
+  
+  //MARK: TODO: Add button to segue to the main view controller to prompt the user to view other works
 }
