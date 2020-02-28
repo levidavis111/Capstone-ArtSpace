@@ -59,6 +59,7 @@ class LoginViewController: UIViewController {
         button.layer.shadowColor = UIColor.darkGray.cgColor
         button.layer.masksToBounds = false
         button.layer.shadowOpacity = 0.5
+        
         return button
     }()
     
@@ -102,6 +103,9 @@ class LoginViewController: UIViewController {
         FirebaseAuthService.manager.loginUser(email: email.lowercased(), password: password) { (result) in
             self.handleLoginAccountResponse(with: result)
         }
+        
+        
+        
     }
     
     @objc func switchToSignUpController() {

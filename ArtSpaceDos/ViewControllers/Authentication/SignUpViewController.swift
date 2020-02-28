@@ -11,6 +11,7 @@ import SnapKit
 import FirebaseAuth
 
 class SignUpViewController: UIViewController {
+    
     //MARK: UI Elements
     lazy var gifView: UIImageView = {
         let imageView = UIImageView()
@@ -131,6 +132,7 @@ class SignUpViewController: UIViewController {
                 self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
             }
         }
+        
     }
     
     private func handleCreatedUserInFirestore(result: Result<Void, Error>) {
@@ -149,7 +151,7 @@ class SignUpViewController: UIViewController {
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alertVC, animated: true, completion: nil)
     }
-
+   
     // MARK: - Constraints
     
     func setUpConstraints() {
@@ -200,4 +202,5 @@ class SignUpViewController: UIViewController {
             make.height.equalTo(60)
         }
     }
+    
 }
