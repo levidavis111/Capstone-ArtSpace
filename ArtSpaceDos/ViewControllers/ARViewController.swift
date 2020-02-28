@@ -32,6 +32,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private var basePlane = SCNNode()
     private var artBox = SCNNode()
     
+    private var status: String = "Looking for Surface" {
+        didSet {
+            DispatchQueue.main.async {
+                self.statusLabel.text = self.status
+            }
+        }
+    }
+    
     //    MARK: - Instantiate UI Elements
     
     lazy var sceneView: ARSCNView = {
@@ -45,6 +53,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         resetButton.setTitle("RESET", for: .normal)
         resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchUpInside)
         return resetButton
+    }()
+    
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = self.status
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
     }()
     
     //    MARK: - Lifecycle Methods
@@ -73,6 +89,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     @objc private func resetButtonPressed(sender: UIButton) {
         resetARSession()
         removeNodes()
+        status = "Looking for Surface"
     }
     
     //    Adds box with image on it when scene is tapped, as long as there is a plane on it
@@ -104,11 +121,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private func addSubviews() {
         view.addSubview(sceneView)
         sceneView.addSubview(resetButton)
+        sceneView.addSubview(statusLabel)
     }
     
     private func constrainSubviews() {
         constrainSceneView()
         constrainResetButton()
+        constrainStatusLabel()
     }
     
     private func constrainSceneView() {
@@ -128,6 +147,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
          resetButton.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
          resetButton.heightAnchor.constraint(equalToConstant: 50),
          resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
+    }
+    
+    private func constrainStatusLabel() {
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        [statusLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor),
+         statusLabel.topAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.topAnchor, constant: 20)].forEach {$0.isActive = true}
     }
     
     private func retrieveImage() {
@@ -215,6 +241,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         
         artBox.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
         sceneView.scene.rootNode.addChildNode(artBox)
+        status = "Do you like it? Buy it."
         
     }
     
@@ -327,10 +354,12 @@ extension ARViewController {
             print("It's horizontal")
             basePlane.name = "horizontal"
         } else {
-//            If vertical plane, add node as child
-            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
+            //            If vertical plane, add node as child
+            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.clear
             basePlane.name = "vertical"
             node.addChildNode(basePlane)
+            
+            status = "Wall Detected. Tap to Place Art."
         }
         arState = .isNotActive
         print("\(arState)")
