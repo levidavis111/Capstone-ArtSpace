@@ -44,6 +44,8 @@ class FirestoreService {
         }
     }
     
+    
+    
     func updateCurrentUser(userName: String? = nil, completion: @escaping (Result<(), Error>) -> ()) {
         guard let userID = FirebaseAuthService.manager.currentUser?.uid else {return}
         
@@ -57,8 +59,23 @@ class FirestoreService {
             }
             completion(.success(()))
         }
+        
     }
-    
+    func getAllUsers(completion: @escaping (Result<[AppUser], Error>) -> ()) {
+        
+        database.collection(FirestoreCollections.AppUser.rawValue).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let users = snapshot?.documents.compactMap({ (snapshot) -> AppUser? in
+                    let userID = snapshot.documentID
+                    let user = AppUser(from: snapshot.data(), id: userID)
+                    return user
+                })
+                completion(.success(users ?? []))
+            }
+        }
+    }
 //    MARK: - ArtObject Methods
     
     func createArtObject(artObject: ArtObject, completion: @ escaping (Result<(), Error>) -> ()) {

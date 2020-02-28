@@ -267,7 +267,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
         
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {return}
         //MARK: To Do - Refactor when Image is being saved
-        FirebaseStorageService.manager.storeImage(image: imageData) { [weak self] (result) in
+        FirebaseStorageService.manager.storeImage(pictureType: .artPiece, image: imageData) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error)
