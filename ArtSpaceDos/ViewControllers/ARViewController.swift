@@ -265,21 +265,28 @@ extension ARViewController {
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
         case .notAvailable:
-            print("For some reason, augmented reality tracking isn’t available.")
+            self.status = "For some reason, augmented reality tracking isn’t available."
         case .normal:
-            print("Tracking state normal")
+            
+            if arState == .isActive {
+                self.status = "Looking for Surface"
+            }
+            
         case .limited(let reason):
-            switch reason {
-            case .excessiveMotion:
-                print("You’re moving the device around too quickly. Slow down.")
-            case .insufficientFeatures:
-                print("I can’t get a sense of the room. Is something blocking the rear camera?")
-            case .initializing:
-                print("Initializing — please wait a moment...")
-            case .relocalizing:
-                print("Relocalizing — please wait a moment...")
-            @unknown default:
-                print("Unknown default")
+            
+            if arState == .isActive {
+                switch reason {
+                case .excessiveMotion:
+                    self.status = "You’re moving the device around too quickly. Slow down."
+                case .insufficientFeatures:
+                    self.status = "I can’t get a sense of the room. Is something blocking the rear camera?"
+                case .initializing:
+                    self.status = "Initializing — please wait a moment..."
+                case .relocalizing:
+                    self.status = "Relocalizing — please wait a moment..."
+                @unknown default:
+                    print("Unknown default")
+                }
             }
         }
     }
