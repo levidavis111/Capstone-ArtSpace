@@ -165,15 +165,15 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.3)
   - BoringSSL-GRPC/Interface (0.0.3)
   - EmptyDataSet-Swift (5.0.0)
-  - Firebase/Auth (6.16.0):
+  - Firebase/Auth (6.18.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.3)
-  - Firebase/CoreOnly (6.16.0):
-    - FirebaseCore (= 6.6.1)
-  - Firebase/Firestore (6.16.0):
+  - Firebase/CoreOnly (6.18.0):
+    - FirebaseCore (= 6.6.3)
+  - Firebase/Firestore (6.18.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 1.10.0)
-  - Firebase/Storage (6.16.0):
+    - FirebaseFirestore (~> 1.11.0)
+  - Firebase/Storage (6.18.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.5.0)
   - FirebaseAuth (6.4.3):
@@ -183,19 +183,19 @@ PODS:
     - GoogleUtilities/Environment (~> 6.5)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (6.6.1):
+  - FirebaseCore (6.6.3):
     - FirebaseCoreDiagnostics (~> 1.2)
     - FirebaseCoreDiagnosticsInterop (~> 1.2)
     - GoogleUtilities/Environment (~> 6.5)
     - GoogleUtilities/Logger (~> 6.5)
-  - FirebaseCoreDiagnostics (1.2.0):
+  - FirebaseCoreDiagnostics (1.2.1):
     - FirebaseCoreDiagnosticsInterop (~> 1.2)
     - GoogleDataTransportCCTSupport (~> 1.3)
     - GoogleUtilities/Environment (~> 6.5)
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
-  - FirebaseFirestore (1.10.1):
+  - FirebaseFirestore (1.11.0):
     - abseil/algorithm (= 0.20190808)
     - abseil/base (= 0.20190808)
     - abseil/memory (= 0.20190808)
@@ -212,9 +212,9 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleDataTransport (3.3.1)
-  - GoogleDataTransportCCTSupport (1.3.1):
-    - GoogleDataTransport (~> 3.3)
+  - GoogleDataTransport (4.0.1)
+  - GoogleDataTransportCCTSupport (1.4.1):
+    - GoogleDataTransport (~> 4.0)
     - nanopb (~> 0.3.901)
   - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
@@ -247,9 +247,9 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
   - GTMSessionFetcher/Core (1.3.1)
-  - Kingfisher (5.13.0):
-    - Kingfisher/Core (= 5.13.0)
-  - Kingfisher/Core (5.13.0)
+  - Kingfisher (5.13.2):
+    - Kingfisher/Core (= 5.13.2)
+  - Kingfisher/Core (5.13.2)
   - leveldb-library (1.22)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -297,21 +297,21 @@ SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
-  Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
+  Firebase: 0490eca762a72e4f1582319539153897f1508dee
   FirebaseAuth: 5ce2b03a3d7fe56b7a6e4c5ec7ff1522890b1d6f
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: 85064903ed6c28e47fec9c7bd149d94ba1b6b6e7
-  FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
+  FirebaseCore: 78276943ad85e616dfa54dafa6c89512987d9d60
+  FirebaseCoreDiagnostics: 2109d10c35e8289b1ee6cabf44d9ffb055620194
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
-  FirebaseFirestore: ff429edd15d5acdd2b8da02ea69483313e4ae0a7
+  FirebaseFirestore: a23d596ae3a8c13d3b8353b565d2adfb690f9032
   FirebaseStorage: 6c5263796af3b1be82ed173598aade47535fe125
-  GoogleDataTransport: 0048df6388dab1c254799f2a30365b1dffe20422
-  GoogleDataTransportCCTSupport: f880d70972efa2ed1be4e9173a0f4c5f3dc2d176
+  GoogleDataTransport: 653963cf5be60fb59cf051e070f0836fdc305f81
+  GoogleDataTransportCCTSupport: 84e4d4bbab642f2e9d83ee65d78aca2b5527d314
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
-  Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
+  Kingfisher: d342c8354c10c3d85a27d6d4c42c41285924b898
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb

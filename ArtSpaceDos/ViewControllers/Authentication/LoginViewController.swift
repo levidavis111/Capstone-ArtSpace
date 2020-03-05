@@ -11,6 +11,11 @@ import SnapKit
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    private enum SignInMethod {
+        case logIn
+        case register
+    }
+    private var signInMethod: SignInMethod = .logIn
 
     //MARK: UI Elements
     lazy var gifView: UIImageView = {
@@ -25,6 +30,16 @@ class LoginViewController: UIViewController {
         label.font = UIFont(name: "Chalkduster", size: 40)
         label.textColor = .white
         return label
+    }()
+    
+    lazy var segmentedControl: UISegmentedControl = {
+        let items = ["Log In", "Register"]
+        let sc = UISegmentedControl(items: items)
+        sc.selectedSegmentIndex = 0
+        sc.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        sc.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+        sc.tintColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+        return sc
     }()
     
     lazy var emailTextField: UITextField = {
@@ -50,7 +65,7 @@ class LoginViewController: UIViewController {
     
     lazy var loginButton: UIButton = {
         let button = UIButton(frame:CGRect(x: 0, y: 0, width: 250, height: 40))
-        UIUtilities.setUpButton(button, title: "Login", backgroundColor:  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) , target: self, action: #selector(loginUserFunction))
+        UIUtilities.setUpButton(button, title: "Login", backgroundColor:  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) , target: self, action: #selector(loginOrRegisterUser))
         button.titleLabel?.textColor = .red
         button.titleLabel?.textAlignment = .center
         button.layer.cornerRadius = button.frame.height / 2
@@ -80,11 +95,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .black
-    UIUtilities.addSubViews([gifView,titleLabel,emailTextField,passwordTextField,loginButton,switchToLogin], parentController: self)
+    UIUtilities.addSubViews([gifView,titleLabel,emailTextField,passwordTextField,loginButton,switchToLogin,segmentedControl], parentController: self)
         setUpConstraints()
     }
     //MARK: Objective C
-    @objc func loginUserFunction() {
+    @objc func loginOrRegisterUser() {
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             showAlert(with: "Error", and: "Please fill out all fields.")
             return
@@ -99,13 +114,27 @@ class LoginViewController: UIViewController {
             showAlert(with: "Error", and: "Please enter a valid password. Passwords must have at least 8 characters.")
             return
         }
-        
+        switch signInMethod {
+        case .logIn:
         FirebaseAuthService.manager.loginUser(email: email.lowercased(), password: password) { (result) in
             self.handleLoginAccountResponse(with: result)
         }
-        
-        
-        
+        case .register:
+            FirebaseAuthService.manager.createNewUser(email: email.lowercased(), password: password, completion: {(result) in
+                self.handleCreateAccountResponse(with: result)
+                
+            })
+    }
+    }
+    
+    @objc private func segmentedControlChanged(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            loginButton.setTitle("Log In", for: .normal)
+            signInMethod = .logIn
+        } else {
+            loginButton.setTitle("Register", for: .normal)
+            signInMethod = .register
+        }
     }
     
     @objc func switchToSignUpController() {
@@ -134,6 +163,29 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    private func handleCreateAccountResponse(with result: Result<User, Error>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .success(let user):
+                FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
+                    self?.handleCreatedUserInFirestore(result: newResult)
+                }
+            case .failure(let error):
+                self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+            }
+        }
+    }
+    
+    private func handleCreatedUserInFirestore(result: Result<Void, Error>) {
+        switch result {
+        case .success:
+            let tabBarController = MainTabBarController()
+            tabBarController.modalPresentationStyle = .overCurrentContext
+            self.present(tabBarController, animated: true, completion: nil)
+        case .failure(let error):
+            self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+        }
+    }
 
     private func showAlert(with title: String, and message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -152,7 +204,11 @@ class LoginViewController: UIViewController {
         titleLabel.snp.makeConstraints{ make in
             make.top.equalTo(view).offset(50)
             make.centerX.equalTo(view)
-            
+        }
+        
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(125)
+            make.centerX.equalTo(view)
         }
         
         emailTextField.snp.makeConstraints{ make in
