@@ -58,6 +58,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.text = self.status
+        label.numberOfLines = 0
         label.textColor = .white
         label.textAlignment = .center
         return label
