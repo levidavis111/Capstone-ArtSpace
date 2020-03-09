@@ -119,43 +119,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     //    MARK: - Private Methods
     
-    private func addSubviews() {
-        view.addSubview(sceneView)
-        sceneView.addSubview(resetButton)
-        sceneView.addSubview(statusLabel)
-    }
-    
-    private func constrainSubviews() {
-        constrainSceneView()
-        constrainResetButton()
-        constrainStatusLabel()
-    }
-    
-    private func constrainSceneView() {
-        sceneView.translatesAutoresizingMaskIntoConstraints = false
-        
-        [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-         sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-         sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-         sceneView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)].forEach{$0.isActive = true}
-        
-    }
-    
-    private func constrainResetButton() {
-        resetButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        [resetButton.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
-         resetButton.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
-         resetButton.heightAnchor.constraint(equalToConstant: 50),
-         resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
-    }
-    
-    private func constrainStatusLabel() {
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        [statusLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor),
-         statusLabel.topAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.topAnchor, constant: 20)].forEach {$0.isActive = true}
-    }
+   
     
     private func retrieveImage() {
         guard let url = URL.init(string: artObject.artImageURL) else {return}
@@ -166,7 +130,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
     
     //    Initialize sceneView and ARSession
     
@@ -245,6 +208,47 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         status = "Do you like it? Buy it."
         
     }
+    
+//    MARK: - Constrain UI Elements
+    
+    private func addSubviews() {
+           view.addSubview(sceneView)
+           sceneView.addSubview(resetButton)
+           sceneView.addSubview(statusLabel)
+       }
+       
+       private func constrainSubviews() {
+           constrainSceneView()
+           constrainResetButton()
+           constrainStatusLabel()
+       }
+       
+       private func constrainSceneView() {
+           sceneView.translatesAutoresizingMaskIntoConstraints = false
+           
+           [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            sceneView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)].forEach{$0.isActive = true}
+           
+       }
+       
+       private func constrainResetButton() {
+           resetButton.translatesAutoresizingMaskIntoConstraints = false
+           
+           [resetButton.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
+            resetButton.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
+            resetButton.heightAnchor.constraint(equalToConstant: 50),
+            resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
+       }
+       
+       private func constrainStatusLabel() {
+           statusLabel.translatesAutoresizingMaskIntoConstraints = false
+           
+           [statusLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor),
+            statusLabel.topAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            statusLabel.widthAnchor.constraint(equalToConstant: sceneView.safeAreaLayoutGuide.layoutFrame.width - 20)].forEach {$0.isActive = true}
+       }
     
     
 }

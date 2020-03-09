@@ -16,6 +16,7 @@ class CreatePostViewController: UIViewController {
     var imageURL: URL? = nil
     
     var currentUser: AppUser? = nil
+
     
     //MARK: - UIOjbects
     //MARK: TO DO - Add Text alignment to UI Utilities
@@ -145,6 +146,8 @@ class CreatePostViewController: UIViewController {
     }
     
     @objc func uploadButtonPressed() {
+        self.showActivityIndicator(shouldShow: true)
+        
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
         present(imagePickerVC, animated: true)
@@ -232,6 +235,7 @@ class CreatePostViewController: UIViewController {
         navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.topItem?.title = "\(title)"
     }
+ 
     
     //MARK: UISetup
     func addSubviews() {
@@ -328,9 +332,16 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
                 print(error)
             case .success(let url):
                 self?.imageURL = url
-                
             }
         }
+                
+        self.showActivityIndicator(shouldShow: false)
+
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.showActivityIndicator(shouldShow: false)
         self.dismiss(animated: true, completion: nil)
     }
 }

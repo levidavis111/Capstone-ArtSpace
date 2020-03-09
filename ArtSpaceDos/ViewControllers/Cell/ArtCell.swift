@@ -19,7 +19,6 @@ class ArtCell: UICollectionViewCell {
     }()
     lazy var priceLabel: UILabel = {
         var label = UILabel()
-//        label.text = "$50"
         label.textColor = .black
         label.backgroundColor = .white
         return label
