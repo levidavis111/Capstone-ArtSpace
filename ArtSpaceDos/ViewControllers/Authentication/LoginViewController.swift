@@ -11,6 +11,7 @@ import SnapKit
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    
     private enum SignInMethod {
         case logIn
         case register
@@ -49,6 +50,20 @@ class LoginViewController: UIViewController {
         input.alpha = 0.90
         input.layer.cornerRadius = 10.0
         input.clipsToBounds = true
+        input.attributedPlaceholder = NSAttributedString(string: "Enter Email",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        return input
+    }()
+    
+    lazy var usernameTextField: UITextField = {
+        let input = UITextField()
+        UIUtilities.setupTextView(input, placeholder: "Enter Username", alignment: .center)
+        input.backgroundColor = .white
+        input.alpha = 0.90
+        input.layer.cornerRadius = 10.0
+        input.clipsToBounds = true
+        input.attributedPlaceholder = NSAttributedString(string: "Enter Username",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return input
     }()
     
@@ -60,6 +75,8 @@ class LoginViewController: UIViewController {
         input.alpha = 0.90
         input.layer.cornerRadius = 10.0
         input.clipsToBounds = true
+        input.attributedPlaceholder = NSAttributedString(string: "Enter Password",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return input
     }() 
     
@@ -78,24 +95,14 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    lazy var switchToLogin: UIButton = {
-        let button = UIButton(frame:CGRect(x: 0, y: 0, width: 250, height: 40))
-        UIUtilities.setUpButton(button, title: "Don't Have An Account?", backgroundColor: .clear, target: self, action: #selector(switchToSignUpController))
-        button.layer.cornerRadius = button.frame.height / 2
-        button.clipsToBounds = true
-        button.layer.shadowOffset = CGSize(width: 2, height: 2)
-        button.layer.shadowColor = UIColor.darkGray.cgColor
-        button.layer.masksToBounds = false
-        button.layer.shadowOpacity = 0.5
-        return button
-    }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .black
-    UIUtilities.addSubViews([gifView,titleLabel,emailTextField,passwordTextField,loginButton,switchToLogin,segmentedControl], parentController: self)
+        dismissKeyboard()
+    UIUtilities.addSubViews([gifView,titleLabel,emailTextField,passwordTextField,loginButton, segmentedControl,usernameTextField], parentController: self)
+        usernameTextField.isHidden = true
         setUpConstraints()
     }
     //MARK: Objective C
@@ -122,7 +129,6 @@ class LoginViewController: UIViewController {
         case .register:
             FirebaseAuthService.manager.createNewUser(email: email.lowercased(), password: password, completion: {(result) in
                 self.handleCreateAccountResponse(with: result)
-                
             })
     }
     }
@@ -131,19 +137,23 @@ class LoginViewController: UIViewController {
         if sender.selectedSegmentIndex == 0 {
             loginButton.setTitle("Log In", for: .normal)
             signInMethod = .logIn
+            usernameTextField.isHidden = true
         } else {
             loginButton.setTitle("Register", for: .normal)
             signInMethod = .register
+            usernameTextField.isHidden = false
         }
     }
     
-    @objc func switchToSignUpController() {
-           let signUpViewController = SignUpViewController()
-        signUpViewController.modalPresentationStyle = .overFullScreen
-           self.present(signUpViewController, animated: true, completion: nil)
-       }
-    
     //MARK: Private Function
+    private func dismissKeyboardWithTap() {
+      let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+       
+      view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+      view.endEditing(true)
+    }
     private func handleLoginAccountResponse(with result: Result<(), Error>) {
         DispatchQueue.main.async {
             switch result {
@@ -168,8 +178,21 @@ class LoginViewController: UIViewController {
             switch result {
             case .success(let user):
                 FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
-                    self?.handleCreatedUserInFirestore(result: newResult)
+                    self?.addUserNameToUser(with: newResult)
                 }
+            case .failure(let error):
+                self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+            }
+        }
+    }
+    
+    private func addUserNameToUser (with result: Result<Void, Error>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .success( _):
+                FirestoreService.manager.updateCurrentUser(userName: self.usernameTextField.text ?? "", completion: { (result) in
+                    self.handleCreatedUserInFirestore(result: result)
+                })
             case .failure(let error):
                 self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
             }
@@ -218,6 +241,14 @@ class LoginViewController: UIViewController {
             make.height.equalTo(40)
         }
         
+        usernameTextField.snp.makeConstraints{ make in
+            make.top.equalTo(emailTextField).offset(50)
+            make.width.equalTo(emailTextField)
+            make.centerX.equalTo(view)
+            make.height.equalTo(40)
+            
+        }
+        
         passwordTextField.snp.makeConstraints{ make in
             make.top.equalTo(emailTextField).offset(100)
             make.centerX.equalTo(view)
@@ -231,14 +262,11 @@ class LoginViewController: UIViewController {
             make.width.equalTo(250)
             make.height.equalTo(40)
         }
-        
-        switchToLogin.snp.makeConstraints{ make in
-            make.top.equalTo(loginButton).offset(100)
-            make.centerX.equalTo(view)
-            make.width.equalTo(250)
-            make.height.equalTo(40)
-        }
-        
-    
     }
+}
+
+
+//MARK: UI Constants
+struct ArtSpaceConstants{
+    static var artSpaceColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
 }

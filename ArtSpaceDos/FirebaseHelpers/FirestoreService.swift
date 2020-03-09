@@ -61,6 +61,8 @@ class FirestoreService {
         }
         
     }
+    
+    
     func getAllUsers(completion: @escaping (Result<[AppUser], Error>) -> ()) {
         
         database.collection(FirestoreCollections.AppUser.rawValue).getDocuments { (snapshot, error) in
