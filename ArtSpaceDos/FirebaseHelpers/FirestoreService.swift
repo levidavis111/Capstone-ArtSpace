@@ -16,15 +16,15 @@ fileprivate enum FirestoreCollections: String {
     
 }
 // MARK: - Add when we add search bar
-//enum SortingCriteria: String {
-//    case fromNewestToOldest = "dateCreated"
-//    var shouldSortDescending: Bool {
-//        switch self {
-//        case .fromNewestToOldest:
-//            return true
-//        }
-//    }
-//}
+enum SortingCriteria: String {
+    case fromNewestToOldest = "dateCreated"
+    var shouldSortDescending: Bool {
+        switch self {
+        case .fromNewestToOldest:
+            return true
+        }
+    }
+}
 
 class FirestoreService {
     
@@ -64,21 +64,38 @@ class FirestoreService {
         }
          
     }
-    func getAllUsers(completion: @escaping (Result<[AppUser], Error>) -> ()) {
-        
-        database.collection(FirestoreCollections.AppUser.rawValue).getDocuments { (snapshot, error) in
+    
+    func getCurrentAppUser(uid: String, completion: @escaping (Result<AppUser, Error>) -> ()) {
+ database.collection(FirestoreCollections.AppUser.rawValue).document(uid).getDocument { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                let users = snapshot?.documents.compactMap({ (snapshot) -> AppUser? in
-                    let userID = snapshot.documentID
-                    let user = AppUser(from: snapshot.data(), id: userID)
-                    return user
-                })
-                completion(.success(users ?? []))
+            } else if let snapshot = snapshot, let data = snapshot.data() {
+                let userID = snapshot.documentID
+                let user = AppUser(from: data, id: userID)
+                completion(.success(user!))
             }
         }
     }
+    
+    func getAllUsers(completion: @escaping (Result<[AppUser], Error>) -> ()) {
+       
+            database.collection(FirestoreCollections.AppUser.rawValue).getDocuments { (snapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    let users = snapshot?.documents.compactMap({ (snapshot) -> AppUser? in
+                        let userID = snapshot.documentID
+                        let user = AppUser(from: snapshot.data(), id: userID)
+                        return user
+                    })
+                    completion(.success(users ?? []))
+                }
+            }
+        
+        
+    }
+    
+   
 //    MARK: - ArtObject Methods
     
     func createArtObject(artObject: ArtObject, completion: @ escaping (Result<(), Error>) -> ()) {
@@ -183,21 +200,5 @@ class FirestoreService {
             }
         }
     }
-    
-//    func deleteFavoriteEvent(forUserID: String, eventID: String, completion: @escaping (Result <(), Error>) -> ()) {
-//
-//        db.collection(FireStoreCollections.events.rawValue).whereField("creatorID", isEqualTo: forUserID).whereField("id", isEqualTo: eventID).getDocuments { (snapshot, error) in
-//            if let error = error {
-//                print("Error getting documents \(error)")
-//                completion(.failure(error))
-//            } else {
-//                for document in snapshot!.documents {
-//                    document.reference.delete()
-//                    completion(.success(()))
-//                }
-//            }
-//        }
-//
-//    }
     
 }

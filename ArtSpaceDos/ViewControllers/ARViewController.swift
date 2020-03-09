@@ -10,12 +10,6 @@ import UIKit
 import ARKit
 import Kingfisher
 
-private enum AppState: Int16 {
-    case lookingForSurface
-    case pointToSurface
-    case readyToFurnish
-}
-
 private enum ARState: Int16 {
     case isActive
     case isNotActive
@@ -23,7 +17,6 @@ private enum ARState: Int16 {
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
     
-    private var appState: AppState = .lookingForSurface
     private var arState: ARState = .isActive
     
     var artObject: ArtObject!
@@ -31,6 +24,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private var basePlane = SCNNode()
     private var artBox = SCNNode()
+    
+    private var status: String = "Looking for Surface" {
+        didSet {
+            DispatchQueue.main.async {
+                self.statusLabel.text = self.status
+            }
+        }
+    }
     
     //    MARK: - Instantiate UI Elements
     
@@ -45,6 +46,15 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         resetButton.setTitle("RESET", for: .normal)
         resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchUpInside)
         return resetButton
+    }()
+    
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = self.status
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
     }()
     
     //    MARK: - Lifecycle Methods
@@ -73,6 +83,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     @objc private func resetButtonPressed(sender: UIButton) {
         resetARSession()
         removeNodes()
+        status = "Looking for Surface"
     }
     
     //    Adds box with image on it when scene is tapped, as long as there is a plane on it
@@ -101,34 +112,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     //    MARK: - Private Methods
     
-    private func addSubviews() {
-        view.addSubview(sceneView)
-        sceneView.addSubview(resetButton)
-    }
-    
-    private func constrainSubviews() {
-        constrainSceneView()
-        constrainResetButton()
-    }
-    
-    private func constrainSceneView() {
-        sceneView.translatesAutoresizingMaskIntoConstraints = false
-        
-        [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-         sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-         sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-         sceneView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)].forEach{$0.isActive = true}
-        
-    }
-    
-    private func constrainResetButton() {
-        resetButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        [resetButton.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
-         resetButton.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
-         resetButton.heightAnchor.constraint(equalToConstant: 50),
-         resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
-    }
     
     private func retrieveImage() {
         guard let url = URL.init(string: artObject.artImageURL) else {return}
@@ -139,7 +122,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
     
     //    Initialize sceneView and ARSession
     
@@ -165,7 +147,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     private func initializeARSession() {
-        guard ARWorldTrackingConfiguration.isSupported else {print("AR World Tracking Not Supported"); return}
+        guard ARWorldTrackingConfiguration.isSupported else {status = "AR World Tracking Not Supported"; return}
         
         let config = createARConfiguration()
         arState = .isActive
@@ -178,7 +160,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let config = createARConfiguration()
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
         arState = .isActive
-        appState = .lookingForSurface
     }
     
     private func removeNodes() {
@@ -215,9 +196,50 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         
         artBox.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
         sceneView.scene.rootNode.addChildNode(artBox)
+        status = "Do you like it? Buy it."
         
     }
     
+    //    MARK: - Constrain UI Elements
+    
+    private func addSubviews() {
+        view.addSubview(sceneView)
+        sceneView.addSubview(resetButton)
+        sceneView.addSubview(statusLabel)
+    }
+    
+    private func constrainSubviews() {
+        constrainSceneView()
+        constrainResetButton()
+        constrainStatusLabel()
+    }
+    
+    private func constrainSceneView() {
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        
+        [sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+         sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+         sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+         sceneView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)].forEach{$0.isActive = true}
+        
+    }
+    
+    private func constrainResetButton() {
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        [resetButton.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
+         resetButton.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
+         resetButton.heightAnchor.constraint(equalToConstant: 50),
+         resetButton.widthAnchor.constraint(equalToConstant: 75)].forEach{$0.isActive = true}
+    }
+    
+    private func constrainStatusLabel() {
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        [statusLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor),
+         statusLabel.topAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.topAnchor, constant: 20),
+         statusLabel.widthAnchor.constraint(equalToConstant: sceneView.safeAreaLayoutGuide.layoutFrame.width - 20)].forEach {$0.isActive = true}
+    }
     
 }
 
@@ -225,47 +247,35 @@ extension ARViewController {
     
     //    MARK: - APP Status
     
-    //   This method gets called every second. Update app state to supply messages to user
-    
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        DispatchQueue.main.async {
-            self.updateAppState()
-        }
-    }
-    
     //    Helper messages that can be displayed to the user. Apple reccomends doing this.
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         switch camera.trackingState {
         case .notAvailable:
-            print("For some reason, augmented reality tracking isn’t available.")
+            self.status = "For some reason, augmented reality tracking isn’t available."
         case .normal:
-            print("Tracking state normal")
-        case .limited(let reason):
-            switch reason {
-            case .excessiveMotion:
-                print("You’re moving the device around too quickly. Slow down.")
-            case .insufficientFeatures:
-                print("I can’t get a sense of the room. Is something blocking the rear camera?")
-            case .initializing:
-                print("Initializing — please wait a moment...")
-            case .relocalizing:
-                print("Relocalizing — please wait a moment...")
-            @unknown default:
-                print("Unknown default")
+            
+            if arState == .isActive {
+                self.status = "Looking for Surface"
             }
-        }
-    }
-    
-    //    Updates the appState when planes are detected or not
-    
-    private func updateAppState() {
-        guard appState == .pointToSurface || appState == .readyToFurnish else {return}
-        
-        if isAnyPlaneInView() {
-            appState = .readyToFurnish
-        } else {
-            appState = .pointToSurface
+            
+        case .limited(let reason):
+            
+            if arState == .isActive {
+                switch reason {
+                case .excessiveMotion:
+                    self.status = "You’re moving the device around too quickly. Slow down."
+                case .insufficientFeatures:
+                    self.status = "I can’t get a sense of the room. Is something blocking the rear camera?"
+                case .initializing:
+                    self.status = "Initializing — please wait a moment..."
+                case .relocalizing:
+                    self.status = "Relocalizing — please wait a moment..."
+                @unknown default:
+                    self.status = "Unknown error"
+                    print("Unknown default")
+                }
+            }
         }
     }
     
@@ -301,14 +311,9 @@ extension ARViewController {
         
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         
-        if arState == .isNotActive {
-            print("is not active")
-        } else {
+        if arState == .isActive {
             if planeAnchor.alignment == .vertical {
-                print("vertical")
                 drawPlaneNode(on: node, for: planeAnchor)
-            } else if planeAnchor.alignment == .horizontal {
-                print("horizontal")
             }
         }
         
@@ -323,19 +328,16 @@ extension ARViewController {
         basePlane.geometry?.firstMaterial?.isDoubleSided = true
         basePlane.eulerAngles = SCNVector3(-Double.pi/2, 0, 0)
         
-        if planeAnchor.alignment == .horizontal {
-            print("It's horizontal")
-            basePlane.name = "horizontal"
-        } else {
-//            If vertical plane, add node as child
-            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.75)
-            basePlane.name = "vertical"
+        if planeAnchor.alignment == .vertical {
+            //   If a vertical plane is detected, draw a SCNPlane over it for the hitTest, but make it clear.
+            basePlane.geometry?.firstMaterial?.diffuse.contents = UIColor.clear
             node.addChildNode(basePlane)
+            
+            status = "Wall Detected. Tap to Place Art"
         }
-        arState = .isNotActive
-        print("\(arState)")
         
-        appState = .readyToFurnish
+        arState = .isNotActive
+        
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
@@ -351,17 +353,19 @@ extension ARViewController {
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
-        print("AR session failure: \(error)")
+        status = "AR session failure: \(error)"
+        resetARSession()
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        print("AR session was interrupted!")
+        status = "AR session was interrupted!"
+        resetARSession()
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        print("AR session interruption ended.")
+        status = "AR session interruption ended."
         resetARSession()
     }
     

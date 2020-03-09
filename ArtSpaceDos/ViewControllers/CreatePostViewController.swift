@@ -15,35 +15,43 @@ class CreatePostViewController: UIViewController {
     
     var imageURL: URL? = nil
     
+    var currentUser: AppUser? = nil
+
+    
     //MARK: - UIOjbects
     //MARK: TO DO - Add Text alignment to UI Utilities
     lazy var createPostLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
+        label.textColor = .black
         label.text = "Tell us about your art! Fill out the fields below."
-        label.font = UIFont(name: "Avenir-Next", size: 30)
+        label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .subheadline), size: 18)
         return label
+        
     }()
     
     lazy var artTitleTextfield: UITextField = {
         let textfield = UITextField()
         textfield.layer.borderWidth = 1.0
         textfield.layer.borderColor = UIColor.black.cgColor
+        textfield.textColor = .black
         textfield.textAlignment = .center
         textfield.attributedPlaceholder = NSAttributedString(string: "Name Of Art",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return textfield
     }()
     
-    lazy var artPriceLabel: UITextField = {
-        let label = UITextField()
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.black.cgColor
-        label.textAlignment = .center
-        label.attributedPlaceholder = NSAttributedString(string: "Price",
-                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        return label
+    lazy var artPriceTextField: UITextField = {
+        let textField = UITextField()
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.textColor = .black
+        textField.textAlignment = .center
+        textField.keyboardType = .decimalPad
+        textField.attributedPlaceholder = NSAttributedString(string: "Price",
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        return textField
     }()
     
     lazy var dimensionsLabel: UILabel = {
@@ -56,7 +64,9 @@ class CreatePostViewController: UIViewController {
         let textfield = UITextField()
         textfield.layer.borderWidth = 1.0
         textfield.layer.borderColor = UIColor.black.cgColor
+        textfield.textColor = .black
         textfield.textAlignment = .center
+        textfield.keyboardType = .decimalPad
         textfield.attributedPlaceholder = NSAttributedString(string: "width",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return textfield
@@ -66,24 +76,27 @@ class CreatePostViewController: UIViewController {
         let textfield = UITextField()
         textfield.layer.borderWidth = 1.0
         textfield.layer.borderColor = UIColor.black.cgColor
+        textfield.textColor = .black
         textfield.textAlignment = .center
+        textfield.keyboardType = .decimalPad
         textfield.attributedPlaceholder = NSAttributedString(string: "height",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return textfield
     }()
     
-    lazy var descriptionTextView: UITextView = {
-        let textView = UITextView()
-        textView.layer.borderWidth = 1.0
-        textView.layer.borderColor = UIColor.black.cgColor
-        textView.text = "Artwork description goes here"
-        textView.backgroundColor = .clear
-        textView.font = UIFont(name: "AvenirNext-Medium", size: 18)
-        textView.textColor = .lightGray
+    lazy var descriptionTextView: UITextField = {
+        let textField = UITextField()
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.placeholder = "Artwork description goes here"
+        textField.backgroundColor = .clear
+        textField.font = UIFont(name: "AvenirNext-Medium", size: 18)
+        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: "Artwork description goes here",
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        
         //MARK: TODO: Make a function to dismiss keyboard
-        //MARK: change .isEditable to true
-        textView.isEditable = false
-        return textView
+        return textField
     }()
     
     lazy var artImageView: UIImageView = {
@@ -119,6 +132,8 @@ class CreatePostViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setUpConstraints()
+        dismissKeyboardWithTap()
+        getCurrentUser()
     }
     
     //MARK: - Obj-C Functions
@@ -127,33 +142,75 @@ class CreatePostViewController: UIViewController {
     }
     
     @objc func submitButtonPressed() {
-        showAlert(with: "Art Posted", and: "Now available for Sale!")
-        //    createArtObject()
+        createArtObject()
     }
     
     @objc func uploadButtonPressed() {
+        self.showActivityIndicator(shouldShow: true)
+        
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
         present(imagePickerVC, animated: true)
     }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     //    MARK: - Private Functions
-    private func createArtObject(){
-        guard let photoURL = imageURL else {return}
-        let photoURLString = "\(photoURL)"
-        //        MARK: - TODO: implement real user once auth is implemented
-        //        guard let user = FirebaseAuthService.manager.currentUser else {return}
-        let userID = "ABC123"
+    
+    private func getCurrentUser() {
+        guard let user = FirebaseAuthService.manager.currentUser else {return}
         
-        let newArtObject = ArtObject(artistName: "Steve", artDescription: "Posted Art", width: 0.3, height: 0.2, artImageURL: photoURLString, sellerID: userID, price: 250.0, tags: ["2"])
-        
-        FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
+        FirestoreService.manager.getCurrentAppUser(uid: user.uid) { (result) in
             switch result {
             case .failure(let error):
                 print(error)
-            case .success(()):
-                self.showAlert(with: "Art Posted", and: "Now Available For Sale!")
+            case .success(let user):
+                self.currentUser = user
+                
             }
+        }
+        
+    }
+    
+    private func dismissKeyboardWithTap() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    private func createArtObject(){
+        guard let photoURL = imageURL else {return}
+        let photoURLString = "\(photoURL)"
+        
+        guard self.currentUser != nil else {showAlert(with: "Error", and: "No valid user"); return}
+               
+        guard let artist = self.currentUser else {showAlert(with: "Error", and: "No valid user"); return}
+        
+        guard descriptionTextView.text != "", descriptionTextView.text != "", widthTexfield.text != "", heightTextfield.text != "", artPriceTextField.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
+        
+        guard let description = descriptionTextView.text, let widthString = widthTexfield.text, let heightString = heightTextfield.text, let priceString = artPriceTextField.text else {showAlert(with: "Error", and: "Invalid entry; check fields"); return}
+        
+        let priceDouble: Double? = Double((priceString as NSString).floatValue)
+        let widthCGFloat: CGFloat? = CGFloat((widthString as NSString).floatValue)
+        let heightCGFloat: CGFloat? = CGFloat((heightString as NSString).floatValue)
+        
+        if let price = priceDouble, let width = widthCGFloat, let height = heightCGFloat {
+            guard price != 0.0, width != 0.0, height != 0.0 else {showAlert(with: "Error", and: "Invalid entry; check fields"); return}
+            let newArtObject = ArtObject(artistName: artist.userName ?? "No artist name", artDescription: description, width: width, height: height, artImageURL: photoURLString, sellerID: artist.uid, price: price, tags: ["2"])
+            
+            FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    self.showAlert(with: "Error", and: "Could not save item")
+                case .success(()):
+                    self.showAlert(with: "Art Posted", and: "Now Available For Sale!")
+                }
+            }
+        } else {
+            showAlert(with: "Error", and: "Invalid entry; check fields")
         }
     }
     
@@ -178,19 +235,21 @@ class CreatePostViewController: UIViewController {
         navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.topItem?.title = "\(title)"
     }
+ 
     
     //MARK: UISetup
     func addSubviews() {
-        [createPostLabel, artTitleTextfield,  artPriceLabel, dimensionsLabel, widthTexfield, heightTextfield, descriptionTextView, artImageView, uploadButton, submitButton].forEach({self.view.addSubview($0)})
+        [createPostLabel, artTitleTextfield,  artPriceTextField, dimensionsLabel, widthTexfield, heightTextfield, descriptionTextView, artImageView, uploadButton, submitButton].forEach({self.view.addSubview($0)})
     }
     
     //MARK: TO DO - Fix constraints
     func setUpConstraints() {
         
         createPostLabel.snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(25)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-25)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            //            make.left.equalTo(view.safeAreaLayoutGuide).offset(25)
+            //            make.right.equalTo(view.safeAreaLayoutGuide).offset(-25)
         }
         
         artTitleTextfield.snp.makeConstraints{ make in
@@ -200,7 +259,7 @@ class CreatePostViewController: UIViewController {
             make.height.equalTo(25)
         }
         
-        artPriceLabel.snp.makeConstraints { make in
+        artPriceTextField.snp.makeConstraints { make in
             make.top.equalTo(artTitleTextfield).offset(50)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(25)
             make.right.equalTo(view.safeAreaLayoutGuide).offset(-25)
@@ -209,20 +268,20 @@ class CreatePostViewController: UIViewController {
         }
         
         dimensionsLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(artPriceLabel).offset(50)
+            make.top.equalTo(artPriceTextField).offset(50)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(25)
             make.height.equalTo(25)
         }
         
         widthTexfield.snp.makeConstraints { (make) in
-            make.top.equalTo(artPriceLabel).offset(50)
+            make.top.equalTo(artPriceTextField).offset(50)
             make.right.equalTo(dimensionsLabel).offset(75)
             make.width.equalTo(75)
             make.height.equalTo(25)
         }
         
         heightTextfield.snp.makeConstraints { (make) in
-            make.top.equalTo(artPriceLabel).offset(50)
+            make.top.equalTo(artPriceTextField).offset(50)
             make.right.equalTo(widthTexfield).offset(100)
             make.width.equalTo(75)
             make.height.equalTo(25)
@@ -273,9 +332,16 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
                 print(error)
             case .success(let url):
                 self?.imageURL = url
-                
             }
         }
+                
+        self.showActivityIndicator(shouldShow: false)
+
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.showActivityIndicator(shouldShow: false)
         self.dismiss(animated: true, completion: nil)
     }
 }
