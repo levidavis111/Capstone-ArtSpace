@@ -15,7 +15,7 @@ import Kingfisher
 class ProfileViewController: UIViewController {
     
 
-    var userName:String!
+   
     var displayNameHolder = "Display Name"
     var defaultImage = UIImage(systemName: "1")
     var settingFromLogin = false
@@ -294,11 +294,8 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func updateButtonPressed(){
-        // guarding against not having a display name and image
-        //        guard let userName = displayName.text, let imageURL = imageURL else {
-        //            showAlert(with: "Error", and: "Please a valid image and user name")
-        //            return
-        //        }
+        guard let user = FirebaseAuthService.manager.currentUser else {return}
+        guard let userName = user.displayName else {return}
         self.activityIndicator.startAnimating()
         FirestoreService.manager.updateCurrentUser(userName: userName) { (result) in
             switch (result) {
