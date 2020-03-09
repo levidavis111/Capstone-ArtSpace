@@ -16,6 +16,7 @@ class CreatePostViewController: UIViewController {
     var imageURL: URL? = nil
     
     var currentUser: AppUser? = nil
+
     
     //MARK: - UIOjbects
     //MARK: TO DO - Add Text alignment to UI Utilities
@@ -145,6 +146,8 @@ class CreatePostViewController: UIViewController {
     }
     
     @objc func uploadButtonPressed() {
+        self.showActivityIndicator(shouldShow: true)
+        
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
         present(imagePickerVC, animated: true)
@@ -180,28 +183,34 @@ class CreatePostViewController: UIViewController {
     private func createArtObject(){
         guard let photoURL = imageURL else {return}
         let photoURLString = "\(photoURL)"
-        guard descriptionTextView.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
-        guard let description = descriptionTextView.text else {showAlert(with: "Error", and: "Fill out all fields"); return}
-        guard widthTexfield.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
-        let width = CGFloat((widthTexfield.text! as NSString).floatValue)
-        guard heightTextfield.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
-        let height = CGFloat((heightTextfield.text! as NSString).floatValue)
-        guard artPriceTextField.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
-        let price = Double((artPriceTextField.text! as NSString).floatValue)
         
         guard self.currentUser != nil else {showAlert(with: "Error", and: "No valid user"); return}
-        
+               
         guard let artist = self.currentUser else {showAlert(with: "Error", and: "No valid user"); return}
         
-        let newArtObject = ArtObject(artistName: artist.userName ?? "No artist name", artDescription: description, width: width, height: height, artImageURL: photoURLString, sellerID: artist.uid, price: price, tags: ["2"])
+        guard descriptionTextView.text != "", descriptionTextView.text != "", widthTexfield.text != "", heightTextfield.text != "", artPriceTextField.text != "" else {showAlert(with: "Error", and: "Fill out all fields"); return}
         
-        FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(()):
-                self.showAlert(with: "Art Posted", and: "Now Available For Sale!")
+        guard let description = descriptionTextView.text, let widthString = widthTexfield.text, let heightString = heightTextfield.text, let priceString = artPriceTextField.text else {showAlert(with: "Error", and: "Invalid entry; check fields"); return}
+        
+        let priceDouble: Double? = Double((priceString as NSString).floatValue)
+        let widthCGFloat: CGFloat? = CGFloat((widthString as NSString).floatValue)
+        let heightCGFloat: CGFloat? = CGFloat((heightString as NSString).floatValue)
+        
+        if let price = priceDouble, let width = widthCGFloat, let height = heightCGFloat {
+            guard price != 0.0, width != 0.0, height != 0.0 else {showAlert(with: "Error", and: "Invalid entry; check fields"); return}
+            let newArtObject = ArtObject(artistName: artist.userName ?? "No artist name", artDescription: description, width: width, height: height, artImageURL: photoURLString, sellerID: artist.uid, price: price, tags: ["2"])
+            
+            FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    self.showAlert(with: "Error", and: "Could not save item")
+                case .success(()):
+                    self.showAlert(with: "Art Posted", and: "Now Available For Sale!")
+                }
             }
+        } else {
+            showAlert(with: "Error", and: "Invalid entry; check fields")
         }
     }
     
@@ -226,6 +235,7 @@ class CreatePostViewController: UIViewController {
         navigationController?.view.backgroundColor = .clear
         navigationController?.navigationBar.topItem?.title = "\(title)"
     }
+ 
     
     //MARK: UISetup
     func addSubviews() {
@@ -322,9 +332,16 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
                 print(error)
             case .success(let url):
                 self?.imageURL = url
-                
             }
         }
+                
+        self.showActivityIndicator(shouldShow: false)
+
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.showActivityIndicator(shouldShow: false)
         self.dismiss(animated: true, completion: nil)
     }
 }
