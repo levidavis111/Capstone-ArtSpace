@@ -63,8 +63,7 @@ class FirestoreService {
     }
     
     func getCurrentAppUser(uid: String, completion: @escaping (Result<AppUser, Error>) -> ()) {
-        
-        database.collection(FirestoreCollections.AppUser.rawValue).document(uid).getDocument { (snapshot, error) in
+ database.collection(FirestoreCollections.AppUser.rawValue).document(uid).getDocument { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else if let snapshot = snapshot, let data = snapshot.data() {

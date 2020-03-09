@@ -39,6 +39,7 @@ struct AppUser {
     }
     
     var fieldsDict: [String:Any] {
+
         return ["userName": self.userName ?? "", "email": self.email ?? "", "uid": self.uid, "profileImageURL": self.profileImageURL ?? ""]
     }
     
