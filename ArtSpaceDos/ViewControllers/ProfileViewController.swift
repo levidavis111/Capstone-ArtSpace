@@ -14,54 +14,53 @@ import Kingfisher
 
 class ProfileViewController: UIViewController {
     
-var unwrappedImageURL:URL!
-var userName:String!
-   var displayNameHolder = "Display Name"
+
+    var userName:String!
+    var displayNameHolder = "Display Name"
     var defaultImage = UIImage(systemName: "1")
-       
-var settingFromLogin = false
-var photoLibraryAccess = true
-var userProfile: AppUser!
+    var settingFromLogin = false
+    var photoLibraryAccess = true
+
   
-        var imageURL: URL? = nil
-  var savedImage = UIImage() {
-    didSet {
-      profileImage.image = savedImage
+    var imageURL: URL? = nil
+    var savedImage = UIImage() {
+        didSet {
+            profileImage.image = savedImage
+        }
     }
-  }
 
     
-  //MARK: UI OBJC
+    //MARK: UI OBJC
     lazy var userNameLabel: UILabel = {
-     let label = UILabel()
-         label.textAlignment = .center
-      label.text = "Welcome"
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = "Welcome"
         label.textColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-         return label
+        return label
     }()
     
     lazy var profileImage: UIImageView = {
-       let image = UIImageView()
-     image.image = #imageLiteral(resourceName: "1")
-       image.contentMode = .scaleAspectFill
-       image.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-       image.layer.borderWidth = 5.0
-      var frame = image.frame
-       frame.size.width = 150
-       frame.size.height = 150
-       image.frame = frame
-     image.clipsToBounds = true
-       image.backgroundColor = .white
-       let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
-       image.layer.cornerRadius = image.frame.size.width/2
-       image.isUserInteractionEnabled = true
-       image.addGestureRecognizer(gesture)
-      return image
-         }()
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "1")
+        image.contentMode = .scaleAspectFill
+        image.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        image.layer.borderWidth = 5.0
+        var frame = image.frame
+        frame.size.width = 150
+        frame.size.height = 150
+        image.frame = frame
+        image.clipsToBounds = true
+        image.backgroundColor = .white
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        image.layer.cornerRadius = image.frame.size.width/2
+        image.isUserInteractionEnabled = true
+        image.addGestureRecognizer(gesture)
+        return image
+    }()
     
-  
-
-
+    
+    
+    
     lazy var editDisplayNameButton: UIButton = {
         let button = UIButton()
         button.setTitle("Edit Username", for: .normal)
@@ -74,96 +73,92 @@ var userProfile: AppUser!
         textField.placeholder = "Enter User Name"
         textField.font = UIFont(name: "Verdana", size: 14)
         textField.backgroundColor = .white
-      //  textField.borderStyle = .bezel
+        //  textField.borderStyle = .bezel
         textField.layer.cornerRadius = 5
         textField.autocorrectionType = .no
         return textField
     }()
-
+    
     lazy var uploadImageButton: UIButton = {
         let button = UIButton()
-    button.setImage(UIImage(systemName: "icloud.and.arrow.up"), for: .normal)
-     let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
-    button.backgroundColor = .clear
+        button.setImage(UIImage(systemName: "icloud.and.arrow.up"), for: .normal)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        button.backgroundColor = .clear
         button.contentMode = .scaleAspectFill
-
+        
         return button
     }()
-  lazy var activityIndicator: UIActivityIndicatorView = {
-       let activityView = UIActivityIndicatorView(style: .large)
-       activityView.hidesWhenStopped = true
-       activityView.color = .white
-       activityView.stopAnimating()
-       return activityView
-   }()
-
-  lazy var saveButton: UIButton = {
-    let button = UIButton(type: UIButton.ButtonType.system)
-         button.layer.borderWidth = 2.0
-         button.layer.cornerRadius = 15
-         button.layer.borderColor = UIColor.systemBlue.cgColor
-         button.setTitleColor(UIColor.systemBlue, for: .normal)
-         button.setTitle("Save Changes", for: .normal)
-         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
-     
-    return button
-  }()
-
-  lazy var settingsButton: UIButton = {
-    let button = UIButton(type: UIButton.ButtonType.system)
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityView = UIActivityIndicatorView(style: .large)
+        activityView.hidesWhenStopped = true
+        activityView.color = .white
+        activityView.stopAnimating()
+        return activityView
+    }()
+    
+    lazy var saveButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.layer.borderWidth = 2.0
+        button.layer.cornerRadius = 15
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.setTitle("Save Changes", for: .normal)
+        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    lazy var settingsButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
         button.layer.borderWidth = 2.0
         button.layer.cornerRadius = 15
         button.layer.borderColor = UIColor.systemBlue.cgColor
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.setTitle("Settings", for: .normal)
-       // button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
-    return button
-  }()
-
-   
-  //MARK: addSubviews
-  func addSubviews() {
-    view.addSubview(profileImage)
-   // view.addSubview(uploadButton)
-    view.addSubview(uploadImageButton)
-    view.addSubview(saveButton)
-    view.addSubview(settingsButton)
-    view.addSubview(userNameLabel)
-    view.addSubview(textField)
-    view.addSubview(editDisplayNameButton)
-  }
-  //MARK:ViewDidLoad cycle
-  override func viewDidLoad() {
-    super.viewDidLoad()
-     addSubviews()
-    constrainProfilePicture()
-    saveChangesConstraints()
-    settinglabelConstraints()
-    constrainDisplayname()
-    editUserNameConstraints()
-    uploadImageConstraints()
-   
-  if let displayName = FirebaseAuthService.manager.currentUser?.displayName {
-       loadImage()
-       userNameLabel.text = displayName
-       
-       let user = FirebaseAuthService.manager.currentUser
-       imageURL = user?.photoURL
-   }
-
-
-
-      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SignOut", style: .plain, target: self, action: #selector(signOutFunc))
-   self.navigationController?.navigationBar.isHidden = false
- UIUtilities.setViewBackgroundColor(view)
-
-  }
-   
-    
-
+        // button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
+        return button
+    }()
     
     
-//MARK: Private Functions
+    //MARK: addSubviews
+    func addSubviews() {
+        view.addSubview(profileImage)
+        // view.addSubview(uploadButton)
+        view.addSubview(uploadImageButton)
+        view.addSubview(saveButton)
+        view.addSubview(settingsButton)
+        view.addSubview(userNameLabel)
+        view.addSubview(textField)
+        view.addSubview(editDisplayNameButton)
+    }
+    //MARK:ViewDidLoad cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addSubviews()
+        constrainProfilePicture()
+        saveChangesConstraints()
+        settinglabelConstraints()
+        constrainDisplayname()
+        editUserNameConstraints()
+        uploadImageConstraints()
+        
+        if let displayName = FirebaseAuthService.manager.currentUser?.displayName {
+            loadImage()
+            userNameLabel.text = displayName
+            
+            let user = FirebaseAuthService.manager.currentUser
+            imageURL = user?.photoURL
+        }
+        
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SignOut", style: .plain, target: self, action: #selector(signOutFunc))
+        self.navigationController?.navigationBar.isHidden = false
+        UIUtilities.setViewBackgroundColor(view)
+        
+    }
+
+    //MARK: Private Functions
     private func setSceneDelegateInitialVC(with result: Result<User, Error>) {
         DispatchQueue.main.async { [weak self] in
             switch result {
@@ -191,64 +186,64 @@ var userProfile: AppUser!
     }
     
     private func formValidation() {
-           let validUserName = userNameLabel.text != displayNameHolder
-           let imagePresent = profileImage.image != defaultImage
-           saveButton.isEnabled = validUserName && imagePresent
-       }
+        let validUserName = userNameLabel.text != displayNameHolder
+        let imagePresent = profileImage.image != defaultImage
+        saveButton.isEnabled = validUserName && imagePresent
+    }
     //MARK: Objc functions
     
-  @objc func signOutFunc(){
-    FirebaseAuthService.manager.logoutUser()
-
-    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-      let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
-      else { return}
-
-    UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromTop, animations: {
-
-      window.rootViewController = LoginViewController()
-    }, completion: nil)
-  }
-
+    @objc func signOutFunc(){
+        FirebaseAuthService.manager.logoutUser()
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+            else { return}
+        
+        UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromTop, animations: {
+            
+            window.rootViewController = LoginViewController()
+        }, completion: nil)
+    }
     
-        @objc func saveButtonPressed() {
-               guard let userName = userNameLabel.text, let image = profileImage.image else {
-                   print("Defaults are not working")
-                   return
-               }
-               
-               let validInput = (userName != displayNameHolder) && (image != defaultImage)
-               
-               if validInput {
-                   
-                   guard let imageUrl = imageURL else {
-                       print("Not able to compute imageUrl")
-                       return
-                   }
-                   
-                FirebaseAuthService.manager.updateUserFields(userName: userName, photoURL: imageUrl) { (result) in
-                    switch result {
-                    case .success():
-                        FirestoreService.manager.updateCurrentUser(userName: userName, photoURL: imageUrl) {  (result) in
-                            switch result {
-                            case .success(): break
-                                
-                              //  self?.transitionToMainFeed()
-                            case .failure(let error):
-                                print("Failure to update current user: \(error)")
-                            }
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-               } else {
-                showErrorAlert(title: "Missing Requirements", message: "Profile needs a username and image")
+    
+    @objc func saveButtonPressed() {
+        guard let userName = userNameLabel.text, let image = profileImage.image else {
+            print("Defaults are not working")
+            return
+        }
+        
+        let validInput = (userName != displayNameHolder) && (image != defaultImage)
+        
+        if validInput {
+            
+            guard let imageUrl = imageURL else {
+                print("Not able to compute imageUrl")
+                return
             }
             
-               
-           }
-   private func showErrorAlert(title: String, message: String) {
+            FirebaseAuthService.manager.updateUserFields(userName: userName, photoURL: imageUrl) { (result) in
+                switch result {
+                case .success():
+                    FirestoreService.manager.updateCurrentUser(userName: userName, photoURL: imageUrl) {  (result) in
+                        switch result {
+                        case .success(): break
+                            
+                        //  self?.transitionToMainFeed()
+                        case .failure(let error):
+                            print("Failure to update current user: \(error)")
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } else {
+            showErrorAlert(title: "Missing Requirements", message: "Profile needs a username and image")
+        }
+        
+        
+    }
+    private func showErrorAlert(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alertVC, animated: true, completion: nil)
@@ -258,34 +253,34 @@ var userProfile: AppUser!
     @objc private func profileImageTapped(){
         print("Pressed")
         
-           switch PHPhotoLibrary.authorizationStatus() {
-                   case .notDetermined, .denied, .restricted:
-                       PHPhotoLibrary.requestAuthorization({[weak self] status in
-                           switch status {
-                           case .authorized:
-                               self?.presentPhotoPickerController()
-                           case .denied:
-                               print("Denied photo library permissions")
-                           default:
-                               print("No usable status")
-                           }
-                       })
-                   default:
-                       presentPhotoPickerController()
-                   }
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .notDetermined, .denied, .restricted:
+            PHPhotoLibrary.requestAuthorization({[weak self] status in
+                switch status {
+                case .authorized:
+                    self?.presentPhotoPickerController()
+                case .denied:
+                    print("Denied photo library permissions")
+                default:
+                    print("No usable status")
+                }
+            })
+        default:
+            presentPhotoPickerController()
+        }
     }
- 
+    
     private func loadImage() {
-          guard let imageUrl = FirebaseAuthService.manager.currentUser?.photoURL else {
-              print("photo url not found")
-              return
-          }
+        guard let imageUrl = FirebaseAuthService.manager.currentUser?.photoURL else {
+            print("photo url not found")
+            return
+        }
         //King Fisher
         let url = URL(string:imageUrl.absoluteString)
         profileImage.kf.setImage(with: url)
- 
         
-      }
+        
+    }
     
     private func presentPhotoPickerController() {
         DispatchQueue.main.async{
@@ -300,10 +295,10 @@ var userProfile: AppUser!
     
     @objc private func updateButtonPressed(){
         // guarding against not having a display name and image
-//        guard let userName = displayName.text, let imageURL = imageURL else {
-//            showAlert(with: "Error", and: "Please a valid image and user name")
-//            return
-//        }
+        //        guard let userName = displayName.text, let imageURL = imageURL else {
+        //            showAlert(with: "Error", and: "Please a valid image and user name")
+        //            return
+        //        }
         self.activityIndicator.startAnimating()
         FirestoreService.manager.updateCurrentUser(userName: userName) { (result) in
             switch (result) {
@@ -314,70 +309,70 @@ var userProfile: AppUser!
                 print(error)
             }
         }
-      
+        
         self.showAlert(with: "Error", and: "It seem your image was not save. Please check your image format and try again")
-      
+        
     }
     @objc func editDisplayNamePressed() {
-          let alert = UIAlertController(title: "UserName", message: nil, preferredStyle: .alert)
-          
-          
-          alert.addTextField { (textfield) in
-              textfield.placeholder = "Enter UserName"
-          }
-          
-          guard let userNameField = alert.textFields else {return}
-          
-          alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{ (alert) -> Void in
-              
+        let alert = UIAlertController(title: "UserName", message: nil, preferredStyle: .alert)
+        
+        
+        alert.addTextField { (textfield) in
+            textfield.placeholder = "Enter UserName"
+        }
+        
+        guard let userNameField = alert.textFields else {return}
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{ (alert) -> Void in
+            
             self.userNameLabel.text = userNameField[0].text ?? self.displayNameHolder
-              self.formValidation()
-              
-          }))
-          
-          present(alert, animated: true, completion: nil)
-          
-      }
+            self.formValidation()
+            
+        }))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
     private func showAlert(with title: String, and message: String) {
-         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-         present(alertVC, animated: true, completion: nil)
-     }
-    
-    
-     private func showAlertWithSucessMessage(){
-         let alert = UIAlertController(title: "Success", message: "You have updated your profile", preferredStyle: .alert)
-         let ok = UIAlertAction(title: "OK", style: .default) { (dismiss) in
-             self.handleNavigationAwayFromVCAfterUpdating()
-         }
-         alert.addAction(ok)
-         present(alert, animated: true, completion: nil)
-     }
-    private func handleNavigationAwayFromVCAfterUpdating() {
-          if settingFromLogin {
-              self.dismiss(animated: true, completion: nil)
-          }
-      }
-  //MARK: Constraints
-   
-  private func constrainProfilePicture() {
-    profileImage.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view).offset(250)
-      make.centerX.equalTo(self.view)
-      make.height.equalTo(profileImage.frame.height)
-      make.width.equalTo(profileImage.frame.width)
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
     }
-  }
-   private func constrainDisplayname() {
-     userNameLabel.snp.makeConstraints { (make) in
-     //   make.top.greaterThanOrEqualTo(profileImage).offset(-50)
-        make.top.equalTo(view.safeAreaLayoutGuide)
-        make.centerX.equalTo(self.view)
-     }
-   }
-   
+    
+    
+    private func showAlertWithSucessMessage(){
+        let alert = UIAlertController(title: "Success", message: "You have updated your profile", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { (dismiss) in
+            self.handleNavigationAwayFromVCAfterUpdating()
+        }
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+    private func handleNavigationAwayFromVCAfterUpdating() {
+        if settingFromLogin {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    //MARK: Constraints
+    
+    private func constrainProfilePicture() {
+        profileImage.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view).offset(250)
+            make.centerX.equalTo(self.view)
+            make.height.equalTo(profileImage.frame.height)
+            make.width.equalTo(profileImage.frame.width)
+        }
+    }
+    private func constrainDisplayname() {
+        userNameLabel.snp.makeConstraints { (make) in
+            //   make.top.greaterThanOrEqualTo(profileImage).offset(-50)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(60)
+            make.centerX.equalTo(self.view)
+        }
+    }
+    
     private func uploadImageConstraints() {
         uploadImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.profileImage).offset(125)
@@ -386,31 +381,31 @@ var userProfile: AppUser!
         }
     }
     
-  private func saveChangesConstraints() {
-    saveButton.snp.makeConstraints { make in
-          make.bottom.equalTo(settingsButton).offset(50)
-          make.centerX.equalTo(view.safeAreaLayoutGuide)
-          make.width.equalTo(120)
-      }
-  }
+    private func saveChangesConstraints() {
+        saveButton.snp.makeConstraints { make in
+            make.bottom.equalTo(settingsButton).offset(50)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(120)
+        }
+    }
     
-
+    
     private func editUserNameConstraints() {
         editDisplayNameButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.profileImage).offset(100)
             make.centerX.equalTo(self.view)
         }
     }
-
-
+    
+    
     private func settinglabelConstraints() {
-  settingsButton.snp.makeConstraints { make in
-         make.bottom.equalTo(editDisplayNameButton).offset(50)
-         make.centerX.equalTo(view.safeAreaLayoutGuide)
-         make.width.equalTo(120)
-     }
+        settingsButton.snp.makeConstraints { make in
+            make.bottom.equalTo(editDisplayNameButton).offset(50)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.width.equalTo(120)
+        }
     }
-
+    
 }
 
 //MARK: Extension
@@ -429,18 +424,18 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
         }
         
         FirebaseStorageService.manager.storeImage(pictureType: .profilePicture, image: imageData, completion: { [weak self] (result) in
-                   switch result{
-                   case .success(let url):
-                    print("working")
-                    print(result)
-                       self?.imageURL = url
-                    
-                   case .failure(let error):
-                    print("Notworking")
-                       print(error)
-                   }
-               })
-       self.activityIndicator.stopAnimating()
+            switch result{
+            case .success(let url):
+                print("working")
+                print(result)
+                self?.imageURL = url
+                
+            case .failure(let error):
+                print("Notworking")
+                print(error)
+            }
+        })
+        self.activityIndicator.stopAnimating()
         picker.dismiss(animated: true, completion: nil)
     }
 }
