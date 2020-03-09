@@ -30,8 +30,10 @@ class FirebaseStorageService {
     }
     
     func storeImage(pictureType: pictureUploadType,image: Data, completion: @escaping (Result<URL, Error>) -> ()) {
+        
+        guard let user = FirebaseAuthService.manager.currentUser else {return}
         let metaData = StorageMetadata()
-        let userID = (FirebaseAuthService.manager.currentUser?.uid)!
+        let userID = user.uid
         metaData.contentType = "image/jpeg"
         let uuid = UUID()
         var imageLocation = storageReference

@@ -27,15 +27,15 @@ class ArtCell: UICollectionViewCell {
     
     lazy var likeButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        let imageConfig = UIImage.SymbolConfiguration(scale: .large)
+        button.backgroundColor = .black
         button.tintColor = .white
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
         button.layer.cornerRadius = CGFloat(integerLiteral: 50)
         button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
         return button
     }()
-    
-    
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)

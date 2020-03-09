@@ -9,19 +9,19 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
-
+fileprivate let imageURLKey = "profileImageURL"
 struct AppUser {
     let userName: String?
     let email: String?
     let uid: String
     let dateCreated: Date?
-  let profileImageUrl: String?
+    let profileImageURL: String?
     
     init(from user: User) {
         self.userName = user.displayName
         self.email = user.email
         self.uid = user.uid
-        self.profileImageUrl = user.photoURL?.absoluteString
+        self.profileImageURL = user.photoURL?.absoluteString
         self.dateCreated = user.metadata.creationDate
     }
     
@@ -29,17 +29,18 @@ struct AppUser {
     init?(from dict: [String: Any], id: String) {
         guard let userName = dict["userName"] as? String,
         let email = dict["email"] as? String,
-        let profileImageUrl = dict["profileImageUrl"] as? String,
+        let profileImageURL = dict["profileImageURL"] as? String,
         let dateCreated = (dict["dateCreated"] as? Timestamp)?.dateValue() else {return nil}
         self.userName = userName
         self.email = email
         self.dateCreated = dateCreated
         self.uid = id
-      self.profileImageUrl = profileImageUrl
+      self.profileImageURL = profileImageURL
     }
     
     var fieldsDict: [String:Any] {
-        return ["userName": self.userName ?? "", "email": self.email ?? ""]
+
+        return ["userName": self.userName ?? "", "email": self.email ?? "", "uid": self.uid, "profileImageURL": self.profileImageURL ?? ""]
     }
     
 }
