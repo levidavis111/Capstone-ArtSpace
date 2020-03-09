@@ -31,12 +31,14 @@ class FirebaseAuthService {
         }
     }
     
-    func updateUserFields(experience: String? = nil, completion: @escaping (Result<(), Error>) -> ()) {
+    func updateUserFields(userName: String? = nil,photoURL: URL? = nil, completion: @escaping (Result<(),Error>) -> ()){
         let changeRequest = auth.currentUser?.createProfileChangeRequest()
-        if let experience = experience {
-            changeRequest?.displayName = experience
+        if let userName = userName {
+            changeRequest?.displayName = userName
         }
-        
+        if let photoURL = photoURL {
+            changeRequest?.photoURL = photoURL
+        }
         changeRequest?.commitChanges(completion: { (error) in
             if let error = error {
                 completion(.failure(error))
@@ -45,6 +47,22 @@ class FirebaseAuthService {
             }
         })
     }
+    
+    
+//    func updateUserFields(experience: String? = nil, completion: @escaping (Result<(), Error>) -> ()) {
+//        let changeRequest = auth.currentUser?.createProfileChangeRequest()
+//        if let experience = experience {
+//            changeRequest?.displayName = experience
+//        }
+//        
+//        changeRequest?.commitChanges(completion: { (error) in
+//            if let error = error {
+//                completion(.failure(error))
+//            } else {
+//                completion(.success(()))
+//            }
+//        })
+//    }
     
     func loginUser(email: String, password: String, completion: @escaping(Result<(), Error>) -> ()) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
