@@ -59,13 +59,7 @@ var userProfile: AppUser!
       return image
          }()
     
-    lazy var segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Listings", "Purchased","Bill History"])
-        control.selectedSegmentIndex = 0
-        control.layer.borderColor = UIColor.gray.cgColor
-        control.tintColor = .gray
-        return control
-    }()
+  
 
 
     lazy var editDisplayNameButton: UIButton = {
@@ -87,15 +81,9 @@ var userProfile: AppUser!
     }()
     
  
-  lazy var plusButton: UIButton = {
+  lazy var uploadButton: UIButton = {
        let button = UIButton()
-    button.setTitle("Edit", for: .normal)
-       button.setTitleColor(.gray, for: .normal)
-       button.layer.cornerRadius = 4.0
-       button.layer.borderColor = UIColor.gray.cgColor
-       button.layer.borderWidth = 1.0
-       button.tintColor = .gray
-       button.backgroundColor = .red
+    button.setImage(UIImage(named: "icloud.and.arrow.up"), for: .normal)
      return button
      }()
   lazy var activityIndicator: UIActivityIndicatorView = {
@@ -106,13 +94,13 @@ var userProfile: AppUser!
        return activityView
    }()
 
-  lazy var signOutButton: UIButton = {
+  lazy var saveButton: UIButton = {
     let button = UIButton()
     button.setTitleColor(.black ,for: .normal)
-    button.setTitle("Sign Out", for: .normal)
+    button.setTitle("Save Changes", for: .normal)
     button.backgroundColor = .clear
     button.titleLabel?.font = UIFont(name: "Verdana", size: 15)
-    button.addTarget(self, action: #selector(signOutFunc), for: .touchUpInside)
+    button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
         button.isEnabled = true
         button.isHidden = false
     return button
@@ -137,12 +125,11 @@ var userProfile: AppUser!
   //MARK: addSubviews
   func addSubviews() {
     view.addSubview(profileImage)
-    view.addSubview(plusButton)
-    view.addSubview(signOutButton)
+    view.addSubview(uploadButton)
+    view.addSubview(saveButton)
     view.addSubview(settingsButton)
     view.addSubview(displayName)
     view.addSubview(paymentButton)
-    view.addSubview(segmentedControl)
     view.addSubview(textField)
     view.addSubview(editDisplayNameButton)
   }
@@ -155,7 +142,6 @@ var userProfile: AppUser!
     ConstraintsSignOut()
     settinglabelConstraints()
     PaymenlabelConstraints()
-    constraintlistingandpurchasedLabel()
     constrainDisplayname()
     editUserNameConstraints()
     //textfieldConstraints()
@@ -164,7 +150,7 @@ var userProfile: AppUser!
 
 
 
-      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(updateButtonPressed))
+      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SignOut", style: .plain, target: self, action: #selector(signOutFunc))
    self.navigationController?.navigationBar.isHidden = false
  UIUtilities.setViewBackgroundColor(view)
 
@@ -204,7 +190,7 @@ var userProfile: AppUser!
     private func formValidation() {
            let validUserName = displayName.text != displayNameHolder
            let imagePresent = profileImage.image != defaultImage
-           signOutButton.isEnabled = validUserName && imagePresent
+           saveButton.isEnabled = validUserName && imagePresent
        }
     //MARK: Objc functions
   @objc func signOutFunc(){
@@ -323,7 +309,7 @@ var userProfile: AppUser!
    
   private func constrainProfilePicture() {
     profileImage.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view).offset(100)
+      make.top.equalTo(self.view).offset(200)
       make.centerX.equalTo(self.view)
       make.height.equalTo(profileImage.frame.height)
       make.width.equalTo(profileImage.frame.width)
@@ -338,7 +324,7 @@ var userProfile: AppUser!
    }
    
   private func constraintAddImage() {
-     plusButton.snp.makeConstraints { (make) in
+     uploadButton.snp.makeConstraints { (make) in
        make.top.equalTo(self.view).offset(200)
       make.trailing.equalTo(self.view).offset(60)
        make.size.equalTo(CGSize(width: 50, height: 50))
@@ -346,21 +332,15 @@ var userProfile: AppUser!
    }
    
   private func ConstraintsSignOut() {
-    signOutButton.snp.makeConstraints { (make) in
-        make.bottom.equalTo(self.settingsButton).offset(100)
+    saveButton.snp.makeConstraints { (make) in
+        make.bottom.equalTo(self.settingsButton).offset(80)
         make.leading.equalTo(self.view).offset(50)
        make.trailing.equalTo(self.view).offset(-50)
          
     }
   }
     
-   private func constraintlistingandpurchasedLabel() {
-     segmentedControl.snp.makeConstraints { (make) in
-        make.centerY.equalTo(self.profileImage).offset(150)
-        make.leading.equalTo(self.view)
-            make.trailing.equalTo(self.view)
-     }
-   }
+
     private func editUserNameConstraints() {
         editDisplayNameButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.profileImage).offset(100)
@@ -378,7 +358,7 @@ var userProfile: AppUser!
 //    }
     private func PaymenlabelConstraints() {
         paymentButton.snp.makeConstraints { (make) in
-            make.bottom.greaterThanOrEqualTo(self.segmentedControl).offset(50)
+            make.bottom.greaterThanOrEqualTo(self.editDisplayNameButton).offset(80)
            make.leading.equalTo(self.view)
             make.trailing.equalTo(self.view)
             
