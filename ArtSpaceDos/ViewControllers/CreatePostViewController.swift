@@ -176,7 +176,6 @@ class CreatePostViewController: UIViewController {
     
     private func dismissKeyboardWithTap() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        
         view.addGestureRecognizer(tap)
     }
     

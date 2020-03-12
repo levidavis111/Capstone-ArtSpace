@@ -184,7 +184,7 @@ extension MainViewController: FilterTheArtDelegate {
     loadFilteredPosts(tags: tags)
     //Assigns the tags filtering the collection view to a variable that will be passed back to the Filtering View Controller
     currentFilters = tags
-    //A bool that determines whether on not the iew Controller is filtered, will be passed back to filter view controller so that the user doesnt repeat filters
+    //A bool that determines whether on not the view Controller is filtered, will be passed back to filter view controller so that the user doesnt repeat filters
     isCurrentlyFiltered = true
   }
   
@@ -197,8 +197,8 @@ extension MainViewController: FilterTheArtDelegate {
       return
     }
     //Filtering through the art object data based upon the tags selected
-    artObjectData = artObjectData.filter({$0.tags.contains(tags[0])})
-    //MARK: TO DO - Enable Multiple Tags To Be Filtered
+    artObjectData = artObjectData.filter({$0.tags.contains(tags[0].lowercased())
+    })
   }
   
 }
