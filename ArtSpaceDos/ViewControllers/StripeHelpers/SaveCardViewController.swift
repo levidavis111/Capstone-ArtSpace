@@ -66,7 +66,7 @@ class SaveCardViewController: STPAddCardViewController {
             // Do any additional setup after loading the view.
         }
     
-        func constraints() {
+        private func constraints() {
             
             titleLabel.snp.makeConstraints{ make in
                 make.centerX.equalTo(view)

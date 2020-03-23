@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import Stripe
 //MARK: Add Activity Indicator
 //MARK: Change Font color on whether or not its been selected
 
@@ -187,6 +188,14 @@ class LoginViewController: UIViewController {
             case .success(let user):
                 FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
                     self?.addUserNameToUser(with: newResult)
+                    
+//                    MyAPIClient.sharedClient.createCustomerKey(withAPIVersion: "2020-03-02") { (result),<#arg#>  in {
+//                        switch result:
+//                        case .
+//                        }
+//                        
+//                    }
+             
                 }
             case .failure(let error):
                 self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")

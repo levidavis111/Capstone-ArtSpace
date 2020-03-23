@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    Stripe.setDefaultPublishableKey(StripeKeys.stripePublishableKey.rawValue)
+    Stripe.setDefaultPublishableKey(StripeKeys.stripePublishableKey)
     FirebaseApp.configure()
     return true
   }
