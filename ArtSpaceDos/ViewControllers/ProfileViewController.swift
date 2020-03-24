@@ -2,7 +2,7 @@
 //  ProfileViewController.swift
 //  ArtSpaceDos
 //
-//  Created by Jocelyn Boyd on 2/6/20.
+//  Created by kary Martinez on 2/6/20.
 //  Copyright © 2020 Jocelyn Boyd. All rights reserved.
 //
 
@@ -29,7 +29,8 @@ class ProfileViewController: UIViewController {
         }
     }
 
-    
+ 
+   
     //MARK: UI OBJC
     lazy var userNameLabel: UILabel = {
         let label = UILabel()
@@ -108,16 +109,7 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    lazy var settingsButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.borderWidth = 2.0
-        button.layer.cornerRadius = 15
-        button.layer.borderColor = UIColor.systemBlue.cgColor
-        button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.setTitle("Settings", for: .normal)
-        // button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
-        return button
-    }()
+
     
     
     //MARK: addSubviews
@@ -126,7 +118,6 @@ class ProfileViewController: UIViewController {
         // view.addSubview(uploadButton)
         view.addSubview(uploadImageButton)
         view.addSubview(saveButton)
-        view.addSubview(settingsButton)
         view.addSubview(userNameLabel)
         view.addSubview(textField)
         view.addSubview(editDisplayNameButton)
@@ -137,7 +128,6 @@ class ProfileViewController: UIViewController {
         addSubviews()
         constrainProfilePicture()
         saveChangesConstraints()
-        settinglabelConstraints()
         constrainDisplayname()
         editUserNameConstraints()
         uploadImageConstraints()
@@ -373,14 +363,13 @@ class ProfileViewController: UIViewController {
     private func uploadImageConstraints() {
         uploadImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.profileImage).offset(125)
-            make.trailing.equalTo(self.editDisplayNameButton)
-            
+            make.trailing.equalTo(self.editDisplayNameButton).offset(15)
         }
     }
     
     private func saveChangesConstraints() {
         saveButton.snp.makeConstraints { make in
-            make.bottom.equalTo(settingsButton).offset(50)
+            make.bottom.equalTo(editDisplayNameButton).offset(50)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.width.equalTo(120)
         }
@@ -394,15 +383,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    
-    private func settinglabelConstraints() {
-        settingsButton.snp.makeConstraints { make in
-            make.bottom.equalTo(editDisplayNameButton).offset(50)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(120)
-        }
-    }
-    
+ 
 }
 
 //MARK: Extension
@@ -437,4 +418,8 @@ extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
+
+extension ProfileViewController: UICollectionViewDelegate {
+    
+}
 

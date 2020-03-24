@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B8E6BDE241FC4030080D834 /* profileArtCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8E6BDD241FC4030080D834 /* profileArtCollectionViewCell.swift */; };
 		980E16862829BDEE706D64FE /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09A865853798F4EBF1E7D5E9 /* Pods_ArtSpaceDos.framework */; };
 		CB0D6FAA23FC55A20082178A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FA923FC55A20082178A /* LoginViewController.swift */; };
 		CB0D6FAE23FC55EA0082178A /* GifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FAD23FC55EA0082178A /* GifExtension.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		09A865853798F4EBF1E7D5E9 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DD12EF2A79FB1D4CE364A52 /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
+		6B8E6BDD241FC4030080D834 /* profileArtCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileArtCollectionViewCell.swift; sourceTree = "<group>"; };
 		77B923EE99E9D0A580ED1304 /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
 		CB0D6FA923FC55A20082178A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CB0D6FAD23FC55EA0082178A /* GifExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifExtension.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				D82FA8A723E33D1F005B22D4 /* ArtCell.swift */,
 				D886C88623FDA15E002FA690 /* SavedArtCollectionViewCell.swift */,
+				6B8E6BDD241FC4030080D834 /* profileArtCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				TargetAttributes = {
 					D82FA87D23E33697005B22D4 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1100;
 					};
 				};
 			};
@@ -361,6 +365,7 @@
 				D886C88723FDA15E002FA690 /* SavedArtCollectionViewCell.swift in Sources */,
 				D82FA88423E33697005B22D4 /* SceneDelegate.swift in Sources */,
 				CB18ADE62416CCDA00A8745A /* FilterButton.swift in Sources */,
+				6B8E6BDE241FC4030080D834 /* profileArtCollectionViewCell.swift in Sources */,
 				D82FA8A823E33D1F005B22D4 /* ArtCell.swift in Sources */,
 				D82FA8B423E346B6005B22D4 /* UIUtilities.swift in Sources */,
 				CBBEC33B23F5A13800A83FD7 /* Delegates.swift in Sources */,
@@ -513,6 +518,7 @@
 			baseConfigurationReference = 77B923EE99E9D0A580ED1304 /* Pods-ArtSpaceDos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QNT8W8WL29;
 				INFOPLIST_FILE = ArtSpaceDos/Info.plist;
@@ -523,6 +529,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Levi.ArtSpacePrototype;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -533,6 +540,7 @@
 			baseConfigurationReference = 5DD12EF2A79FB1D4CE364A52 /* Pods-ArtSpaceDos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QNT8W8WL29;
 				INFOPLIST_FILE = ArtSpaceDos/Info.plist;
