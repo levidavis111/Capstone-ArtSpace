@@ -361,7 +361,7 @@ class ProfileViewController: UIViewController {
     private func uploadImageConstraints() {
         uploadImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.profileImage).offset(125)
-            make.trailing.equalTo(self.editDisplayNameButton)
+            make.trailing.equalTo(self.editDisplayNameButton).offset(15)
             
         }
     }
