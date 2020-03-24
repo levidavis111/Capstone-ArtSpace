@@ -132,7 +132,7 @@ self.navigationController?.popViewController(animated: true)
         view.addSubview(artistNameLabel)
         view.addSubview(priceNameLabel)
         view.addSubview(arLogo)
-        view.addSubview(artDescription)
+//        view.addSubview(artDescription)
     }
     
     private func setupUIConstraints() {
@@ -142,7 +142,7 @@ self.navigationController?.popViewController(animated: true)
         constrainBuyButton()
         constrainARButton()
         constrainArtView()
-        descriptionConstraints()
+//        descriptionConstraints()
     }
     
     // MARK: - Constraints
