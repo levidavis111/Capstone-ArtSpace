@@ -63,8 +63,8 @@ class ArtDetailViewController: UIViewController {
     
     lazy var buyNowButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
-        UIUtilities.setUpButton(button, title: "BUY NOW", backgroundColor: .clear, target: self, action: #selector(buyNowButtonPressed))
-        button.setTitle("BUY NOW ", for: .normal)
+        UIUtilities.setUpButton(button, title: "S A V E", backgroundColor: .clear, target: self, action: #selector(buyNowButtonPressed))
+//        button.setTitle("Save", for: .normal)
        button.layer.cornerRadius = 15
          button.layer.borderWidth = 5.0
         button.layer.borderColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
@@ -76,10 +76,21 @@ class ArtDetailViewController: UIViewController {
  
     //MARK: - Obj-C Functions
     @objc func buyNowButtonPressed() {
-        let alertPopup = UIAlertController(title: "Successful", message: "Thank you for your purchase!", preferredStyle: .alert)
-        //MARK: Go back to originalVC(Home)
-        alertPopup.addAction(UIAlertAction(title: "okay", style: .default, handler: nil))
-        self.present(alertPopup, animated: true, completion: nil)
+        FirestoreService.manager.createFavoriteArtObject(artObject: currentArtObject) { (result) in
+          switch result {
+          case .failure(let error):
+            print(error)
+          case .success(()):
+    let alertPopup = UIAlertController(title: "Successful", message: "Saved that to favorites", preferredStyle: .alert)
+   //MARK: Go back to originalVC(Home)
+    alertPopup.addAction(UIAlertAction(title: "okay", style: .default, handler: {(alert: UIAlertAction!) in
+        let mainVC = MainViewController()
+self.navigationController?.popViewController(animated: true)
+    }))
+    
+    self.present(alertPopup, animated: true, completion: nil)
+          }
+        }
     }
     // MARK: arButtonNavigation
     @objc func arButtonTapped(_ tapGesture: UITapGestureRecognizer) {
