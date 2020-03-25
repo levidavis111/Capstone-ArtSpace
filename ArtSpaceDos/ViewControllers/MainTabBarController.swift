@@ -26,7 +26,7 @@ class MainTabBarController: UITabBarController {
   private func setTabItems() {
     homePage.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "house.fill"), tag: 0)
     createPost.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "plus"), tag: 1)
-    favorites.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "bookmark.fill"), tag: 2)
+    favorites.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart.fill"), tag: 2)
     profile.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "person"), tag: 3)
     
     self.viewControllers  = [homePage, createPost, favorites, profile]
