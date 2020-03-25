@@ -18,8 +18,12 @@ class ArtDetailViewController: UIViewController {
     // MARK: - UI Objects
     lazy var artImageView: UIImageView = {
         let imageView = UIImageView()
-        UIUtilities.setUpImageView(imageView, image: UIImage(imageLiteralResourceName: "noimage"), contentMode: .scaleAspectFit)
+        UIUtilities.setUpImageView(imageView, image: UIImage(imageLiteralResourceName: "noimage"), contentMode: .scaleAspectFill)
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
+        imageView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        imageView.layer.shadowOpacity = 0.9
+        imageView.layer.shadowRadius = 4
         return imageView
     }()
     
@@ -40,7 +44,8 @@ class ArtDetailViewController: UIViewController {
     
     lazy var artistNameLabel: UILabel = {
         let label = UILabel()
-        UIUtilities.setUILabel(label, labelTitle: "", size: 20, alignment: .center)
+        UIUtilities.setUILabel(label, labelTitle: "", size: 30, alignment: .center)
+//        label.font = UIFont(name: "", size: <#T##CGFloat#>)
         return label
     }()
     
@@ -105,8 +110,12 @@ self.navigationController?.popViewController(animated: true)
     //MARK:- Private func
     private func getArtPosts() {
         priceNameLabel.text = "Price: $\(currentArtObject.price)"
-        dimensionsLabel.text = "Size: H x \(currentArtObject.height) W x \(currentArtObject.width)D"
-        artistNameLabel.text = "Artist: \(currentArtObject.artistName)"
+        let heighMeasurement = Measurement(value: Double(currentArtObject.height), unit: UnitLength.meters)
+        let widthMeasurement = Measurement(value: Double(currentArtObject.width), unit: UnitLength.meters)
+        let centimeterWidth = heighMeasurement.converted(to: .centimeters)
+        let centimeterHeight = widthMeasurement.converted(to: .centimeters)
+        dimensionsLabel.text = "Dimensions: H x \(centimeterHeight) W x \(centimeterWidth)"
+        artistNameLabel.text = "Artist Name: \(currentArtObject.artistName)"
          let url = URL(string: currentArtObject.artImageURL)
         artImageView.kf.setImage(with: url)
         
@@ -116,7 +125,6 @@ self.navigationController?.popViewController(animated: true)
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        //   self.navigationController?.navigationBar.isHidden = true
         UIUtilities.setViewBackgroundColor(view)
         addSubviews()
         setupUIConstraints()
@@ -130,7 +138,7 @@ self.navigationController?.popViewController(animated: true)
         view.addSubview(artImageView)
         view.addSubview(dimensionsLabel)
         view.addSubview(artistNameLabel)
-        view.addSubview(priceNameLabel)
+//        view.addSubview(priceNameLabel)
         view.addSubview(arLogo)
 //        view.addSubview(artDescription)
     }
@@ -138,7 +146,7 @@ self.navigationController?.popViewController(animated: true)
     private func setupUIConstraints() {
         constrainDimensionLabel()
         constrainArtLabel()
-        constrainPriceLabel()
+//        constrainPriceLabel()
         constrainBuyButton()
         constrainARButton()
         constrainArtView()
@@ -148,19 +156,18 @@ self.navigationController?.popViewController(animated: true)
     // MARK: - Constraints
     private func constrainDimensionLabel() {
    dimensionsLabel.snp.makeConstraints { (make) in
-    make.left.equalTo(self.view).offset(8)
-    make.right.equalTo(self.view).offset(-8)
+    make.left.equalTo(artistNameLabel)
+//    make.right.equalTo(self.view).offset(-8)
     make.height.equalTo(self.view)
     make.bottom.equalTo(self.view).offset(100)
     }
     }
     private func constrainArtLabel() {
-
         artistNameLabel.snp.makeConstraints { (make) in
-                make.left.equalTo(dimensionsLabel).offset(8)
-                make.right.equalTo(dimensionsLabel).offset(-8)
+            make.left.equalTo(view).offset(20)
+//                make.right.equalTo(dimensionsLabel).offset(-8)
                 make.height.equalTo(dimensionsLabel)
-            make.bottom.equalTo(dimensionsLabel).offset(30)
+            make.bottom.equalTo(dimensionsLabel).offset(-30)
             }
     }
     
