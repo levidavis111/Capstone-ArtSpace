@@ -17,7 +17,6 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   //MARK: UI Elements
   lazy var savedImageView: UIImageView = {
     let imageView = UIImageView()
-    //MARK: Note: How to better scale pictures in view?
     imageView.contentMode = .scaleToFill
     imageView.backgroundColor = .clear
     
@@ -27,7 +26,7 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   lazy var bookmarkButton: UIButton = {
     let button = UIButton()
     let imageConfig = UIImage.SymbolConfiguration(scale: .large)
-    button.setImage(UIImage(systemName: "bookmark.fill", withConfiguration: imageConfig), for: .normal)
+    button.setImage(UIImage(systemName: "heart.fill", withConfiguration: imageConfig), for: .normal)
     button.tintColor = .systemBlue
     button.layer.backgroundColor = UIColor.clear.cgColor
     button.addTarget(self, action: #selector(bookmarkButtonPressed), for: .touchUpInside)
@@ -50,17 +49,17 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     return label
   }()
   
-  lazy var priceLabel: UILabel = {
-    let label = UILabel()
-    label.text = "Price"
-    label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .caption1), size: 16)
-    label.textColor = .black
-    return label
-  }()
+//  lazy var priceLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "Price"
+//    label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .caption1), size: 16)
+//    label.textColor = .black
+//    return label
+//  }()
   
   lazy var buyButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Buy", for: .normal)
+    button.setTitle("Details", for: .normal) //changed to Details for TestFlight release
     button.layer.backgroundColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
     button.layer.borderWidth = 1.0
     button.layer.cornerRadius  = 5.0
@@ -68,19 +67,19 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     return button
   }()
   
-  lazy var soldStatusView: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-    return view
-  }()
+//  lazy var soldStatusView: UIView = {
+//    let view = UIView()
+//    view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+//    return view
+//  }()
   
-  lazy var soldStatusLabel: UILabel = {
-    let label = UILabel()
-    label.text = "Item Sold"
-    label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 75)
-    label.textColor = .red
-    return label
-  }()
+//  lazy var soldStatusLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "Item Sold"
+//    label.font = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .headline), size: 75)
+//    label.textColor = .red
+//    return label
+//  }()
   
   //MARK: Lifecycle Methods
   override init(frame: CGRect) {
@@ -106,18 +105,18 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
   //MARK: Functions
   
   func setupContentView() {
-    contentView.backgroundColor = .systemPurple
+    contentView.backgroundColor = .systemGray2
     contentView.layer.shadowColor = UIColor(red: 35/255, green: 46/255, blue: 33/255, alpha: 1).cgColor
     contentView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
     contentView.layer.shadowOpacity = 0.9
     contentView.layer.shadowRadius = 4
   }
   
-  func updateSoldStatus(status: Bool) {
-    if status {
-      setupSoldStatus()
-    }
-  }
+//  func updateSoldStatus(status: Bool) {
+//    if status {
+//      setupSoldStatus()
+//    }
+//  }
   
   //MARK: Private Functions
   private func addSubViews() {
@@ -125,31 +124,31 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(bookmarkButton)
     contentView.addSubview(titleLabel)
     contentView.addSubview(artistNameLabel)
-    contentView.addSubview(priceLabel)
+//    contentView.addSubview(priceLabel)
     contentView.addSubview(buyButton)
   }
   
-  private func setupSoldStatus() {
-    contentView.addSubview(soldStatusView)
-    soldStatusView.addSubview(soldStatusLabel)
-    constrainSoldStatus()
-    buyButton.isEnabled = false
-    buyButton.isHidden = true
-  }
+//  private func setupSoldStatus() {
+//    contentView.addSubview(soldStatusView)
+//    soldStatusView.addSubview(soldStatusLabel)
+//    constrainSoldStatus()
+//    buyButton.isEnabled = false
+//    buyButton.isHidden = true
+//  }
   
-  private func constrainSoldStatus() {
-    soldStatusView.snp.makeConstraints { (make) in
-      make.top.equalTo(contentView)
-      make.left.equalTo(contentView)
-      make.right.equalTo(contentView)
-      make.bottom.equalTo(contentView).offset(-75)
-    }
+//  private func constrainSoldStatus() {
+//    soldStatusView.snp.makeConstraints { (make) in
+//      make.top.equalTo(contentView)
+//      make.left.equalTo(contentView)
+//      make.right.equalTo(contentView)
+//      make.bottom.equalTo(contentView).offset(-75)
+//    }
     
-    soldStatusLabel.snp.makeConstraints { (make) in
-      make.center.equalTo(soldStatusView)
-    }
+//    soldStatusLabel.snp.makeConstraints { (make) in
+//      make.center.equalTo(soldStatusView)
+//    }
     
-  }
+//  }
   
   private func addConstraints() {
     savedImageView.snp.makeConstraints { (make) in
@@ -176,10 +175,10 @@ class SavedArtCollectionViewCell: UICollectionViewCell {
       make.left.equalTo(contentView).offset(25)
     }
     
-    priceLabel.snp.makeConstraints { (make) in
-      make.bottom.equalTo(artistNameLabel).offset(25)
-      make.left.equalTo(contentView).offset(25)
-    }
+//    priceLabel.snp.makeConstraints { (make) in
+//      make.bottom.equalTo(artistNameLabel).offset(25)
+//      make.left.equalTo(contentView).offset(25)
+//    }
     
     buyButton.snp.makeConstraints { (make) in
       make.bottom.equalTo(savedImageView).offset(50)

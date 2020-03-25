@@ -65,6 +65,7 @@ class MainViewController: UIViewController {
   
   //MARK: -- Private Functions
   private func getArtPosts() {
+    self.showActivityIndicator(shouldShow: true)
     FirestoreService.manager.getAllArtObjects { [weak self](result) in
       switch result {
       case .failure(let error):
@@ -72,6 +73,7 @@ class MainViewController: UIViewController {
       case .success(let artFromFirebase):
         DispatchQueue.main.async {
           self?.artObjectData = artFromFirebase
+                 self?.showActivityIndicator(shouldShow: false)
         }
       }
     }
@@ -117,8 +119,7 @@ extension MainViewController: UICollectionViewDataSource {
     cell.imageView.kf.setImage(with: url)
     cell.delegate = self
     cell.likeButton.tag = indexPath.row
-    cell.priceLabel.text = "$\(currentImage.price)"
-    
+  
     let _ = currentImage.existsInFavorites { (result) in
       switch result {
       case .failure(let error):

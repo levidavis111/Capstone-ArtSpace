@@ -183,6 +183,7 @@ class ProfileViewController: UIViewController {
     //MARK: Objc functions
     
     @objc func signOutFunc(){
+             self.showActivityIndicator(shouldShow: true)
         FirebaseAuthService.manager.logoutUser()
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -192,7 +193,10 @@ class ProfileViewController: UIViewController {
         UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromTop, animations: {
             
             window.rootViewController = LoginViewController()
-        }, completion: nil)
+        }, completion: {_ in
+                 self.showActivityIndicator(shouldShow: false)
+        })
+      
     }
     
     
@@ -364,6 +368,7 @@ class ProfileViewController: UIViewController {
         uploadImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.profileImage).offset(125)
             make.trailing.equalTo(self.editDisplayNameButton).offset(15)
+
         }
     }
     
@@ -382,8 +387,7 @@ class ProfileViewController: UIViewController {
             make.centerX.equalTo(self.view)
         }
     }
-    
- 
+
 }
 
 //MARK: Extension

@@ -132,13 +132,12 @@ extension SavedArtViewController: UICollectionViewDataSource {
     cell.savedImageView.kf.setImage(with: url)
     
     cell.artistNameLabel.text = "Artist: \(savedArtObjects.artistName)"
-    cell.titleLabel.text = "Art Title Goes Here"
+    cell.titleLabel.text = " "
     
-    let price = savedArtObjects.price
-    let formattedPrice = String(format: "$ %.2f", price)
-    cell.priceLabel.text = formattedPrice
-    
-    cell.updateSoldStatus(status: savedArtObjects.soldStatus)
+//    let price = savedArtObjects.price
+//    let formattedPrice = String(format: "$ %.2f", price)
+//    cell.priceLabel.text = formattedPrice
+//    cell.updateSoldStatus(status: savedArtObjects.soldStatus)
     
     cell.delegate = self
     cell.tag = indexPath.row
@@ -202,5 +201,4 @@ extension SavedArtViewController: EmptyDataSetSource, EmptyDataSetDelegate {
     return NSAttributedString(string: descriptionString, attributes: descriptionAttributes)
   }
   
-  //MARK: TODO: Add button to segue to the main view controller to prompt the user to view other works
 }
