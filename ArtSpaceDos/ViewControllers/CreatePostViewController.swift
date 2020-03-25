@@ -44,6 +44,7 @@ class CreatePostViewController: UIViewController {
     
     lazy var artPriceTextField: UITextField = {
         let textField = UITextField()
+        textField.isHidden = true
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.textColor = .black
@@ -56,7 +57,7 @@ class CreatePostViewController: UIViewController {
     
     lazy var dimensionsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Dimensions: "
+        label.text = "Dimensions (cm): "
         return label
     }()
     
@@ -197,7 +198,7 @@ class CreatePostViewController: UIViewController {
         
         if let price = priceDouble, let width = widthCGFloat, let height = heightCGFloat {
             guard price != 0.0, width != 0.0, height != 0.0 else {showAlert(with: "Error", and: "Invalid entry; check fields"); return}
-            let newArtObject = ArtObject(artistName: artist.userName ?? "No artist name", artDescription: description, width: width, height: height, artImageURL: photoURLString, sellerID: artist.uid, price: price, tags: ["2"])
+            let newArtObject = ArtObject(artistName: artist.userName ?? "No artist name", artDescription: description, width: (width / 100) , height: (height / 100), artImageURL: photoURLString, sellerID: artist.uid, price: price, tags: ["2"])
             
             FirestoreService.manager.createArtObject(artObject: newArtObject) { (result) in
                 switch result {
