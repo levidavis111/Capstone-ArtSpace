@@ -79,7 +79,7 @@ class ArtCell: UICollectionViewCell {
         }
         
         likeButton.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(30)
+            make.top.equalTo(contentView).offset(15)
             make.right.equalTo(contentView).offset(-5)
         }
         

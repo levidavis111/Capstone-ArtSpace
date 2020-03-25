@@ -117,8 +117,7 @@ extension MainViewController: UICollectionViewDataSource {
     cell.imageView.kf.setImage(with: url)
     cell.delegate = self
     cell.likeButton.tag = indexPath.row
-    cell.priceLabel.text = "$\(currentImage.price)"
-    
+  
     let _ = currentImage.existsInFavorites { (result) in
       switch result {
       case .failure(let error):

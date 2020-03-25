@@ -108,16 +108,6 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    lazy var settingsButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.layer.borderWidth = 2.0
-        button.layer.cornerRadius = 15
-        button.layer.borderColor = UIColor.systemBlue.cgColor
-        button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.setTitle("Settings", for: .normal)
-        // button.addTarget(self, action: #selector(updateButtonPressed), for: .touchUpInside)
-        return button
-    }()
     
     lazy var savePaymentInformation: UIButton = {
         let button = UIButton()
@@ -136,7 +126,6 @@ class ProfileViewController: UIViewController {
         // view.addSubview(uploadButton)
         view.addSubview(uploadImageButton)
         view.addSubview(saveButton)
-        view.addSubview(settingsButton)
         view.addSubview(userNameLabel)
         view.addSubview(textField)
         view.addSubview(editDisplayNameButton)
@@ -148,7 +137,6 @@ class ProfileViewController: UIViewController {
         addSubviews()
         constrainProfilePicture()
         saveChangesConstraints()
-        settinglabelConstraints()
         constrainDisplayname()
         editUserNameConstraints()
         uploadImageConstraints()
@@ -389,14 +377,14 @@ class ProfileViewController: UIViewController {
     private func uploadImageConstraints() {
         uploadImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(self.profileImage).offset(125)
-            make.trailing.equalTo(self.editDisplayNameButton)
+            make.trailing.equalTo(self.editDisplayNameButton).offset(15)
             
         }
     }
     
     private func saveChangesConstraints() {
         saveButton.snp.makeConstraints { make in
-            make.bottom.equalTo(settingsButton).offset(50)
+            make.bottom.equalTo(editDisplayNameButton).offset(50)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.width.equalTo(120)
         }
@@ -409,15 +397,7 @@ class ProfileViewController: UIViewController {
             make.centerX.equalTo(self.view)
         }
     }
-    
-    
-    private func settinglabelConstraints() {
-        settingsButton.snp.makeConstraints { make in
-            make.bottom.equalTo(editDisplayNameButton).offset(50)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(120)
-        }
-    }
+ 
     
     private func saveCardConstraints() {
         savePaymentInformation.snp.makeConstraints{ make in
