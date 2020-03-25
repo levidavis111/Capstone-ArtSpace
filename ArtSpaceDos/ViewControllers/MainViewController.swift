@@ -213,7 +213,7 @@ extension MainViewController: ArtCellFavoriteDelegate {
       case .success(let bool):
         switch bool {
         case true:
-          FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
+    FirestoreService.manager.removeSavedArtObject(artID: oneArtObject.artID) { (result) in
             switch result {
             case .failure(let error):
               print(error)

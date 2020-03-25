@@ -11,7 +11,7 @@ import FirebaseAuth
 import Photos
 import Firebase
 import Kingfisher
-
+import Stripe
 class ProfileViewController: UIViewController {
     
 
@@ -109,6 +109,16 @@ class ProfileViewController: UIViewController {
     }()
     
     
+    lazy var savePaymentInformation: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.systemBlue, for: .normal)
+        UIUtilities.setUpButton(button, title: "Save Card", backgroundColor: .white, target: self, action: #selector(stripeSaveCard))
+        button.layer.borderWidth = 2.0
+               button.layer.cornerRadius = 15
+               button.layer.borderColor = UIColor.systemBlue.cgColor
+        return button
+    }()
+    
     
     //MARK: addSubviews
     func addSubviews() {
@@ -119,6 +129,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(userNameLabel)
         view.addSubview(textField)
         view.addSubview(editDisplayNameButton)
+        view.addSubview(savePaymentInformation)
     }
     //MARK:ViewDidLoad cycle
     override func viewDidLoad() {
@@ -129,7 +140,7 @@ class ProfileViewController: UIViewController {
         constrainDisplayname()
         editUserNameConstraints()
         uploadImageConstraints()
-        
+        saveCardConstraints()
         if let displayName = FirebaseAuthService.manager.currentUser?.displayName {
             loadImage()
             userNameLabel.text = displayName
@@ -237,7 +248,12 @@ class ProfileViewController: UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
     
-    
+    @objc private func stripeSaveCard() {
+        let saveCardVC = SaveCardViewController()
+        saveCardVC.modalPresentationStyle = .overCurrentContext
+        present(saveCardVC, animated: true, completion: nil)
+        
+    }
     @objc private func profileImageTapped(){
         print("Pressed")
         
@@ -382,6 +398,16 @@ class ProfileViewController: UIViewController {
         }
     }
  
+    
+    private func saveCardConstraints() {
+        savePaymentInformation.snp.makeConstraints{ make in
+            make.bottom.equalTo(saveButton).offset(50)
+            make.centerX.equalTo(saveButton)
+            make.width.equalTo(saveButton)
+            make.height.equalTo(saveButton)
+            
+        }
+    }
     
 }
 
