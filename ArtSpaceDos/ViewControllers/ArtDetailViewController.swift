@@ -149,7 +149,7 @@ self.navigationController?.popViewController(animated: true)
 //        constrainPriceLabel()
         constrainBuyButton()
         constrainARButton()
-        constrainArtView()
+//        constrainArtView()
 //        descriptionConstraints()
     }
     
