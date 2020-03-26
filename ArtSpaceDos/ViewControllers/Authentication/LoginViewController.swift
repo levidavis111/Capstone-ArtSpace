@@ -115,6 +115,8 @@ class LoginViewController: UIViewController {
     }
     //MARK: Objective C
     @objc func loginOrRegisterUser() {
+      self.showActivityIndicator(shouldShow: true)
+      
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             showAlert(with: "Error", and: "Please fill out all fields.")
             return
@@ -136,6 +138,7 @@ class LoginViewController: UIViewController {
         }
         case .register:
             FirebaseAuthService.manager.createNewUser(email: email.lowercased(), password: password, completion: {(result) in
+              self.showActivityIndicator(shouldShow: false)
                 self.handleCreateAccountResponse(with: result)
             })
     }

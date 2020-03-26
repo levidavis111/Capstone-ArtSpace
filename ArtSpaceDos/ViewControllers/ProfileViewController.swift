@@ -192,6 +192,7 @@ class ProfileViewController: UIViewController {
     //MARK: Objc functions
     
     @objc func signOutFunc(){
+      self.showActivityIndicator(shouldShow: true)
         FirebaseAuthService.manager.logoutUser()
         
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -201,7 +202,9 @@ class ProfileViewController: UIViewController {
         UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromTop, animations: {
             
             window.rootViewController = LoginViewController()
-        }, completion: nil)
+        }, completion: {_ in
+          self.showActivityIndicator(shouldShow: false)
+        })
     }
     
     

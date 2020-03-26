@@ -65,6 +65,7 @@ class MainViewController: UIViewController {
   
   //MARK: -- Private Functions
   private func getArtPosts() {
+    self.showActivityIndicator(shouldShow: true)
     FirestoreService.manager.getAllArtObjects { [weak self](result) in
       switch result {
       case .failure(let error):
@@ -72,6 +73,7 @@ class MainViewController: UIViewController {
       case .success(let artFromFirebase):
         DispatchQueue.main.async {
           self?.artObjectData = artFromFirebase
+          self?.showActivityIndicator(shouldShow: false)
         }
       }
     }
