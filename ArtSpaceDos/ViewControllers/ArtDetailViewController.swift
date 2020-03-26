@@ -161,7 +161,15 @@ self.navigationController?.popViewController(animated: true)
     make.height.equalTo(self.view)
     make.bottom.equalTo(self.view).offset(100)
     }
-    }
+    } 
+    
+    private func constrainArtView() {
+        artImageView.snp.makeConstraints{ make in
+            make.top.equalTo(view).offset(100)
+            make.centerX.equalTo(view)
+        }
+    } 
+    
     private func constrainArtLabel() {
         artistNameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(view).offset(20)
