@@ -18,7 +18,10 @@ ArtSpace is an immersive app where users can browse art available for sale and e
 - Firebase
 
 ## Screenshots
-Coming soon...
+
+![](images/ArtSpaceMainDetailScreen.gif)
+
+![](images/ArtSpaceFavs.gif)
 
 ## Project Status
 Active
