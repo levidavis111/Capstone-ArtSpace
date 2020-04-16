@@ -13,7 +13,6 @@ ArtSpace is an immersive app where users can browse art posted by other users an
 
 ## Technology Stack
 - ARKit
-- Stripe
 - UIKit
 - Firebase
 
