@@ -89,7 +89,7 @@ class ArtDetailViewController: UIViewController {
     let alertPopup = UIAlertController(title: "Successful", message: "Saved that to favorites", preferredStyle: .alert)
    //MARK: Go back to originalVC(Home)
     alertPopup.addAction(UIAlertAction(title: "okay", style: .default, handler: {(alert: UIAlertAction!) in
-        let mainVC = MainViewController()
+//        let mainVC = MainViewController()
 self.navigationController?.popViewController(animated: true)
     }))
     
