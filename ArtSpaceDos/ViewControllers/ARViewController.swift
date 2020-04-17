@@ -196,7 +196,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         
         artBox.geometry?.materials = [sideOne, otherSides, otherSides, otherSides, otherSides, otherSides]
         sceneView.scene.rootNode.addChildNode(artBox)
-        status = "Do you like it? Buy it."
+        status = "Do you like it?"
         
     }
     
