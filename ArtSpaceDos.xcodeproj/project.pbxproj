@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7DDA6DC05FA73343E6BA89BD /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C25476F3F868E50797CF2B5 /* Pods_ArtSpaceDos.framework */; };
+		B2AC2E398A17C35CDEB94BF8 /* Pods_ArtSpaceDos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33B934BE5CD13C6F2233C14 /* Pods_ArtSpaceDos.framework */; };
 		CB00A3C024293E7000F42467 /* StripeKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A3BF24293E7000F42467 /* StripeKeys.swift */; };
 		CB0D6FAA23FC55A20082178A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FA923FC55A20082178A /* LoginViewController.swift */; };
 		CB0D6FAE23FC55EA0082178A /* GifExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D6FAD23FC55EA0082178A /* GifExtension.swift */; };
@@ -47,9 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F4C1F7545B4ED3F5B3C9619 /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
-		7C25476F3F868E50797CF2B5 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EF2FABBA27444C92A5C1D0D /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
+		B4EA1061167644802D8225B1 /* Pods-ArtSpaceDos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.release.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.release.xcconfig"; sourceTree = "<group>"; };
 		CB00A3BF24293E7000F42467 /* StripeKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeKeys.swift; sourceTree = "<group>"; };
 		CB0D6FA923FC55A20082178A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CB0D6FAD23FC55EA0082178A /* GifExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifExtension.swift; sourceTree = "<group>"; };
@@ -84,6 +82,8 @@
 		D82FA8B323E346B6005B22D4 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		D854837D23E385D300811E6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D886C88623FDA15E002FA690 /* SavedArtCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArtCollectionViewCell.swift; sourceTree = "<group>"; };
+		D9C8DD70B64F5FD9F3D836BE /* Pods-ArtSpaceDos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtSpaceDos.debug.xcconfig"; path = "Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos.debug.xcconfig"; sourceTree = "<group>"; };
+		F33B934BE5CD13C6F2233C14 /* Pods_ArtSpaceDos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtSpaceDos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC1616FC23E8B45D00289C74 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		FC1616FE23ECA03900289C74 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiers.swift; sourceTree = "<group>"; };
@@ -95,18 +95,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DDA6DC05FA73343E6BA89BD /* Pods_ArtSpaceDos.framework in Frameworks */,
+				B2AC2E398A17C35CDEB94BF8 /* Pods_ArtSpaceDos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44D3DF494DF310A3FDBD8881 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F33B934BE5CD13C6F2233C14 /* Pods_ArtSpaceDos.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6C801646FBAE48EAE621CBD4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9EF2FABBA27444C92A5C1D0D /* Pods-ArtSpaceDos.debug.xcconfig */,
-				1F4C1F7545B4ED3F5B3C9619 /* Pods-ArtSpaceDos.release.xcconfig */,
+				D9C8DD70B64F5FD9F3D836BE /* Pods-ArtSpaceDos.debug.xcconfig */,
+				B4EA1061167644802D8225B1 /* Pods-ArtSpaceDos.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -138,7 +146,7 @@
 				D82FA88023E33697005B22D4 /* ArtSpaceDos */,
 				D82FA87F23E33697005B22D4 /* Products */,
 				6C801646FBAE48EAE621CBD4 /* Pods */,
-				D972D1201EFBDF95CF045E70 /* Frameworks */,
+				44D3DF494DF310A3FDBD8881 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -245,14 +253,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		D972D1201EFBDF95CF045E70 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7C25476F3F868E50797CF2B5 /* Pods_ArtSpaceDos.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,11 +260,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D82FA89223E3369A005B22D4 /* Build configuration list for PBXNativeTarget "ArtSpaceDos" */;
 			buildPhases = (
-				7A7A8351C85E866630493179 /* [CP] Check Pods Manifest.lock */,
+				AE85D490459C735E902819F9 /* [CP] Check Pods Manifest.lock */,
 				D82FA87A23E33697005B22D4 /* Sources */,
 				D82FA87B23E33697005B22D4 /* Frameworks */,
 				D82FA87C23E33697005B22D4 /* Resources */,
-				483235C6554D3C1D66CEB80B /* [CP] Embed Pods Frameworks */,
+				89D4E5A874D43631AF7CB2BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,7 +323,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		483235C6554D3C1D66CEB80B /* [CP] Embed Pods Frameworks */ = {
+		89D4E5A874D43631AF7CB2BF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -340,7 +340,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArtSpaceDos/Pods-ArtSpaceDos-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7A7A8351C85E866630493179 /* [CP] Check Pods Manifest.lock */ = {
+		AE85D490459C735E902819F9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -542,11 +542,11 @@
 		};
 		D82FA89323E3369A005B22D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9EF2FABBA27444C92A5C1D0D /* Pods-ArtSpaceDos.debug.xcconfig */;
+			baseConfigurationReference = D9C8DD70B64F5FD9F3D836BE /* Pods-ArtSpaceDos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 453FAV4WWW;
+				DEVELOPMENT_TEAM = QNT8W8WL29;
 				INFOPLIST_FILE = ArtSpaceDos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -562,11 +562,11 @@
 		};
 		D82FA89423E3369A005B22D4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F4C1F7545B4ED3F5B3C9619 /* Pods-ArtSpaceDos.release.xcconfig */;
+			baseConfigurationReference = B4EA1061167644802D8225B1 /* Pods-ArtSpaceDos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 453FAV4WWW;
+				DEVELOPMENT_TEAM = QNT8W8WL29;
 				INFOPLIST_FILE = ArtSpaceDos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

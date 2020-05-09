@@ -116,6 +116,7 @@ class ProfileViewController: UIViewController {
         button.layer.borderWidth = 2.0
                button.layer.cornerRadius = 15
                button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.isHidden = true
         return button
     }()
     
