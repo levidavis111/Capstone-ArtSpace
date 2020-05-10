@@ -40,8 +40,6 @@
 		FC16170323FC8C6900289C74 /* ReuseIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC16170223FC8C6900289C74 /* ReuseIdentifiers.swift */; };
 		FC6D4D482416C48B00D5FB66 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6D4D472416C48A00D5FB66 /* UIViewControllerExtension.swift */; };
 		FCF4F0A724676E080039F8DB /* ArtSpaceDosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF4F0A624676E080039F8DB /* ArtSpaceDosTests.swift */; };
-		FCF4F0AF246875FA0039F8DB /* AppUser.json in Resources */ = {isa = PBXBuildFile; fileRef = FCF4F0AE246875FA0039F8DB /* AppUser.json */; };
-		FCF4F0B1246876130039F8DB /* ArtObject.json in Resources */ = {isa = PBXBuildFile; fileRef = FCF4F0B0246876130039F8DB /* ArtObject.json */; };
 		FCF4F0B424687AF10039F8DB /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA89823E33BED005B22D4 /* AppUser.swift */; };
 		FCF4F0B5246880910039F8DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FA88123E33697005B22D4 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -98,8 +96,6 @@
 		FCF4F0A424676E080039F8DB /* ArtSpaceDosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtSpaceDosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCF4F0A624676E080039F8DB /* ArtSpaceDosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtSpaceDosTests.swift; sourceTree = "<group>"; };
 		FCF4F0A824676E080039F8DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FCF4F0AE246875FA0039F8DB /* AppUser.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AppUser.json; sourceTree = "<group>"; };
-		FCF4F0B0246876130039F8DB /* ArtObject.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ArtObject.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,8 +265,6 @@
 			children = (
 				FCF4F0A624676E080039F8DB /* ArtSpaceDosTests.swift */,
 				FCF4F0A824676E080039F8DB /* Info.plist */,
-				FCF4F0AE246875FA0039F8DB /* AppUser.json */,
-				FCF4F0B0246876130039F8DB /* ArtObject.json */,
 			);
 			path = ArtSpaceDosTests;
 			sourceTree = "<group>";
@@ -370,8 +364,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCF4F0B1246876130039F8DB /* ArtObject.json in Resources */,
-				FCF4F0AF246875FA0039F8DB /* AppUser.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
