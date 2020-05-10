@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Stripe
+//import Stripe
 
 class PaymentOptionsViewController: STPPaymentOptionsViewController {
 

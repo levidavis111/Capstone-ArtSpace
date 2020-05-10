@@ -29,13 +29,14 @@ struct AppUser {
     init?(from dict: [String: Any], id: String) {
         guard let userName = dict["userName"] as? String,
         let email = dict["email"] as? String,
-        let profileImageURL = dict["profileImageURL"] as? String,
-        let dateCreated = (dict["dateCreated"] as? Timestamp)?.dateValue() else {return nil}
+        let profileImageURL = dict["profileImageURL"] as? String else {return nil}
+        let dateCreated = (dict["dateCreated"] as? Timestamp)?.dateValue()
+        
         self.userName = userName
         self.email = email
         self.dateCreated = dateCreated
         self.uid = id
-      self.profileImageURL = profileImageURL
+        self.profileImageURL = profileImageURL
     }
     
     var fieldsDict: [String:Any] {

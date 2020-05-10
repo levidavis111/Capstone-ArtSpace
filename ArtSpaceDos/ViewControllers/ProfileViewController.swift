@@ -11,7 +11,7 @@ import FirebaseAuth
 import Photos
 import Firebase
 import Kingfisher
-import Stripe
+//import Stripe
 class ProfileViewController: UIViewController {
     
 
@@ -253,9 +253,9 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func stripeSaveCard() {
-        let saveCardVC = SaveCardViewController()
-        saveCardVC.modalPresentationStyle = .overCurrentContext
-        present(saveCardVC, animated: true, completion: nil)
+//        let saveCardVC = SaveCardViewController()
+//        saveCardVC.modalPresentationStyle = .overCurrentContext
+//        present(saveCardVC, animated: true, completion: nil)
         
     }
     @objc private func profileImageTapped(){

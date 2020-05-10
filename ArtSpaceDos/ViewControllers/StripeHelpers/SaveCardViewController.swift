@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Stripe
+//import Stripe
 import SnapKit
 
 class SaveCardViewController: STPAddCardViewController {

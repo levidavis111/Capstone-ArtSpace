@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Stripe
+//import Stripe
 
 class MyAPIClient: NSObject, STPCustomerEphemeralKeyProvider {
     enum APIError: Error {

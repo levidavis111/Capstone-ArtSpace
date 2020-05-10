@@ -10,8 +10,10 @@ target 'ArtSpaceDos' do
 	pod 'SnapKit', '~> 5.0.0'
 	pod 'Kingfisher', '~> 5.0'
 	pod 'EmptyDataSet-Swift', '~> 5.0.0' 
-	pod 'Stripe'
+	# pod 'Stripe'
 
-  # Pods for ArtSpaceDos
-
+  target 'ArtSpaceDosTests' do
+    inherit! :search_paths
+    # Pods for testing
+	end
 end

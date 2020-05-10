@@ -41,26 +41,6 @@ struct ArtObject {
         }
     }
     
-//    func existsInFavorites(completion: @escaping (Result<Bool,Error>) -> ()) {
-//
-//            guard let user = FirebaseAuthService.manager.currentUser else {return}
-//
-//            FirestoreService.manager.getArts(forUserID: user.uid) { (result) in
-//                switch result {
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                    print(error)
-//                case .success(let events):
-//                    if events.contains(where: {$0.id == self.id}) {
-//                        completion(.success(true))
-//                    } else {
-//                        completion(.success(false))
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
 //    MARK: - Init
   
     init(artistName: String, artDescription: String, width: CGFloat, height: CGFloat, artImageURL: String, sellerID: String, price: Double, dateCreated: Date? = nil, tags: [String]){
@@ -85,8 +65,9 @@ struct ArtObject {
         let artID = dict["artID"] as? String,
         let sellerID = dict["sellerID"] as? String,
         let price = dict["price"] as? Double,
-        let dateCreated = (dict["dateCreated"] as? Timestamp)?.dateValue(),
+        
         let tags = dict["tags"] as? [String] else {return nil}
+        let dateCreated = (dict["dateCreated"] as? Timestamp)?.dateValue()
         
         self.artistName = artistName
         self.artDescription = artDescription

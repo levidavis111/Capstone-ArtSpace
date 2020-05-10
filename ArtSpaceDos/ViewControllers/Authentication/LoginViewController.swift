@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
-import Stripe
+//import Stripe
 //MARK: Add Activity Indicator
 //MARK: Change Font color on whether or not its been selected
 
