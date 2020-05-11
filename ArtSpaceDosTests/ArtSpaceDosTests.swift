@@ -12,7 +12,7 @@ import XCTest
 
 class ArtSpaceDosTests: XCTestCase {
     
-    func testAppUserFromJSON() {
+    func testAppUserFrom() {
         let userName = "Levi"
         let email = "levi@levi.com"
         let profileImageURL = "image.com"
